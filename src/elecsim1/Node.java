@@ -1,33 +1,43 @@
 package elecsim1;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
 class Node {
     
-    private Collection<Component> components;
-    private Collection<Component> otherComponents;
+    private Collection<Component> reverse;
+    private Collection<Component> forward;
+    double voltage;
+    boolean fixed;
+    
+    Node() {
+        this(0);
+        fixed = false;
+    }
 
-    public Node() {
-        components = new LinkedList<Component>();
-        otherComponents = new ArrayList<Component>(10);
+    Node(double voltage) {
+        this.voltage = voltage;
+        reverse = new LinkedList<Component>();
+        forward = new LinkedList<Component>();
+        fixed = true;
     }    
     
-    void removeComponent(Component component) {
-        components.remove(component);
+    
+    void addBehind(Component component) {
+        reverse.remove(component);
     }
     
-    void addComponent(Component component) {
-        components.add(component);
+    void addFront(Component component) {
+        forward.add(component);
     }
-    
-    Collection<Component> allComponentsExcept(Component caller) {
-        otherComponents.clear();
-        for (Component c : components) {
-            if (c != caller) 
-                otherComponents.add(c);
-        }
-        return otherComponents;
-    }    
+      
+    void merge(Node other) {
+        reverse.addAll(other.reverse);
+        forward.addAll(other.forward);
+    }
+
+    void scrub() {
+        reverse.clear();
+        forward.clear();
+    }
 }
