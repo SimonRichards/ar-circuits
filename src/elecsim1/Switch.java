@@ -2,17 +2,19 @@
 package elecsim1;
 
 class Switch extends Component {
-    private boolean closed;
-    
+    boolean closed;
+
     Switch(boolean closed) {
         this.closed = closed;
     }
-    
+
     Switch() {
-        
+
     }
-    
-    boolean isClosed() {
-        return closed;
+
+
+    @Override
+    double getResistance() {
+        return closed ? 0 : Double.POSITIVE_INFINITY;
     }
 }

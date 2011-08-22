@@ -3,8 +3,9 @@ package elecsim1;
 abstract class Component {
     private Node left;
     private Node right;
-    
-    
+
+    abstract double getResistance();
+
     Node getLeft() {
         return left;
     }
