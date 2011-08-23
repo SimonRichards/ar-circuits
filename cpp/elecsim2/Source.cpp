@@ -1,5 +1,5 @@
 class Source : Gate{
-    boolean on;
+    bool on;
 
     void connect(Gate gate) {
         throw new RuntimeException("Not callable");
@@ -9,7 +9,7 @@ class Source : Gate{
         throw new RuntimeException("Not callable");
     }
 
-    boolean determine() {
+    bool determine() {
         return on;
     }
 };

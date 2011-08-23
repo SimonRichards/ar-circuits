@@ -1,3 +1,5 @@
+#pragma once gate_h
+
 virtual class Gate {
     protected:
         vector<Gate> inputs;
@@ -7,5 +9,5 @@ virtual class Gate {
 
         void connect(Gate gate);
 
-        virtual boolean determine();
+        virtual bool determine();
 };

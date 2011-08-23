@@ -6,4 +6,4 @@ void Gate::connect(Gate gate) {
     inputs.add(gate);
 }
 
-virtual boolean Gate::determine();
+virtual bool Gate::determine();

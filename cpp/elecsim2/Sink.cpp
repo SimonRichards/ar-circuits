@@ -2,7 +2,7 @@ class Sink {
 
     Gate input;
 
-    boolean determine() {
+    bool determine() {
         return input.determine();
     }
 
