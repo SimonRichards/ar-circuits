@@ -3,5 +3,6 @@
 using namespace std;
 
 class Or : public Gate {
-	bool determine();
+public:
+	virtual bool determine();
 };

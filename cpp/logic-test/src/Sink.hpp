@@ -4,9 +4,10 @@ using namespace std;
 
 class Sink {
 private:
-	Gate _input;
+	Gate* _input;
 
 public:
-	bool determine();
-	void connect(Gate input);
+	//Sink();
+	virtual bool determine();
+	void connect(Gate* input);
 };

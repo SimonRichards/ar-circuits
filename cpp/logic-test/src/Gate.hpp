@@ -4,12 +4,12 @@ using namespace std;
 
 class Gate {
     protected:
-        std::vector<Gate> _inputs;
+        std::vector<Gate*> _inputs;
 
     public:
         void scrub();
 
-        void connect(Gate gate);
+        void connect(Gate* gate);
 
-        virtual bool determine();
+        virtual bool determine() = 0;
 };

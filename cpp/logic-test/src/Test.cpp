@@ -11,11 +11,11 @@ int main (int argc, char** argv) {
         b.on = true;
 
         And andGate;
-        andGate.connect(a);
-        andGate.connect(b);
+        andGate.connect(&a);
+        andGate.connect(&b);
 
         Sink output;
-        output.connect(andGate);
+        output.connect(&andGate);
 
         if (!output.determine()) {
             cerr << "And gate failed to read two high inputs" << endl;
@@ -48,21 +48,21 @@ int main (int argc, char** argv) {
         Sink out1;
         Sink out2;
 
-        and1.connect(a);
-        and1.connect(b);
-        and1.connect(c);
+        and1.connect(&a);
+        and1.connect(&b);
+        and1.connect(&c);
 
-        and2.connect(c);
-        and2.connect(d);
+        and2.connect(&c);
+        and2.connect(&d);
 
-        orGate.connect(and1);
-        orGate.connect(and2);
+        orGate.connect(&and1);
+        orGate.connect(&and2);
 
-        xorGate.connect(and1);
-        xorGate.connect(and2);
+        xorGate.connect(&and1);
+        xorGate.connect(&and2);
 
-        out1.connect(xorGate);
-        out2.connect(orGate);
+        out1.connect(&xorGate);
+        out2.connect(&orGate);
 
         if (out1.determine()) {
             cerr << "Xor gate failed" << endl;

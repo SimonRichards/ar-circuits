@@ -3,5 +3,5 @@
 using namespace std;
 
 class Xor : public Gate {
-   bool determine();
+   virtual bool determine();
 };

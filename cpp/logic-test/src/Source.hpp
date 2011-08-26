@@ -8,9 +8,9 @@ class Source : public Gate{
     public:
         bool on;
 
-        void connect(Gate gate);
+        void connect(Gate* gate);
 
         void scrub();
 
-        bool determine();
+        virtual bool determine();
 };
