@@ -3,7 +3,7 @@
 #include "ARScene.h"
 #include "osg.h"
 using namespace OPIRALibrary;
-using namespace osg;
+using namespace std;
 
 osg::ref_ptr<osg::Camera> fgCamera;
 vector<ARScene *> scenes;
