@@ -114,7 +114,7 @@ osg::Node* findNamedNode(const std::string& searchName, osg::Node* currNode)
 }
 
 void main(int argc, char **argv) {  
-
+	unsigned int i;
 	Registration *registration = new RegistrationARToolkit();
 
 	initOGL(argc, argv);
@@ -140,7 +140,7 @@ void main(int argc, char **argv) {
 	scenes.at(1)->setSceneTransformCallback(new osg::AnimationPathCallback(ap));
 	scenes.at(0)->setSceneTransformCallback(new osg::AnimationPathCallback(ap));
 
-	for (int i = 0; i < scenes.size(); i++){
+	for (i = 0; i < scenes.size(); i++){
 		fgCamera->addChild(scenes.at(i));
 	}
 
@@ -185,7 +185,7 @@ void main(int argc, char **argv) {
 		}
 
 		cvReleaseImage(&frame);
-		for (int i=0; i<mt.size(); i++) mt.at(i).clear(); mt.clear();
+		for (i=0; i<mt.size(); i++) mt.at(i).clear(); mt.clear();
 	}
 
 //	delete registration;
@@ -241,17 +241,18 @@ void initOGL(int argc, char **argv) {
 
 
 void render(IplImage* frame_input, std::vector<MarkerTransform> mt) { 
+	unsigned int i, j;
 	//Copy the frame into the background image
 	IplImage *scaleImage = cvCreateImage(cvSize(512,512), IPL_DEPTH_8U, 3);
 	cvResize(frame_input, scaleImage); cvCvtColor(scaleImage, scaleImage, CV_RGB2BGR);
  	mVideoImage->setImage(scaleImage->width, scaleImage->height, 0, 3, GL_RGB, GL_UNSIGNED_BYTE, (unsigned char*)scaleImage->imageData, osg::Image::NO_DELETE);
 	
-	for (int j = 0; j < scenes.size(); j++){
+	for (j = 0; j < scenes.size(); j++){
 		scenes.at(j)->setVisibility(false);  //TODO: add safety for when no markers are added
 	}
 
-	for (int i=0; i<mt.size(); i++) {
-		for (int j = 0; j < scenes.size(); j++){
+	for (i=0; i<mt.size(); i++) {
+		for (j = 0; j < scenes.size(); j++){
 			if (mt.at(i).marker.name == scenes.at(j)->getMarkerID()) {
 				scenes.at(j)->setVisibility(true);
 				scenes.at(j)->setTransform(osg::Matrix(mt.at(i).transMat));
