@@ -47,14 +47,14 @@ void main(int argc, char **argv) {
 	scenes.push_back(new ARScene(modelDir + "Switch_anim.osg", markerDir + "ACSupply.patt", registration));
 
 	osg::AnimationPath* ap = new osg::AnimationPath();
-	vector<Vec3d> points;
-	points.push_back(Vec3d(10,0,0));
-	points.push_back(Vec3d(0,10,0));
-	points.push_back(Vec3d(-10,0,0));
-	points.push_back(Vec3d(0,-10,0));
-	points.push_back(Vec3d(10,0,0));
+	vector<osg::Vec3d> points;
+	points.push_back(osg::Vec3d(10,0,0));
+	points.push_back(osg::Vec3d(0,10,0));
+	points.push_back(osg::Vec3d(-10,0,0));
+	points.push_back(osg::Vec3d(0,-10,0));
+	points.push_back(osg::Vec3d(10,0,0));
 	for (i = 0; i < points.size(); i++) 
-		ap->insert(i, AnimationPath::ControlPoint(points.at(i), Quat(i*PI/2, Vec3d(0,0,1))));
+		ap->insert(i, osg::AnimationPath::ControlPoint(points.at(i), osg::Quat(i*osg::PI/2, osg::Vec3d(0,0,1))));
 	ap->setLoopMode(osg::AnimationPath::LOOP);
 
 
