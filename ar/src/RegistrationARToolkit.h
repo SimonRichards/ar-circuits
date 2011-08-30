@@ -1,9 +1,6 @@
-#ifndef ARTOOLKIT2POINT7OPENCV_H
-#define ARTOOLKIT2POINT7OPENCV_H
+#pragma once
 
-#include "OPIRALibrary.h"
-#include "AR\ar.h"
-#include <string>
+#include "StdAfx.h"
 
 namespace OPIRALibrary {
 
@@ -25,5 +22,3 @@ class RegistrationARToolkit: public Registration {
 		void calcAROpenGLTransform(int direction, double vertex[4][2], CvMat* captureParams, CvMat* captureDistortion, double *transMat[16]);
 	};
 }
-
-#endif

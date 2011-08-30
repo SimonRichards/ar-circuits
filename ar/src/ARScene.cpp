@@ -1,4 +1,7 @@
-#include "..\include\ARScene.h"
+
+#include "StdAfx.h"
+#include "ARScene.h"
+
 
 
 ARScene::ARScene(osg::Node* n, std::string markerPath, OPIRALibrary::Registration* r)

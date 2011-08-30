@@ -1,31 +1,9 @@
-#include <windows.h>
-
-//OPIRA
-#include <CaptureLibrary.h>
-#include <OPIRALibrary.h>
-
-//ARToolkit
-#include <ARToolkit2.7OpenCV.h>
-
+#include "StdAfx.h"
+#include "RegistrationARToolkit.h"
 #include "ARScene.h"
 
-//OpenSceneGraph
-#include <osgViewer/Viewer>
-#include <osgViewer/ViewerEventHandlers>
-#include <osg/Texture2D>
-#include <osg/Geode>
-#include <osg/Geometry>
-#include <osgDB/ReadFile>
-#include <osg/ShapeDrawable>
-#include <osg/MatrixTransform>
-#include <osg/PositionAttitudeTransform>
-#include <osg/io_utils>
-#include <GL/glut.h>
-
-#include <string>
 
 using namespace OPIRALibrary;
-//using namespace osg;
 
 osg::Node* createLights(osg::Node* scene) {
     osg::Group* lightGroup = new osg::Group;
@@ -49,9 +27,6 @@ osg::Node* createLights(osg::Node* scene) {
 	lightSource->setLocalStateSetModes(osg::StateAttribute::ON); 
     lightSource->setStateSetModes(*stateset, osg::StateAttribute::ON);
     lightGroup->addChild(lightSource);
-
-#if defined(WIN32) && !defined(__CYGWIN__) && !defined(__MWERKS__)
-#endif
 	
     return lightGroup;
 }

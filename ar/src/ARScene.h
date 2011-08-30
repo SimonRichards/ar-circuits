@@ -1,23 +1,8 @@
 #pragma once
 
-#include <OPIRALibrary.h>
-#include <ARToolkit2.7OpenCV.h>
-
-//OpenSceneGraph
-#include <osgViewer/Viewer>
-#include <osgViewer/ViewerEventHandlers>
-#include <osg/Texture2D>
-#include <osg/Geode>
-#include <osg/Geometry>
-#include <osgDB/ReadFile>
-#include <osg/ShapeDrawable>
-#include <osg/MatrixTransform>
-#include <osg/PositionAttitudeTransform>
-#include <osg/io_utils>
-#include <GL/glut.h>
-
-#include <iostream>
-#include <string>
+#include "StdAfx.h"
+#include "ARScene.h"
+#include "RegistrationARToolkit.h"
 
 class ARScene :
 	public osg::Group

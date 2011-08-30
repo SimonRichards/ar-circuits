@@ -1,4 +1,5 @@
-#include "ARToolkit2.7OpenCV.h"
+#include "StdAfx.h"
+#include "RegistrationARToolkit.h"
 
 using namespace OPIRALibrary;
 
