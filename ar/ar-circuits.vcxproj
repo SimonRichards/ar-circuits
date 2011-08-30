@@ -81,7 +81,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ac\capacitor.cpp" />
     <ClCompile Include="src\ARScene.cpp" />
+    <ClCompile Include="src\dc\bulb.cpp" />
     <ClCompile Include="src\logic\And.cpp" />
     <ClCompile Include="src\logic\Gate.cpp" />
     <ClCompile Include="src\logic\Or.cpp" />
@@ -96,7 +98,9 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ac\ac.h" />
     <ClInclude Include="src\ARScene.h" />
+    <ClInclude Include="src\dc\dc.h" />
     <ClInclude Include="src\logic\Logic.h" />
     <ClInclude Include="src\RegistrationARToolkit.h" />
     <ClInclude Include="src\StdAfx.h" />
