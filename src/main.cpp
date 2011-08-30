@@ -28,7 +28,23 @@ int _width = 640, _height = 480;
 void initOGL(int argc, char **argv);
 void render(IplImage* frame_input, std::vector<MarkerTransform> mt);
 
-void main(int argc, char **argv) {  
+int main(int argc, char **argv) {  
+	libconfig::Config cfg;
+	try {
+		cfg.readFile("ar-circuits.cfg");
+	} catch (const libconfig::ConfigException &e) {
+		cerr << "Could not open config file" << endl;
+		return -1;
+	}
+
+	try {
+		string name = cfg.lookup("printme");
+		std::cout << name << endl;
+	} catch (libconfig::ConfigException &e) {
+		cerr << "Value not found in ar-circuits.cfg - " << e.what() << endl;
+		return -1;
+	}
+
 	unsigned int i;
 	Registration *registration = new RegistrationARToolkit();
 
@@ -113,6 +129,7 @@ void main(int argc, char **argv) {
 
 //	delete registration;
 	delete camera;
+	return 0;
 }
 
 

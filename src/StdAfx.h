@@ -16,6 +16,7 @@
 #include <CaptureLibrary.h>
 #include <OPIRALibrary.h>
 #include "AR\ar.h"
+#include <libconfig.h++>
 
 #include <string>
 #include <iostream>

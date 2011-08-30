@@ -77,7 +77,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>OPIRALibrary.lib;videoinput.lib;libAR.lib;osg.lib;osgGA.lib;osgviewer.lib;osgdb.lib;cv200.lib;cxcore200.lib;highgui200.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OPIRALibrary.lib;videoinput.lib;libAR.lib;osg.lib;osgGA.lib;osgviewer.lib;osgdb.lib;cv200.lib;cxcore200.lib;highgui200.lib;%(AdditionalDependencies);libconfig++.lib;</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
