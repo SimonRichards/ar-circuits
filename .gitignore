@@ -1,0 +1,16 @@
+
+/ar/Release
+/ar/bin
+/ar/build
+/ar/Debug
+/ar/ipch
+/ar/ar-circuits.opensdf
+/ar/ar-circuits.sdf
+/ar/ar-circuits.suo
+/ar/ar-circuits.vcxproj.user
+/circuit-sim/logic/logic-test.vcxproj.filters
+/circuit-sim/logic/logic-test.vcxproj.user
+/ar-circuits.sdf
+/ar-circuits.suo
+/ar-circuits.vcxproj.user
+/ipch/ar-circuits-b2d5ce1a/ar-circuits-be6d708c.ipch
