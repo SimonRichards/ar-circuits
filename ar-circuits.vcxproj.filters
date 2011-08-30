@@ -60,6 +60,9 @@
     <ClCompile Include="src\dc\bulb.cpp">
       <Filter>Source Files\dc</Filter>
     </ClCompile>
+    <ClCompile Include="src\osg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\StdAfx.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\dc\dc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\osg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

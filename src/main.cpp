@@ -1,64 +1,18 @@
 #include "StdAfx.h"
 #include "RegistrationARToolkit.h"
 #include "ARScene.h"
-
-
+#include "osg.h"
 using namespace OPIRALibrary;
+using namespace osg;
 
-osg::Node* createLights(osg::Node* scene) {
-    osg::Group* lightGroup = new osg::Group;
-   
-	osg::StateSet* stateset = scene->getOrCreateStateSet();
-
-    // Create a local light.
-	osg::Light* light = new osg::Light();
-    light->setLightNum(0);
-    light->setPosition(osg::Vec4(0.0f, 0.0f, 1.0, 0.0f));
-    light->setAmbient(osg::Vec4(0.4f,0.4f,0.4f,1.0f));
-    light->setDiffuse(osg::Vec4(1.0f,1.0f,1.0f,1.0f));
-	light->setSpecular(osg::Vec4(0.4f,0.4f,0.4f,1.0f));
-    light->setConstantAttenuation(0.2f);
-    light->setLinearAttenuation(0.05f);
-    light->setQuadraticAttenuation(0.05f);
-
-	
-    osg::LightSource* lightSource = new osg::LightSource;	
-    lightSource->setLight(light);
-	lightSource->setLocalStateSetModes(osg::StateAttribute::ON); 
-    lightSource->setStateSetModes(*stateset, osg::StateAttribute::ON);
-    lightGroup->addChild(lightSource);
-	
-    return lightGroup;
-}
-
-class modelOSG: public osg::Group {
-public:
-	osg::ref_ptr<osg::Node> model;
-	osg::ref_ptr<osg::MatrixTransform> transform;
-	osg::ref_ptr<osg::MatrixTransform> osgTransform;
-	osg::ref_ptr<osg::Switch> visible;
-	
-	modelOSG(osg::Node *n) {
-		model = n;
-		transform = new osg::MatrixTransform(osg::Matrix::identity());
-		osgTransform = new osg::MatrixTransform(osg::Matrix::identity());//osg::Matrix::rotate(osg::DegreesToRadians(180.0f), osg::X_AXIS));
-		visible = new osg::Switch();
-		visible->addChild(transform); transform->addChild(osgTransform); osgTransform->addChild(model); transform->addChild(createLights(this));
-		this->addChild(visible);
-	};
-};
-
-
-osgViewer::Viewer viewer;
-osg::ref_ptr<osg::Image> mVideoImage;
 osg::ref_ptr<osg::Camera> fgCamera;
-osg::ref_ptr<modelOSG> batMask; osg::ref_ptr<modelOSG> theatreMask;
 vector<ARScene *> scenes;
 
-void initOGL(int argc, char **argv);
-void render(IplImage* frame_input, std::vector<MarkerTransform> mt);
-
-int _width = 640, _height = 480;
+vector<string> markerPaths(0);
+osg::ref_ptr<modelOSG> batMask; 
+osg::ref_ptr<modelOSG> theatreMask;
+osgViewer::Viewer viewer;
+osg::ref_ptr<osg::Image> mVideoImage;
 
 float bX=44, bY=142, bZ=113, bS=310;
 float tX=17, tY=232, tZ=17, tS=8;
@@ -66,52 +20,13 @@ float tX=17, tY=232, tZ=17, tS=8;
 inline void theatreTrans(osg::ref_ptr<osg::MatrixTransform> trans) { trans->setMatrix(osg::Matrix::translate(tX, tY, tZ)); }
 inline void theatreScale(osg::ref_ptr<osg::MatrixTransform> scale) { scale->setMatrix(osg::Matrix::scale(tS, tS, tS)); }
 
-vector<string> markerPaths(0);
 const string markerDir = "resources/markers/";
 const string modelDir = "resources/models/";
 
-osg::Node* findNamedNode(const std::string& searchName, osg::Node* currNode)
-{
-    osg::Group* currGroup;
-    osg::Node* foundNode;
+int _width = 640, _height = 480;
 
-    // check to see if we have a valid (non-NULL) node.
-    // if we do have a null node, return NULL.
-    if ( !currNode)
-    {
-        return NULL;
-    }
-
-    // We have a valid node, check to see if this is the node we 
-    // are looking for. If so, return the current node.
-    if (currNode->getName() == searchName)
-    {
-        return currNode;
-    }
-
-    // We have a valid node, but not the one we are looking for.
-    // Check to see if it has children (non-leaf node). If the node
-    // has children, check each of the child nodes by recursive call.
-    // If one of the recursive calls returns a non-null value we have
-    // found the correct node, so return this node.
-    // If we check all of the children and have not found the node,
-    // return NULL
-    currGroup = currNode->asGroup(); // returns NULL if not a group.
-    if ( currGroup ) 
-    {
-        for (unsigned int i = 0 ; i < currGroup->getNumChildren(); i ++)
-        { 
-            foundNode = findNamedNode(searchName, currGroup->getChild(i));
-            if (foundNode)
-            return foundNode; // found a match!
-        }
-        return NULL; // We have checked each child node - no match found.
-    }
-    else 
-    {
-        return NULL; // leaf node, no match 
-    }
-}
+void initOGL(int argc, char **argv);
+void render(IplImage* frame_input, std::vector<MarkerTransform> mt);
 
 void main(int argc, char **argv) {  
 	unsigned int i;
@@ -125,18 +40,24 @@ void main(int argc, char **argv) {
 	int boxHL = 5;
 	osg::Geode* boxGeode = new osg::Geode();
 	boxGeode->addDrawable(new osg::ShapeDrawable(new osg::Box(osg::Vec3(0,0,0), boxHL, boxHL/2, boxHL/2)));
+
 	scenes.push_back(new ARScene(boxGeode, markerDir + "Diode.patt", registration));
 
 	scenes.push_back(new ARScene(modelDir + "cessna.osg", markerDir + "patt.Hiro", registration));
 	scenes.push_back(new ARScene(modelDir + "Switch_anim.osg", markerDir + "ACSupply.patt", registration));
 
 	osg::AnimationPath* ap = new osg::AnimationPath();
-	ap->insert(0, osg::AnimationPath::ControlPoint(osg::Vec3d(10, 0, 0), osg::Quat(0, osg::Vec3d(0,0,1))));
-	ap->insert(1, osg::AnimationPath::ControlPoint(osg::Vec3d(0, 10, 0), osg::Quat(osg::PI/2, osg::Vec3d(0,0,1))));
-	ap->insert(2, osg::AnimationPath::ControlPoint(osg::Vec3d(-10, 0, 0), osg::Quat(osg::PI, osg::Vec3d(0,0,1))));
-	ap->insert(3, osg::AnimationPath::ControlPoint(osg::Vec3d(0, -10, 0), osg::Quat(osg::PI*3/2, osg::Vec3d(0,0,1))));
-	ap->insert(4, osg::AnimationPath::ControlPoint(osg::Vec3d(10, 0, 0), osg::Quat(osg::PI*2, osg::Vec3d(0,0,1))));
+	vector<Vec3d> points;
+	points.push_back(Vec3d(10,0,0));
+	points.push_back(Vec3d(0,10,0));
+	points.push_back(Vec3d(-10,0,0));
+	points.push_back(Vec3d(0,-10,0));
+	points.push_back(Vec3d(10,0,0));
+	for (i = 0; i < points.size(); i++) 
+		ap->insert(i, AnimationPath::ControlPoint(points.at(i), Quat(i*PI/2, Vec3d(0,0,1))));
 	ap->setLoopMode(osg::AnimationPath::LOOP);
+
+
 	scenes.at(1)->setSceneTransformCallback(new osg::AnimationPathCallback(ap));
 	scenes.at(0)->setSceneTransformCallback(new osg::AnimationPathCallback(ap));
 
@@ -185,12 +106,15 @@ void main(int argc, char **argv) {
 		}
 
 		cvReleaseImage(&frame);
-		for (i=0; i<mt.size(); i++) mt.at(i).clear(); mt.clear();
+		for (i=0; i<mt.size(); i++) 
+			mt.at(i).clear(); 
+		mt.clear();
 	}
 
 //	delete registration;
 	delete camera;
 }
+
 
 void initOGL(int argc, char **argv) {
 

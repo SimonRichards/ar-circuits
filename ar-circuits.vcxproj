@@ -90,6 +90,7 @@
     <ClCompile Include="src\logic\Sink.cpp" />
     <ClCompile Include="src\logic\Source.cpp" />
     <ClCompile Include="src\logic\Xor.cpp" />
+    <ClCompile Include="src\osg.cpp" />
     <ClCompile Include="src\RegistrationARToolkit.cpp" />
     <ClCompile Include="src\StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -102,6 +103,7 @@
     <ClInclude Include="src\ARScene.h" />
     <ClInclude Include="src\dc\dc.h" />
     <ClInclude Include="src\logic\Logic.h" />
+    <ClInclude Include="src\osg.h" />
     <ClInclude Include="src\RegistrationARToolkit.h" />
     <ClInclude Include="src\StdAfx.h" />
   </ItemGroup>

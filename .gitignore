@@ -14,3 +14,51 @@
 /ar-circuits.suo
 /ar-circuits.vcxproj.user
 /ipch/ar-circuits-b2d5ce1a/ar-circuits-be6d708c.ipch
+*.obj
+*.log
+*.tlog
+*.o
+*.lo
+*.la
+*.al
+.libs
+*.so, *.so.[0-9]*
+*.a
+*.pyc
+*.pyo
+*.rej
+*~, .~
+#*#
+.#*
+.*.swp
+.DS_Store
+*.ilk
+*.aps
+*.suo
+*.ncb
+*.user
+*.opt
+*.plg
+*/Debug*, */debug*
+*/Release*, */release*
+*.tlb
+*_i.c, *_p.c, _*.idl, _*.h, *_i.h
+*.obj
+*.vspscc
+dlldata.c
+*.pch
+*.idb
+*.pdb
+*.manifest
+*.res
+*.exe, *.dll
+mt.dep
+BuildLog.htm
+*.idc
+*.swp
+*.trx
+*/TestResults
+*.vcxproj.filters
+ipch
+*.sdf
+*.opensdf
