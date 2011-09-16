@@ -75,15 +75,17 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\component.h" />
+    <ClInclude Include="src\analog.h" />
+    <ClInclude Include="src\components.h" />
     <ClInclude Include="src\node.h" />
+    <ClInclude Include="src\rowinfo.h" />
+    <ClInclude Include="src\simulator.h" />
     <ClInclude Include="src\stdafx.h" />
-    <ClInclude Include="src\targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\analog.cpp" />
-    <ClCompile Include="src\component.cpp" />
     <ClCompile Include="src\resistor.cpp" />
+    <ClCompile Include="src\simulator.cpp" />
     <ClCompile Include="src\source.cpp" />
     <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -1,10 +1,17 @@
+#pragma once
 #include "stdafx.h"
-#include <vector>
-#include "component.h"
+#include "components.h"
 
-namespace analog {
+namespace circuit_sim {
+
+	class NodeLink {
+	public:
+		int num;
+		Component* elm;
+	};
+
 	class Node {
 	public:
-		std::vector<Component> components;
+		std::vector<NodeLink> links;
 	};
 }

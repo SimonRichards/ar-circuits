@@ -1,16 +1,17 @@
 #include "stdafx.h"
-#include "component.h"
+#include "components.h"
 
-namespace analog {
-	class Source : public Component {
-		virtual void step() {
+namespace circuit_sim {
+	void Source::step() {
 
-		}
-		virtual void calculateCurrent() {
+	}
+	void Source::calculateCurrent() {
 
-		}
-		virtual void stamp() {
+	}
+	void Source::stamp() {
 
-		}
-	};
+	}
+	void Source::startIteration() {
+
+	}
 }

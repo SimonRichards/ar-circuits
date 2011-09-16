@@ -1,16 +1,19 @@
 #include "stdafx.h"
-#include "component.h"
+#include "components.h"
 
-namespace analog {
-	class Resistor : public Component {
-		virtual void step() {
+namespace circuit_sim {
 
-		}
-		virtual void calculateCurrent() {
 
-		}
-		virtual void stamp() {
+	void Resistor::step() {
 
-		}
-	};
+	}
+	void Resistor::calculateCurrent() {
+
+	}
+	void Resistor::stamp() {
+
+	}
+	void Resistor::startIteration() {
+
+	}
 }

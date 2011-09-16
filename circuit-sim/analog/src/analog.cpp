@@ -1,6 +1,7 @@
 #include "stdafx.h"
+#include "components.h"
 
-using namespace analog;
+using namespace circuit_sim;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
