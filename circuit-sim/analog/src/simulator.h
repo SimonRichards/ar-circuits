@@ -13,12 +13,13 @@ namespace circuit_sim {
 		const static int sourceRadius = 7;
 		bool analyzeFlag;
 		bool dumpMatrix;
-		double t;
 		static const int pause = 10;
 		double timeStep;
 		vector<Component*> components;
-		double **circuitMatrix, *circuitRightSide,
-		*origRightSide, **origMatrix;
+		double** circuitMatrix;
+		double* circuitRightSide;
+		double* origRightSide;
+		double** origMatrix;
 		RowInfo *circuitRowInfo;
 		int* circuitPermute;
 		bool circuitNonLinear;
@@ -32,11 +33,12 @@ namespace circuit_sim {
 		long lastTime, lastFrameTime, lastIterTime, secTime;
 		int frames, steps, framerate, steprate;
 		vector<Node> nodes;
-		Component* voltageSources;
+		Component** voltageSources;
 
 	public:
 		Simulator();
 		~Simulator();
+		double t;
 		void analyseCircuit();
 		bool lu_factor(double** a, int n, int* ipvt);
 		void lu_solve(double** a, int n, int* ipvt, double* b);
@@ -56,4 +58,20 @@ namespace circuit_sim {
 		void stampCCCS(int n1, int n2, int vs, double gain);
 		double getIterCount();
 	};
+
+	class FindPathInfo {
+	public:
+		bool *used;
+		int dest;
+		Component* firstElm;
+		int type;
+		static const int INDUCT  = 1;
+		static const int VOLTAGE = 2;
+		static const int SHORT   = 3;
+		static const int CAP_V   = 4;
+		FindPathInfo(int t, Component* c, int d, int numNodes);
+		bool findPath(int n1, vector<Component*> components) { return findPath(n1, -1, components); }
+		bool findPath(int n1, int depth, vector<Component*> components);
+	};
+
 }

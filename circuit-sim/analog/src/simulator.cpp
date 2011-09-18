@@ -20,6 +20,373 @@ namespace circuit_sim {
 		steprate = 0;
 	}
 
+	void Simulator::analyseCircuit() {
+		if (components.empty())
+			return;
+
+		int i, j;
+		int vscount = 0;
+
+		//TODO: delete all old nodes
+		nodes.clear();
+		bool gotGround = false;
+		bool gotRail = false;
+		Component *volt; //todo set this to main Voltage Source
+
+		// if no ground, and no rails, then the voltage elm's first terminal
+		// is ground
+		Node cn; //TODO: all the x-y stuff won't work without a gui
+		nodes.push_back(cn);
+
+		// allocate nodes and voltage sources
+		for each (Component* component in components) {
+			int ivs = component->getVoltageSourceCount();
+			/*
+			if (1) {
+			//create new node
+			Node cn;
+			NodeLink cnl;
+			cnl.num = j;
+			cnl.elm = component;
+			cn.links.push_back(cnl);
+			component->setNode(j, nodes.size());
+			nodes.push_back(cn);
+			} else {
+			//link to existing node
+			NodeLink cnl;
+			cnl.num = j;
+			cnl.elm = component;
+			nodes[k].links.push_back(cnl);
+			component->setNode(j, k);
+			// if it's the ground node, make sure the node voltage is 0,
+			// cause it may not get set later
+			}
+			if (k == 0)
+				component->setNodeVoltage(j, 0);
+			vscount += ivs;*/
+		}
+		voltageSources = new Component*[vscount];
+		vscount = 0;
+		circuitNonLinear = false;
+		//cout <<"ac3");
+
+		//// determine if circuit is nonlinear TODO reimplement if needed
+		for each (Component* component in components) {
+			//	if (component->nonLinear())
+			//		circuitNonLinear = true;
+			int ivs = component->getVoltageSourceCount();
+			for (j = 0; j != ivs; j++) {
+				voltageSources[vscount] = component;
+				component->setVoltageSource(vscount++); //set voltage source id
+			}
+		}
+		voltageSourceCount = vscount;
+
+		int matrixSize = nodes.size()-1 + vscount;
+		circuitMatrix = new double*[matrixSize]; 
+		for (i = 0; i < matrixSize; i++) circuitMatrix[i] = new double[matrixSize];
+		circuitRightSide = new double[matrixSize];
+		origMatrix = new double*[matrixSize];
+		for (i = 0; i < matrixSize; i++) origMatrix[i] = new double[matrixSize];
+		origRightSide = new double[matrixSize];
+		circuitMatrixSize = circuitMatrixFullSize = matrixSize;
+		circuitRowInfo = new RowInfo[matrixSize];
+		circuitPermute = new int[matrixSize];
+		int vs = 0;
+		circuitNeedsMap = false;
+
+		// stamp linear circuit elements
+		for each (Component* component in components) {
+			component->stamp();
+		}
+		//cout <<"ac4");
+
+		// determine nodes that are unconnected
+		bool *closure = new bool[nodes.size()];
+		bool *tempclosure = new bool[nodes.size()]; //TODO delete later
+		bool changed = true;
+		closure[0] = true;
+		while (changed) {
+			changed = false;
+			for each (Component* component in components) {
+				// loop through all ce's nodes to see if they are connected
+				// to other nodes not in closure
+				for (j = 0; j < component->getPostCount(); j++) {
+					if (!closure[component->getNode(j)]) {
+						/* TODO: reinstate if we need a ground element
+						if (component->hasGroundConnection(j))
+							closure[component->getNode(j)] = changed = true;
+						*/
+						continue;
+					}
+					int k;
+					for (k = 0; k != component->getPostCount(); k++) {
+						if (j == k)
+							continue;
+						int kn = component->getNode(k);
+						if (component->getConnection(j, k) && !closure[kn]) {
+							closure[kn] = true;
+							changed = true;
+						}
+					}
+				}
+			}
+			if (changed)
+				continue;
+
+			// connect unconnected nodes
+			for (i = 0; i != nodes.size(); i++)
+				if (!closure[i]) {
+					cout << "node " << i << " unconnected" << endl;
+					stampResistor(0, i, 1e8);
+					closure[i] = true;
+					changed = true;
+					break;
+				}
+		}
+		//cout <<"ac5");
+
+		for each (Component* component in components) {
+			// look for inductors with no current path
+			if (component->getType() == INDUCTOR) {
+				FindPathInfo fpi(FindPathInfo::INDUCT, component,
+					component->getNode(1), nodes.size());
+				// first try findPath with maximum depth of 5, to avoid slowdowns
+				if (!fpi.findPath(component->getNode(0), 5, components) &&
+					!fpi.findPath(component->getNode(0), components)) {
+						cout << " no path" << endl;
+						component->reset();
+				}
+			}
+			// look for current sources with no current path
+			if (component->getType() == CURRENT_SOURCE) {
+				FindPathInfo fpi(FindPathInfo::INDUCT, component, component->getNode(1), nodes.size());
+				if (!fpi.findPath(component->getNode(0), components)) {
+					cerr << "No path for current source!" << endl;
+					return;
+				}
+			}
+			// look for voltage source loops
+			if ((component->getType() == SOURCE)  /*&& component.getPostCount() == 2)*/ ||
+				(component->getType() == WIRE))  {
+					FindPathInfo fpi(FindPathInfo::VOLTAGE, component,
+						component->getNode(1), nodes.size());
+					if (fpi.findPath(component->getNode(0), components)) {
+						cerr << "Voltage source/wire loop with no resistance!" << endl;
+						return;
+					}
+			}
+			// look for shorted caps, or caps w/ voltage but no R
+			if (component->getType() == CAPACITOR) {
+				FindPathInfo fpi(FindPathInfo::SHORT, component, component->getNode(1), nodes.size());
+				if (fpi.findPath(component->getNode(0), components)) {
+					cout << " shorted" << endl;
+					component->reset();
+				} else {
+					FindPathInfo fpi2(FindPathInfo::CAP_V, component, component->getNode(1), nodes.size());
+					if (fpi2.findPath(component->getNode(0), components)) {
+						cerr << "Capacitor loop with no resistance!" << endl;
+						return;
+					}
+				}
+			}
+		}
+		//cout <<"ac6");
+
+		// simplify the matrix; this speeds things up quite a bit
+		for (i = 0; i != matrixSize; i++) {
+			int qm = -1, qp = -1;
+			double qv = 0;
+			RowInfo re = circuitRowInfo[i];
+			/*cout <<"row " + i + " " + re.lsChanges + " " + re.rsChanges + " " +
+			re.dropRow);*/
+			if (re.lsChanges || re.dropRow || re.rsChanges)
+				continue;
+			double rsadd = 0;
+
+			// look for rows that can be removed
+			for (j = 0; j != matrixSize; j++) {
+				double q = circuitMatrix[i][j];
+				if (circuitRowInfo[j].type == RowInfo::ROW_CONST) {
+					// keep a running total of const values that have been
+					// removed already
+					rsadd -= circuitRowInfo[j].value*q;
+					continue;
+				}
+				if (q == 0)
+					continue;
+				if (qp == -1) {
+					qp = j;
+					qv = q;
+					continue;
+				}
+				if (qm == -1 && q == -qv) {
+					qm = j;
+					continue;
+				}
+				break;
+			}
+			//cout <<"line " + i + " " + qp + " " + qm + " " + j);
+			/*if (qp != -1 && circuitRowInfo[qp].lsChanges) {
+			cout <<"lschanges");
+			continue;
+			}
+			if (qm != -1 && circuitRowInfo[qm].lsChanges) {
+			cout <<"lschanges");
+			continue;
+			}*/
+			if (j == matrixSize) {
+				if (qp == -1) {
+					cerr << "Matrix error" << endl;
+					return;
+				}
+				RowInfo elt = circuitRowInfo[qp];
+				if (qm == -1) {
+					// we found a row with only one nonzero entry; that value
+					// is a constant
+					int k;
+					for (k = 0; elt.type == RowInfo::ROW_EQUAL && k < 100; k++) {
+						// follow the chain
+						/*cout <<"following equal chain from " +
+						i + " " + qp + " to " + elt.nodeEq);*/
+						qp = elt.nodeEq;
+						elt = circuitRowInfo[qp];
+					}
+					if (elt.type == RowInfo::ROW_EQUAL) {
+						// break equal chains
+						//cout <<"Break equal chain");
+						elt.type = RowInfo::ROW_NORMAL;
+						continue;
+					}
+					if (elt.type != RowInfo::ROW_NORMAL) {
+						cout << "type already " << elt.type << " for " << qp << "!" << endl;
+						continue;
+					}
+					elt.type = RowInfo::ROW_CONST;
+					elt.value = (circuitRightSide[i]+rsadd)/qv;
+					circuitRowInfo[i].dropRow = true;
+					//cout <<qp + " * " + qv + " = const " + elt.value);
+					i = -1; // start over from scratch
+				} else if (circuitRightSide[i]+rsadd == 0) {
+					// we found a row with only two nonzero entries, and one
+					// is the negative of the other; the values are equal
+					if (elt.type != RowInfo::ROW_NORMAL) {
+						//cout <<"swapping");
+						int qq = qm;
+						qm = qp; qp = qq;
+						elt = circuitRowInfo[qp];
+						if (elt.type != RowInfo::ROW_NORMAL) {
+							// we should follow the chain here, but this
+							// hardly ever happens so it's not worth worrying
+							// about
+							cout << "swap failed" << endl;
+							continue;
+						}
+					}
+					elt.type = RowInfo::ROW_EQUAL;
+					elt.nodeEq = qm;
+					circuitRowInfo[i].dropRow = true;
+					//cout <<qp + " = " + qm);
+				}
+			}
+		}
+		//cout <<"ac7");
+
+		// find size of new matrix
+		int nn = 0;
+		for (i = 0; i != matrixSize; i++) {
+			RowInfo elt = circuitRowInfo[i];
+			if (elt.type == RowInfo::ROW_NORMAL) {
+				elt.mapCol = nn++;
+				//cout <<"col " + i + " maps to " + elt.mapCol);
+				continue;
+			}
+			if (elt.type == RowInfo::ROW_EQUAL) {
+				RowInfo* e2;
+				// resolve chains of equality; 100 max steps to avoid loops
+				for (j = 0; j != 100; j++) {
+					e2 = &circuitRowInfo[elt.nodeEq]; //TODO may not work
+					if (e2->type != RowInfo::ROW_EQUAL)
+						break;
+					if (i == e2->nodeEq)
+						break;
+					elt.nodeEq = e2->nodeEq;
+				}
+			}
+			if (elt.type == RowInfo::ROW_CONST)
+				elt.mapCol = -1;
+		}
+		for (i = 0; i != matrixSize; i++) {
+			RowInfo elt = circuitRowInfo[i];
+			if (elt.type == RowInfo::ROW_EQUAL) {
+				RowInfo e2 = circuitRowInfo[elt.nodeEq];
+				if (e2.type == RowInfo::ROW_CONST) {
+					// if something is equal to a const, it's a const
+					elt.type = e2.type;
+					elt.value = e2.value;
+					elt.mapCol = -1;
+					//cout <<i + " = [late]const " + elt.value);
+				} else {
+					elt.mapCol = e2.mapCol;
+					//cout <<i + " maps to: " + e2.mapCol);
+				}
+			}
+		}
+		//cout <<"ac8");
+
+		// make the new, simplified matrix
+		int newsize = nn;
+		double **newmatx = new double*[newsize];
+		for (i = 0; i < newsize; i++) newmatx[i] = new double[newsize];
+		double *newrs    = new double[newsize];
+		int ii = 0;
+		for (i = 0; i != matrixSize; i++) {
+			RowInfo rri = circuitRowInfo[i];
+			if (rri.dropRow) {
+				rri.mapRow = -1;
+				continue;
+			}
+			newrs[ii] = circuitRightSide[i];
+			rri.mapRow = ii;
+			//cout <<"Row " + i + " maps to " + ii);
+			for (j = 0; j != matrixSize; j++) {
+				RowInfo ri = circuitRowInfo[j];
+				if (ri.type == RowInfo::ROW_CONST)
+					newrs[ii] -= ri.value*circuitMatrix[i][j];
+				else
+					newmatx[ii][ri.mapCol] += circuitMatrix[i][j];
+			}
+			ii++;
+		}
+
+		circuitMatrix = newmatx;
+		circuitRightSide = newrs;
+		matrixSize = circuitMatrixSize = newsize;
+		for (i = 0; i != matrixSize; i++)
+			origRightSide[i] = circuitRightSide[i];
+		for (i = 0; i != matrixSize; i++)
+			for (j = 0; j != matrixSize; j++)
+				origMatrix[i][j] = circuitMatrix[i][j];
+		circuitNeedsMap = true;
+
+		/*
+		cout <<"matrixSize = " + matrixSize + " " + circuitNonLinear);
+		for (j = 0; j != circuitMatrixSize; j++) {
+		for (i = 0; i != circuitMatrixSize; i++)
+		System.out.print(circuitMatrix[j][i] + " ");
+		System.out.print("  " + circuitRightSide[j] + "\n");
+		}
+		System.out.print("\n");*/
+
+		// if a matrix is linear, we can do the lu_factor here instead of
+		// needing to do it every frame
+		if (!circuitNonLinear) {
+			if (!lu_factor(circuitMatrix, circuitMatrixSize, circuitPermute)) {
+				cerr << "Singular matrix!" << endl;
+				return;
+			}
+		}
+	}
 
 	void Simulator::runCircuit() {
 		int iter;
@@ -89,7 +456,7 @@ namespace circuit_sim {
 						res = ri.value;
 					else
 						res = circuitRightSide[ri.mapCol];
-					/*System.out.println(j + " " + res + " " +
+					/*cout <<j + " " + res + " " +
 					ri.type + " " + ri.mapCol);*/
 					if (res != res) {
 						converged = false;
@@ -106,7 +473,7 @@ namespace circuit_sim {
 					} else {
 						int ji = j-(nodes.size()-1);
 						//cout << "setting vsrc " + ji + " to " + res);
-						voltageSources[ji].setCurrent(/*ji,*/ res);
+						voltageSources[ji]->setCurrent(/*ji,*/ res);
 					}
 				}
 				if (!circuitNonLinear)
@@ -128,7 +495,7 @@ namespace circuit_sim {
 				break;
 		}
 		lastIterTime = lit;
-		//System.out.println((System.currentTimeMillis()-lastFrameTime)/(double) iter);
+		//cout <<(System.currentTimeMillis()-lastFrameTime)/(double) iter);
 	}
 
 
@@ -378,6 +745,93 @@ namespace circuit_sim {
 				tot -= a[i][j]*b[j];
 			b[i] = tot/a[i][i];
 		}
+	}
+
+	FindPathInfo::FindPathInfo(int t, Component* c, int d, int numNodes) {
+		dest = d;
+		type = t;
+		firstElm = c;
+		used = new bool[numNodes];
+	}
+
+	bool FindPathInfo::findPath(int n1, int depth, vector<Component*> components) {
+		if (n1 == dest)
+			return true;
+		if (depth-- == 0)
+			return false;
+		if (used[n1]) {
+			//cout <<"used " + n1);
+			return false;
+		}
+		used[n1] = true;
+		int i;
+		for each(Component* component in components) {
+			if (component == firstElm)
+				continue;
+			if (type == INDUCT) {
+				if (component->getType() == CURRENT_SOURCE)
+					continue;
+			}
+			if (type == VOLTAGE) {
+				if (!(component->getType() == WIRE || component->getType() == SOURCE))
+					continue;
+			}
+			if (type == SHORT && !(component->getType() == WIRE))
+				continue;
+			if (type == CAP_V) {
+				if (!(component->getType() == WIRE || component->getType() == CAPACITOR ||
+					component->getType() == SOURCE))
+					continue;
+			}
+			if (n1 == 0) {
+				// look for posts which have a ground connection;
+				// our path can go through ground
+				int j;
+				for (j = 0; j != component->getPostCount(); j++)
+					if (/*component->hasGroundConnection(j) &&*/
+						findPath(component->getNode(j), depth, components)) {
+							used[n1] = false;
+							return true;
+					}
+			}
+			int j;
+			for (j = 0; j != component->getPostCount(); j++) {
+				//cout <<ce + " " + component->getNode(j));
+				if (component->getNode(j) == n1)
+					break;
+			}
+			if (j == component->getPostCount())
+				continue;
+			if (/*component->hasGroundConnection(j) &&*/ findPath(0, depth, components)) {
+				//cout <<ce + " has ground");
+				used[n1] = false;
+				return true;
+			}
+			if (type == INDUCT && component->getType() == INDUCTOR) {
+				double c = component->getCurrent();
+				if (j == 0)
+					c = -c;
+				//cout <<"matching " + c + " to " + firstElm.getCurrent());
+				//cout <<component + " " + firstElm);
+				if (abs(c-firstElm->getCurrent()) > 1e-10)
+					continue;
+			}
+			int k;
+			for (k = 0; k != component->getPostCount(); k++) {
+				if (j == k)
+					continue;
+				//cout <<ce + " " + component->getNode(j) + "-" + component->getNode(k));
+				if (/*component->getConnection(j, k) &&*/ findPath(component->getNode(k), depth, components)) {
+					//cout <<"got findpath " + n1);
+					used[n1] = false;
+					return true;
+				}
+				//cout <<"back on findpath " + n1);
+			}
+		}
+		used[n1] = false;
+		//cout <<n1 + " failed");
+		return false;
 	}
 }
 
