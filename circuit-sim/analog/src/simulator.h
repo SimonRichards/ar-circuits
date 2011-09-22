@@ -34,7 +34,12 @@ namespace circuit_sim {
 		int frames, steps, framerate, steprate;
 		vector<Node> nodes;
 		Component** voltageSources;
-
+		
+		Resistor *testResistor;
+		DCSource *testSource;
+		Node *leftNode, *rightNode;
+		NodeLink *resistorLeftLink, *resistorRightLink,
+		     *sourceLeftLink, *sourceRightLink;
 	public:
 		Simulator();
 		~Simulator();
@@ -73,6 +78,7 @@ namespace circuit_sim {
 		static const int SHORT   = 3;
 		static const int CAP_V   = 4;
 		FindPathInfo(int t, Component* c, int d, int numNodes);
+		~FindPathInfo();
 		bool findPath(int n1, vector<Component*> components) { return findPath(n1, -1, components); }
 		bool findPath(int n1, int depth, vector<Component*> components);
 	};

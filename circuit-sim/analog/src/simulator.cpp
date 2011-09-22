@@ -19,15 +19,15 @@ namespace circuit_sim {
 		steps = 0;
 		framerate = 0;
 		steprate = 0;
+		
+		converged = circuitNeedsMap = dumpMatrix = circuitNonLinear = circuitNeedsMap = false;
+		timeStep = 0.;
+		lastTime = lastFrameTime = lastIterTime = secTime = 0; frames = steps = framerate = steprate = 
+			subIterations = circuitBottom = voltageSourceCount = circuitMatrixSize = circuitMatrixFullSize = 0;
 	}
 
 	Simulator::~Simulator(){}
 
-	Resistor *testResistor;
-	DCSource *testSource;
-	Node *leftNode, *rightNode;
-	NodeLink *resistorLeftLink, *resistorRightLink,
-		     *sourceLeftLink, *sourceRightLink;
 
 	void Simulator::setupTest() {
 		testResistor = new Resistor(10., this);
@@ -61,11 +61,12 @@ namespace circuit_sim {
 		
 		components.push_back(testResistor);
 		components.push_back(testSource);
+		
+		analyseFlag = true;
 	}
 
 	void Simulator::printTestState() {
-		testResistor->printState();
-		testSource  ->printState();
+        cout << "Resistor current = " << testResistor->current << endl;
 	}
 
 	void Simulator::updateCircuit() {
@@ -76,6 +77,7 @@ namespace circuit_sim {
 		}
 
 		runCircuit();
+		Component::powerMult = exp(43/4.762-7);
 		
 		long sysTime = GetTickCount();
 		if (lastTime != 0) {
@@ -85,13 +87,14 @@ namespace circuit_sim {
 			Component::currentMult = 1.7 * inc * c;
 		}
 		if (sysTime-secTime >= 1000) {
-			framerate = frames; steprate = steps;
-			frames = 0; steps = 0;
+			framerate = frames; 
+			steprate = steps;
+			frames = 0; 
+			steps = 0;
 			secTime = sysTime;
 		}
 		lastTime = sysTime;
 
-		Component::powerMult = exp(43/4.762-7);
 
 		frames++;
 		lastFrameTime = lastTime;
@@ -99,50 +102,63 @@ namespace circuit_sim {
 
 	void Simulator::analyseCircuit() {
 		cout << "analyseCircuit()" << endl;
-		if (components.empty())
+		if (components.empty()) {
+			cout << "no components" << endl;
 			return;
+		}
 
 		int i, j;
-		int vscount = 1; //TODO count from voltage elements
+		int vscount = 0; 
 
 		//TODO: delete all old nodes
-		nodes.clear();
+		//nodes.clear();
 		bool gotGround = false;
 		bool gotRail = false;
-		Component *volt = testSource; //todo set this to main Voltage Source
+		Component *volt = 0;// = testSource; //todo set this to main Voltage Source
 
 		// if no ground, and no rails, then the voltage elm's first terminal
 		// is ground
-		Node cn; //TODO: all the x-y stuff won't work without a gui
-		nodes.push_back(cn);
+		//Node cn; //TODO: all the x-y stuff won't work without a gui
+		//nodes.push_back(cn);
+		
+        //System.out.println("ac1");
+        // look for voltage or ground element
+		for each (Component* component in components) {
+            //if (ce instanceof GroundElm) {
+            //    gotGround = true;
+            //    break;
+            //}
+            //if (ce instanceof RailElm) {
+            //    gotRail = true;
+            //}
+			if (volt == 0 && component->getType() == SOURCE) {
+                volt = component;
+            }
+        }
 		/*
+        // if no ground, and no rails, then the voltage elm's first terminal
+        // is ground
+        if (!gotGround && volt != 0 && !gotRail) {
+            Node* cn = new Node();
+            //Point pt = volt.getPost(0);
+//	    cn.x = pt.x;
+//	    cn.y = pt.y;
+            nodes.push_back(*cn);
+        } else {
+            // otherwise allocate extra node for ground
+            Node* cn = new Node();
+            //cn->x = cn->y = -1;
+            nodes.push_back(*cn);
+        }
+		*/
 		// allocate nodes and voltage sources
 		for each (Component* component in components) {
-			int ivs = component->getVoltageSourceCount();
+            //int inodes = component->getInternalNodeCount();
+            int ivs = component->getVoltageSourceCount();
+            int posts = component->getPostCount();
 			
-			if (1) {
-				//create new node
-				Node cn;
-				NodeLink cnl;
-				cnl.num = j;
-				cnl.elm = component;
-				cn.links.push_back(cnl);
-				component->setNode(j, nodes.size());
-				nodes.push_back(cn);
-			} else {
-				//link to existing node
-				NodeLink cnl;
-				cnl.num = j;
-				cnl.elm = component;
-				nodes[k].links.push_back(cnl);
-				component->setNode(j, k);
-				// if it's the ground node, make sure the node voltage is 0,
-				// cause it may not get set later
-			}
-			if (k == 0)
-				component->setNodeVoltage(j, 0);
 			vscount += ivs;
-		}*/
+		}
 		voltageSources = new Component*[vscount];
 		vscount = 0;
 		circuitNonLinear = false;
@@ -194,11 +210,14 @@ namespace circuit_sim {
 		// determine nodes that are unconnected
 		bool *closure = new bool[nodes.size()];
 		bool *tempclosure = new bool[nodes.size()]; //TODO delete later (possibly unused)
+		for (i = 0; (unsigned int)i < nodes.size(); i++) {
+			closure[i] = false;
+			tempclosure[i] = false;
+		}
 		bool changed = true;
 		closure[0] = true;
 
 		
-		/* Assume nodes a connected correctly
 		while (changed) {
 			changed = false;
 			for each (Component* component in components) {
@@ -237,7 +256,7 @@ namespace circuit_sim {
 					break;
 				}
 		}
-		*/
+		
 		//cout <<"ac5");
 
 		for each (Component* component in components) {
@@ -286,7 +305,7 @@ namespace circuit_sim {
 			}
 		}
 		//cout <<"ac6");
-		/* TODO
+		
 		// simplify the matrix; this speeds things up quite a bit
 		for (i = 0; i != matrixSize; i++) {
 			int qm = -1, qp = -1;
@@ -332,41 +351,41 @@ namespace circuit_sim {
 					cerr << "Matrix error" << endl;
 					return;
 				}
-				RowInfo* elt = circuitRowInfo[qp];
+				RowInfo* elt = &circuitRowInfo[qp];
 				if (qm == -1) {
 					// we found a row with only one nonzero entry; that value
 					// is a constant
 					int k;
 					for (k = 0; circuitRowInfo[qp].type == RowInfo::ROW_EQUAL && k < 100; k++) {
 						// follow the chain
-						//cout <<"following equal chain from " +i + " " + qp + " to " + elt.nodeEq);
-						qp = elt.nodeEq;
-						elt = circuitRowInfo[qp];
+						//cout <<"following equal chain from " +i + " " + qp + " to " + elt->nodeEq);
+						qp = elt->nodeEq;
+						elt = &circuitRowInfo[qp];
 					}
-					if (elt.type == RowInfo::ROW_EQUAL) {
+					if (elt->type == RowInfo::ROW_EQUAL) {
 						// break equal chains
 						//cout <<"Break equal chain");
-						elt.type = RowInfo::ROW_NORMAL;
+						elt->type = RowInfo::ROW_NORMAL;
 						continue;
 					}
-					if (elt.type != RowInfo::ROW_NORMAL) {
-						cout << "type already " << elt.type << " for " << qp << "!" << endl;
+					if (elt->type != RowInfo::ROW_NORMAL) {
+						cout << "type already " << elt->type << " for " << qp << "!" << endl;
 						continue;
 					}
-					elt.type = RowInfo::ROW_CONST;
-					elt.value = (circuitRightSide[i]+rsadd)/qv;
+					elt->type = RowInfo::ROW_CONST;
+					elt->value = (circuitRightSide[i]+rsadd)/qv;
 					circuitRowInfo[i].dropRow = true;
-					//cout <<qp + " * " + qv + " = const " + elt.value);
+					//cout <<qp + " * " + qv + " = const " + elt->value);
 					i = -1; // start over from scratch
 				} else if (circuitRightSide[i]+rsadd == 0) {
 					// we found a row with only two nonzero entries, and one
 					// is the negative of the other; the values are equal
-					if (elt.type != RowInfo::ROW_NORMAL) {
+					if (elt->type != RowInfo::ROW_NORMAL) {
 						//cout <<"swapping");
 						int qq = qm;
 						qm = qp; qp = qq;
-						elt = circuitRowInfo[qp];
-						if (elt.type != RowInfo::ROW_NORMAL) {
+						elt = &circuitRowInfo[qp];
+						if (elt->type != RowInfo::ROW_NORMAL) {
 							// we should follow the chain here, but this
 							// hardly ever happens so it's not worth worrying
 							// about
@@ -374,8 +393,8 @@ namespace circuit_sim {
 							continue;
 						}
 					}
-					elt.type = RowInfo::ROW_EQUAL;
-					elt.nodeEq = qm;
+					elt->type = RowInfo::ROW_EQUAL;
+					elt->nodeEq = qm;
 					circuitRowInfo[i].dropRow = true;
 					//cout <<qp + " = " + qm);
 				}
@@ -386,39 +405,39 @@ namespace circuit_sim {
 		// find size of new matrix
 		int nn = 0;
 		for (i = 0; i != matrixSize; i++) {
-			RowInfo elt = circuitRowInfo[i];
-			if (elt.type == RowInfo::ROW_NORMAL) {
-				elt.mapCol = nn++;
-				//cout <<"col " + i + " maps to " + elt.mapCol);
+			RowInfo* elt = &circuitRowInfo[i];
+			if (elt->type == RowInfo::ROW_NORMAL) {
+				elt->mapCol = nn++;
+				//cout <<"col " + i + " maps to " + elt->mapCol);
 				continue;
 			}
-			if (elt.type == RowInfo::ROW_EQUAL) {
+			if (elt->type == RowInfo::ROW_EQUAL) {
 				RowInfo* e2;
 				// resolve chains of equality; 100 max steps to avoid loops
 				for (j = 0; j != 100; j++) {
-					e2 = &circuitRowInfo[elt.nodeEq]; //TODO may not work
+					e2 = &circuitRowInfo[elt->nodeEq]; 
 					if (e2->type != RowInfo::ROW_EQUAL)
 						break;
 					if (i == e2->nodeEq)
 						break;
-					elt.nodeEq = e2->nodeEq;
+					elt->nodeEq = e2->nodeEq;
 				}
 			}
-			if (elt.type == RowInfo::ROW_CONST)
-				elt.mapCol = -1;
+			if (elt->type == RowInfo::ROW_CONST)
+				elt->mapCol = -1;
 		}
 		for (i = 0; i != matrixSize; i++) {
-			RowInfo elt = circuitRowInfo[i];
-			if (elt.type == RowInfo::ROW_EQUAL) {
-				RowInfo e2 = circuitRowInfo[elt.nodeEq];
+			RowInfo* elt = &circuitRowInfo[i];
+			if (elt->type == RowInfo::ROW_EQUAL) {
+				RowInfo e2 = circuitRowInfo[elt->nodeEq];
 				if (e2.type == RowInfo::ROW_CONST) {
 					// if something is equal to a const, it's a const
-					elt.type = e2.type;
-					elt.value = e2.value;
-					elt.mapCol = -1;
-					//cout <<i + " = [late]const " + elt.value);
+					elt->type = e2.type;
+					elt->value = e2.value;
+					elt->mapCol = -1;
+					//cout <<i + " = [late]const " + elt->value);
 				} else {
-					elt.mapCol = e2.mapCol;
+					elt->mapCol = e2.mapCol;
 					//cout <<i + " maps to: " + e2.mapCol);
 				}
 			}
@@ -432,24 +451,27 @@ namespace circuit_sim {
 		double *newrs    = new double[newsize];
 		int ii = 0;
 		for (i = 0; i != matrixSize; i++) {
-			RowInfo rri = circuitRowInfo[i];
-			if (rri.dropRow) {
-				rri.mapRow = -1;
+			RowInfo* rri = &circuitRowInfo[i];
+			if (rri->dropRow) {
+				rri->mapRow = -1;
 				continue;
 			}
 			newrs[ii] = circuitRightSide[i];
-			rri.mapRow = ii;
+			rri->mapRow = ii;
 			//cout <<"Row " + i + " maps to " + ii);
 			for (j = 0; j != matrixSize; j++) {
-				RowInfo ri = circuitRowInfo[j];
-				if (ri.type == RowInfo::ROW_CONST)
-					newrs[ii] -= ri.value*circuitMatrix[i][j];
+				RowInfo* ri = &circuitRowInfo[j];
+				if (ri->type == RowInfo::ROW_CONST)
+					newrs[ii] -= ri->value*circuitMatrix[i][j];
 				else
-					newmatx[ii][ri.mapCol] += circuitMatrix[i][j];
+					newmatx[ii][ri->mapCol] += circuitMatrix[i][j];
 			}
 			ii++;
 		}
 
+		//TODO:
+		//delete circuitMatrix;
+		//delete circuitRightSide;
 		circuitMatrix = newmatx;
 		circuitRightSide = newrs;
 		matrixSize = circuitMatrixSize = newsize;
@@ -468,7 +490,7 @@ namespace circuit_sim {
 				return;
 			}
 		}
-		*/
+		
 	}
 
 	void Simulator::runCircuit() {
@@ -788,6 +810,7 @@ namespace circuit_sim {
 					a[i][j] *= mult;
 			}
 		}
+		delete scaleFactors;
 		return true;
 	}
 
@@ -836,6 +859,13 @@ namespace circuit_sim {
 		type = t;
 		firstElm = c;
 		used = new bool[numNodes];
+		for (int i = 0; i < numNodes; i++) {
+			used[i] = false;
+		}
+	}
+
+	FindPathInfo::~FindPathInfo() {
+		delete used;
 	}
 
 	bool FindPathInfo::findPath(int n1, int depth, vector<Component*> components) {

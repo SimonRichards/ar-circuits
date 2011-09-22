@@ -17,6 +17,8 @@ namespace circuit_sim {
 	}
 
 	void Resistor::calculateCurrent() {
+		double voltLeft = volts[0];
+		double voltRight= volts[1];
 		current = (volts[0] - volts[1]) / resistance;
 	}
 	void Resistor::stamp() {

@@ -22,11 +22,11 @@ namespace circuit_sim {
 		Simulator* _sim;
 		int *nodes;
 		double *volts;
-		double current, curcount;
 		int voltSource;
 
 	public:
-		Component() {volts = new double[2]; nodes = new int[2];}
+		double current, curcount;
+		Component() {volts = new double[2]; nodes = new int[2]; volts[0] = volts[1] = 0; dx = dy = dsign = voltSource = 0; current = curcount = 0; }
 		~Component() {delete volts; delete nodes;}
 		static double currentMult, powerMult;
 		virtual int getPostCount() { return 2; }
@@ -41,6 +41,8 @@ namespace circuit_sim {
 		void setNodeVoltage(int n, double c) {
 			volts[n] = c;
 			calculateCurrent();
+			double voltLeft = volts[0];
+			double voltRight = volts[1];
 		}
 		virtual void reset() {
 			volts[0] = 0;
