@@ -1,10 +1,12 @@
 #pragma once
 #include "stdafx.h"
+#include <iostream>
+using namespace std;
 //#include "simulator.h"
 
 namespace circuit_sim {
 
-	typedef enum {CAPACITOR, INDUCTOR, WIRE, SOURCE, CURRENT_SOURCE} component_type_t;
+	typedef enum {CAPACITOR, RESISTOR, INDUCTOR, WIRE, SOURCE, CURRENT_SOURCE} component_type_t;
 
 	class Simulator;
 
@@ -12,7 +14,6 @@ namespace circuit_sim {
 	private:
 		const static int voltageRange = 5;
 		const static int colorScaleCount = 32;
-		static double currentMult, powerMult;
 
 		int dx, dy, dsign;
 		double dn, dpx1, dpy1;
@@ -25,14 +26,18 @@ namespace circuit_sim {
 		int voltSource;
 
 	public:
+		Component() {volts = new double[2]; nodes = new int[2];}
+		~Component() {delete volts; delete nodes;}
+		static double currentMult, powerMult;
 		virtual int getPostCount() { return 2; }
-		void setCurrent(double c) { current = c;}
+		void setCurrent(double c) {current = c;}
 		double getCurrent() { return current; }
 		virtual void step() {};
 		virtual void calculateCurrent() = 0;
 		virtual void stamp() = 0;
 		virtual void startIteration() {};
 		virtual component_type_t getType() = 0;
+		virtual void printState() = 0;
 		void setNodeVoltage(int n, double c) {
 			volts[n] = c;
 			calculateCurrent();
@@ -47,6 +52,8 @@ namespace circuit_sim {
 		virtual int getVoltageSourceCount() {return 0;}
 		void setVoltageSource(int v) { voltSource = v; }
 		void setNode(int p, int n) { nodes[p] = n; }
+		virtual double getVoltageDiff() {return volts[0] - volts[1];}
+		double getPower() { return getVoltageDiff()*current;}
 	};
 	
 	class DCSource : public Component {
@@ -60,6 +67,9 @@ namespace circuit_sim {
 		virtual void stamp();
 		virtual void startIteration();
 		virtual int getVoltageSourceCount() {return 1;}
+		virtual void printState();
+		virtual component_type_t getType() {return SOURCE;}
+		virtual double getVoltageDiff();
 	};
 
 	class ACSource : public Component {
@@ -75,6 +85,9 @@ namespace circuit_sim {
 		virtual void stamp();
 		virtual void startIteration();
 		virtual int getVoltageSourceCount() {return 1;}
+		virtual void printState();
+		virtual component_type_t getType() {return SOURCE;}
+		virtual double getVoltageDiff();
 	};	
 	
 	class Resistor : public Component {
@@ -85,5 +98,7 @@ namespace circuit_sim {
 		~Resistor();
 		virtual void calculateCurrent();
 		virtual void stamp();
+		virtual void printState();
+		virtual component_type_t getType() {return RESISTOR;}
 	};
 }

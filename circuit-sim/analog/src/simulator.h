@@ -11,7 +11,7 @@ namespace circuit_sim {
 	class Simulator {
 	private:
 		const static int sourceRadius = 7;
-		bool analyzeFlag;
+		bool analyseFlag;
 		bool dumpMatrix;
 		static const int pause = 10;
 		double timeStep;
@@ -38,6 +38,9 @@ namespace circuit_sim {
 	public:
 		Simulator();
 		~Simulator();
+		void setupTest();
+		void updateCircuit();
+		void printTestState();
 		double t;
 		void analyseCircuit();
 		bool lu_factor(double** a, int n, int* ipvt);

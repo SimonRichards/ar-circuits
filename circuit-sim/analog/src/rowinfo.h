@@ -12,7 +12,12 @@ namespace circuit_sim {
 		bool rsChanges; // row's right side changes
 		bool lsChanges; // row's left side changes
 		bool dropRow;   // row is not needed in matrix
-		RowInfo() { type = ROW_NORMAL; }
 		~RowInfo() {}
+		RowInfo() { 
+			type = ROW_NORMAL;
+			rsChanges = lsChanges = dropRow = false;
+			value = 0.;
+			nodeEq = type = mapCol = mapRow = 0;
+		}
 	};
 }

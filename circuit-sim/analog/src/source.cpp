@@ -1,7 +1,11 @@
 #include "stdafx.h"
 #include "components.h"
 #include "simulator.h"
+#include <iostream>
 #define PI 3.14159265
+
+using namespace std;
+
 namespace circuit_sim {
 
 	ACSource::ACSource(double v, double b, double f, Simulator* sim){
@@ -29,18 +33,32 @@ namespace circuit_sim {
 
 	}
 
+	void ACSource::printState() {
+
+	}
+
+	double ACSource::getVoltageDiff() {
+		return volts[1] - volts[0];
+	}
+
 	DCSource::DCSource(double v, Simulator* sim){
 		_sim = sim;
 		voltage = v;
 	}
 
 	DCSource::~DCSource(){
-
 	}
+
+	double DCSource::getVoltageDiff() {
+		return volts[1] - volts[0];
+	}
+
 	void DCSource::step() {}
 
-	void DCSource::calculateCurrent() {
+	void DCSource::calculateCurrent() {}
 
+	void DCSource::printState() {
+		cout << "DC Source at " << voltage << "V" << endl;
 	}
 
 	void DCSource::stamp() {
