@@ -14,7 +14,6 @@ namespace circuit_sim {
 		bool analyseFlag;
 		bool dumpMatrix;
 		static const int pause = 10;
-		double timeStep;
 		vector<Component*> components;
 		double** circuitMatrix;
 		double* circuitRightSide;
@@ -37,9 +36,11 @@ namespace circuit_sim {
 		
 		Resistor *testResistor;
 		DCSource *testSource;
-		Node *leftNode, *rightNode;
+		Capacitor *testCapacitor;
+		Node *leftNode, *centreNode, *rightNode;
 		NodeLink *resistorLeftLink, *resistorRightLink,
-		     *sourceLeftLink, *sourceRightLink;
+		     *sourceLeftLink, *sourceRightLink,
+		     *capLeftLink, *capRightLink;
 	public:
 		Simulator();
 		~Simulator();
@@ -47,6 +48,7 @@ namespace circuit_sim {
 		void updateCircuit();
 		void printTestState();
 		double t;
+		double timeStep;
 		void analyseCircuit();
 		bool lu_factor(double** a, int n, int* ipvt);
 		void lu_solve(double** a, int n, int* ipvt, double* b);

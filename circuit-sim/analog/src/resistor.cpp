@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace circuit_sim {
-
+	
 	double Component::currentMult;
 	double Component::powerMult;
 
@@ -21,7 +21,10 @@ namespace circuit_sim {
 		double voltRight= volts[1];
 		current = (volts[0] - volts[1]) / resistance;
 	}
+
 	void Resistor::stamp() {
+		int nodeLeft = nodes[0];
+		int nodeRight = nodes[1];
 		_sim->stampResistor(nodes[0], nodes[1], resistance);
 	}
 

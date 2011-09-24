@@ -38,12 +38,13 @@ namespace circuit_sim {
 		virtual void startIteration() {};
 		virtual component_type_t getType() = 0;
 		virtual void printState() = 0;
-		void setNodeVoltage(int n, double c) {
+		virtual void setNodeVoltage(int n, double c) {
 			volts[n] = c;
 			calculateCurrent();
 			double voltLeft = volts[0];
 			double voltRight = volts[1];
 		}
+
 		virtual void reset() {
 			volts[0] = 0;
 			volts[1] = 0;
@@ -102,5 +103,21 @@ namespace circuit_sim {
 		virtual void stamp();
 		virtual void printState();
 		virtual component_type_t getType() {return RESISTOR;}
+	};
+
+	class Capacitor : public Component {
+	private:
+		double capacitance, voltdiff, compResistance, curSourceValue;
+	public:
+		Capacitor(double c, Simulator* sim);
+		~Capacitor();
+		virtual void reset();
+		virtual void calculateCurrent();
+		virtual void setNodeVoltage(int n, double c);
+		virtual void startIteration();
+		virtual void stamp();
+		virtual void step();
+		virtual void printState();
+		virtual component_type_t getType() {return CAPACITOR;}
 	};
 }

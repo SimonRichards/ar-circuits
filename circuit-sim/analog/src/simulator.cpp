@@ -19,11 +19,12 @@ namespace circuit_sim {
 		steps = 0;
 		framerate = 0;
 		steprate = 0;
-		
+		timeStep = 5e-6;
+
 		converged = circuitNeedsMap = dumpMatrix = circuitNonLinear = circuitNeedsMap = false;
-		timeStep = 0.;
-		lastTime = lastFrameTime = lastIterTime = secTime = 0; frames = steps = framerate = steprate = 
-			subIterations = circuitBottom = voltageSourceCount = circuitMatrixSize = circuitMatrixFullSize = 0;
+		lastTime = lastFrameTime = lastIterTime = secTime = 0; 
+		frames = steps = framerate = steprate = subIterations = circuitBottom = 
+			voltageSourceCount = circuitMatrixSize = circuitMatrixFullSize = 0;
 	}
 
 	Simulator::~Simulator(){}
@@ -32,45 +33,59 @@ namespace circuit_sim {
 	void Simulator::setupTest() {
 		testResistor = new Resistor(10., this);
 		testSource = new DCSource(5, this);
+		testCapacitor = new Capacitor(0.000001, this);
 
 		leftNode = new Node();
+		centreNode = new Node();
 		rightNode = new Node();
 		resistorLeftLink = new NodeLink();
 		resistorRightLink = new NodeLink();
 		sourceLeftLink = new NodeLink();
 		sourceRightLink = new NodeLink();
+		capLeftLink = new NodeLink();
+		capRightLink = new NodeLink();
 		
 		resistorLeftLink->elm = testResistor;
 		resistorRightLink->elm = testResistor;
 		sourceLeftLink->elm  = testSource;
 		sourceRightLink->elm = testSource;
+		capLeftLink->elm = testCapacitor;
+		capRightLink->elm = testCapacitor;
 
-		leftNode->links.push_back(*sourceLeftLink);
-		leftNode->links.push_back(*resistorLeftLink);
-
-		rightNode->links.push_back(*sourceRightLink);
-		rightNode->links.push_back(*resistorRightLink);
+		leftNode->links.push_back(*sourceRightLink);
+		leftNode->links.push_back(*capLeftLink);
 		
-		testResistor->setNode(0, 0);
-		testResistor->setNode(1, 1);
-		testSource->setNode(0, 0);
-		testSource->setNode(1, 1);
+		centreNode->links.push_back(*capRightLink);
+		centreNode->links.push_back(*resistorLeftLink);
+
+		rightNode->links.push_back(*resistorRightLink);
+		rightNode->links.push_back(*sourceLeftLink);
+		
+		testSource->setNode(0, 2);
+		testSource->setNode(1, 0);
+		testCapacitor->setNode(0, 0);
+		testCapacitor->setNode(1, 1);
+		testResistor->setNode(0, 1);
+		testResistor->setNode(1, 2);
 
 		nodes.push_back(*leftNode);
+		nodes.push_back(*centreNode);
 		nodes.push_back(*rightNode);
 		
 		components.push_back(testResistor);
 		components.push_back(testSource);
+		components.push_back(testCapacitor);
 		
 		analyseFlag = true;
 	}
 
 	void Simulator::printTestState() {
         cout << "Resistor current = " << testResistor->current << endl;
+		testCapacitor->printState();
 	}
 
 	void Simulator::updateCircuit() {
-		cout << "updateCircuit()" << endl;
+		//cout << "updateCircuit()" << endl;
 		if (analyseFlag) {
 			analyseCircuit();
 			analyseFlag = false;
@@ -101,7 +116,7 @@ namespace circuit_sim {
 	}
 
 	void Simulator::analyseCircuit() {
-		cout << "analyseCircuit()" << endl;
+		//cout << "analyseCircuit()" << endl;
 		if (components.empty()) {
 			cout << "no components" << endl;
 			return;
@@ -206,7 +221,7 @@ namespace circuit_sim {
 			component->stamp();
 		}
 		//cout <<"ac4");
-
+		/*
 		// determine nodes that are unconnected
 		bool *closure = new bool[nodes.size()];
 		bool *tempclosure = new bool[nodes.size()]; //TODO delete later (possibly unused)
@@ -256,7 +271,7 @@ namespace circuit_sim {
 					break;
 				}
 		}
-		
+		*/
 		//cout <<"ac5");
 
 		for each (Component* component in components) {
@@ -494,15 +509,18 @@ namespace circuit_sim {
 	}
 
 	void Simulator::runCircuit() {
-		cout << "runCircuit()" << endl;
+		//cout << "runCircuit()" << endl;
 		int iter;
 		bool debugprint = dumpMatrix;
 		dumpMatrix = false;
 		long steprate = (long) (160*getIterCount());
 		long tm = GetTickCount();
 		long lit = lastIterTime;
-		if (1000 >= steprate*(tm-lastIterTime))
-			return;
+
+		//if (1000 >= steprate*(tm-lastIterTime)) {
+		//	cout << "time not long enough " << steprate << " " << tm << " " << lastIterTime << " " << steprate * tm << endl;
+		//	return;
+		//}
 		for (iter = 1; ; iter++) {
 			unsigned int i, j, k, subiter;
 			for each (Component* component in components) {

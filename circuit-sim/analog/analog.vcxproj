@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\analog.cpp" />
+    <ClCompile Include="src\capacitor.cpp" />
     <ClCompile Include="src\resistor.cpp" />
     <ClCompile Include="src\simulator.cpp" />
     <ClCompile Include="src\source.cpp" />
