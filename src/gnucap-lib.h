@@ -24,8 +24,14 @@
 #pragma once
 
 namespace gnucap_lib {
+	class Component;
+	class GnucapController;
+
 	class GnucapController {
 	private:
+		std::string dtos(double d);
+		std::string makeName(char type, int id);
+		vector<Component*> components;
 		static void insertComponent(std::string command);
 		void runProbes();
 
@@ -33,26 +39,29 @@ namespace gnucap_lib {
 		GnucapController();
 		~GnucapController();
 		void test();
+		Component* newResistor(double r);
+		Component* newCapacitor(double c);
+		Component* newInductor(double l);
+		Component* newDCSupply(double v);
+		Component* newACSupply(double v, double f); // bias = phase = 0;
+		Component* newACSupply(double v, double b, double f, double p);
 
 	};
-	class Component;
 	class Component {
-		char _type;
+		string _name;
 		bool active;
-		int leftNode;
-		int rightNode;;
+		int *nodes;
+		string value;
+		Component(string name);
+		~Component() {}
 		friend class GnucapController;
 
 	public:
-		Component(char type);
-		  ~Component() {}
 
-		  std::vector<Component*>* connections;
-
-		  void connectTo(Component *other, int lead) {connections[lead].push_back(other);}
-		  double getVoltage();
-
-		  bool isActive() {return active;}
-		  char getType() {return _type;}
+		int leads;
+		double voltage;
+		std::vector<Component*>* connections;
+		void connectTo(Component *other, int lead) {connections[lead].push_back(other);}
+		bool isActive() {return active;}
 	};
 }
