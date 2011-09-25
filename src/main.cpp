@@ -2,7 +2,8 @@
 #include "RegistrationARToolkit.h"
 #include "ARScene.h"
 #include "osg.h"
-#include "../gnucap-lib/src/gnucap-lib.h"
+#include "gnucap-lib.h"
+//#define GNUCAP_TESTING
 using namespace OPIRALibrary;
 using namespace std;
 
@@ -33,6 +34,10 @@ int main(int argc, char **argv) {
 	gnucap_lib::GnucapController circuit;
 	circuit.test();
 
+#ifdef GNUCAP_TESTING
+	cin.get();
+	return 0;
+#else
 
 	libconfig::Config cfg;
 	try {
@@ -135,6 +140,7 @@ int main(int argc, char **argv) {
 //	delete registration;
 	delete camera;
 	return 0;
+#endif
 }
 
 

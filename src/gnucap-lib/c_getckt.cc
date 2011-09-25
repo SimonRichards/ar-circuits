@@ -65,8 +65,7 @@ static	void	do_build(CARD* owner, CARD_LIST::fat_iterator putbefore);
 //	void	CMD::run(CS&);
 static  void    getmerge(CS&, Skip_Header);
 static	void	do_getmerge(CARD* owner, FILE* filen, bool, bool);
-static	CARD*	check_create_insert_parse(CS&,bool,CARD_LIST::fat_iterator&,
-					  CARD*);
+CARD*	check_create_insert_parse(CS&,bool,CARD_LIST::fat_iterator&, CARD*);
 static	void	skip_pre_stuff(CS& cmd);
 static	CARD*	new_device(CS&);
 static	CARD*	do_G(CS&);
@@ -273,7 +272,7 @@ static void do_getmerge(CARD* owner, FILE* filen, bool echoon, bool liston)
 /*--------------------------------------------------------------------------*/
 /* check_create_insert_parse: parse an input line, process it, store it.
  */
-static CARD *check_create_insert_parse(CS& cmd, bool dup_check,
+CARD *check_create_insert_parse(CS& cmd, bool dup_check,
 				       CARD_LIST::fat_iterator& putbefore,
 				       CARD* owner)
 {

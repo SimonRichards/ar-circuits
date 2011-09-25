@@ -342,9 +342,6 @@
     <ClCompile Include="src\gnucap-lib\m_spline.cc">
       <Filter>Source Files\gnucap-lib</Filter>
     </ClCompile>
-    <ClCompile Include="src\gnucap-lib\main.cc">
-      <Filter>Source Files\gnucap-lib</Filter>
-    </ClCompile>
     <ClCompile Include="src\gnucap-lib\md.cc">
       <Filter>Source Files\gnucap-lib</Filter>
     </ClCompile>
@@ -438,6 +435,9 @@
     <ClCompile Include="src\gnucap-lib\u_xprobe.cc">
       <Filter>Source Files\gnucap-lib</Filter>
     </ClCompile>
+    <ClCompile Include="src\gnucap-lib.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\StdAfx.h">
@@ -459,9 +459,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\osg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gnucap-lib\src\gnucap-lib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\gnucap-lib\ap.h">
@@ -706,6 +703,9 @@
     </ClInclude>
     <ClInclude Include="src\gnucap-lib\u_xprobe.h">
       <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

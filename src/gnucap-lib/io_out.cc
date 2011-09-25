@@ -99,6 +99,8 @@ OMSTREAM & OMSTREAM::form(const char *fmt, ...)
  */
 OMSTREAM & OMSTREAM::operator<<(const char *str)
 {
+	//std::cout << str;
+	return *this;/*
   if (_mask & 1) {
     unreachable(); 
     _mask &= ~1;
@@ -106,10 +108,10 @@ OMSTREAM & OMSTREAM::operator<<(const char *str)
   }else{
   }
 
-  bool newline = false;	/* true if any destination is at beginning of line */
-  int sl = strlen(str);	/* length of output string */
+  bool newline = false;	// true if any destination is at beginning of line 
+  int sl = strlen(str);	// length of output string 
   if (strchr("=@(", str[sl-1])) {
-    sl += 12;		/* try not to break it here */
+    sl += 12;		// try not to break it here 
   }else{
   }
 
@@ -120,8 +122,8 @@ OMSTREAM & OMSTREAM::operator<<(const char *str)
       OMSTREAM this_file(_mask & mm);
       this_file << '\n' << '+';
     }else{
-    }				/* see if it fits .... */
-    if (_cpos[ii]==0) {		/* if not, next line   */
+    }				// see if it fits .... 
+    if (_cpos[ii]==0) {		// if not, next line   
       newline = true;
     }else{
     }
@@ -136,7 +138,7 @@ OMSTREAM & OMSTREAM::operator<<(const char *str)
   while (*str && (str[1] || *str != '@')) {
     *this << *str++;
   }
-  return *this;
+  return *this;*/
 }
 /*--------------------------------------------------------------------------*/
 /* mputc: multiple putc

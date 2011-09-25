@@ -66,7 +66,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -77,11 +77,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>OPIRALibrary.lib;videoinput.lib;libAR.lib;osg.lib;osgGA.lib;osgviewer.lib;osgdb.lib;cv200.lib;cxcore200.lib;highgui200.lib;%(AdditionalDependencies);libconfig++.lib;libgnucap.lib</AdditionalDependencies>
+      <AdditionalDependencies>OPIRALibrary.lib;videoinput.lib;libAR.lib;osg.lib;osgGA.lib;osgviewer.lib;osgdb.lib;cv200.lib;cxcore200.lib;highgui200.lib;%(AdditionalDependencies);libconfig++.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\ARScene.cpp" />
+    <ClCompile Include="src\gnucap-lib.cc" />
     <ClCompile Include="src\gnucap-lib\ap_construct.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -361,9 +362,6 @@
     <ClCompile Include="src\gnucap-lib\l_wmatch.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\gnucap-lib\main.cc">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="src\gnucap-lib\md.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -478,10 +476,10 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gnucap-lib\src\gnucap-lib.h" />
     <ClInclude Include="src\ac\ac.h" />
     <ClInclude Include="src\ARScene.h" />
     <ClInclude Include="src\dc\dc.h" />
+    <ClInclude Include="src\gnucap-lib.h" />
     <ClInclude Include="src\gnucap-lib\ap.h" />
     <ClInclude Include="src\gnucap-lib\bm.h" />
     <ClInclude Include="src\gnucap-lib\bmm_semi.h" />

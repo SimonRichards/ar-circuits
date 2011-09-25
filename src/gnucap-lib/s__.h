@@ -135,13 +135,16 @@ protected:
   /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */ 
 	 PROBELIST& alarmlist();	/* s__out.cc */
 	 PROBELIST& plotlist();
-	 PROBELIST& printlist();
 	 PROBELIST& storelist();
 	 void	outdata(double);
 	 void	head(double,double,const char*);
 	 void	print(double);
 	 void	alarm();
   virtual void	store();
+
+  public:
+	  
+	 PROBELIST& printlist();
   /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */ 
 protected:				/* s__solve.cc */
   bool	solve(OPT::ITL,TRACE);

@@ -27,11 +27,30 @@
 namespace gnucap_lib {
     class GnucapController {
     private:
+		static void insertComponent(std::string command);
+		void runProbes();
         
     public:
         GnucapController();
         ~GnucapController();
         void test();
+
     };
+
+	class Component {
+		char _type;
+		bool active;
+		int leftNode;
+		int rightNode;
+		friend class GnucapController;
+	public:
+		Component(char type) : 
+		  _type(type), active(false), leftNode(-1), rightNode(-1) {}
+		~Component() {}
+		bool isActive() {return active;}
+		char getType() {return _type;}
+		std::vector<Component> leftConnections;
+		std::vector<Component> rightConnections;
+	};
 }
 #endif

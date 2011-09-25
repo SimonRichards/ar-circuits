@@ -1,42 +1,50 @@
-/*
- * Copyright (C) 2001 Albert Davis
- * Author: Albert Davis <aldavis@ieee.org>
- *
- * This file is part of "Gnucap", the Gnu Circuit Analysis Package
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2, or (at your option)
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301, USA.
- *
- * Wrapper functions written by Simon Richards - 24/09/2011
- */
+#include "StdAfx.h"
 #include "gnucap-lib.h"
-#include "md.h"
+#include "gnucap-lib\md.h"
+#include "gnucap-lib\c_comand.h"
+#include "gnucap-lib\u_opt.h"
+#include "gnucap-lib\u_prblst.h"
+#include "gnucap-lib\e_card.h"
+#include "gnucap-lib\s__.h"
+
+// DO NOT USE ANY IO METHODS INCLUDING THE COMMANDS < and <<
+
+// Hooking into lower level functions in gnucap
+CARD*	check_create_insert_parse(CS&,bool,CARD_LIST::fat_iterator&, CARD*);
+
+int nodes[20];
+void setProbeVoltage(unsigned int node, double voltage) {
+	cout << "node " << node << ": " << voltage << "v" << endl;
+}
 
 namespace gnucap_lib {
-    GnucapController::GnucapController() {
-        SET_RUN_MODE xx(rINTERACTIVE);
-    }
-    
-    GnucapController::~GnucapController() {}
-    
-    GnucapController::test() {
-        std::string cmdbuf = "< example.cir";
-        CMD::cmdproc(cmdbuf);    
-        std::string cmdbuf = "print op v(nodes)";
-        CMD::cmdproc(cmdbuf);  
-        std::string cmdbuf = "op";
-        CMD::cmdproc(cmdbuf);  
-    }
+	GnucapController::GnucapController() {
+		SET_RUN_MODE xx(rINTERACTIVE);
+	}
+
+	GnucapController::~GnucapController() {}
+
+	void GnucapController::test() {
+		insertComponent("Vsupply 1 0 5");
+		insertComponent("R0 1 2 1k");
+		insertComponent("R1 2 0 1k");
+		CMD::cmdproc("print op v(nodes)");
+		CMD::cmdproc("op");
+
+	}
+
+	void GnucapController::runProbes() {
+	}
+
+	void GnucapController::insertComponent(std::string command) {
+		CARD_LIST* scope = &CARD_LIST::card_list;
+		assert(scope);
+
+		CARD_LIST::fat_iterator putbefore(scope, scope->end());
+
+		CS cmd(command);
+		
+		// check for dups, create, insert, parse
+		CARD* brh = check_create_insert_parse(cmd,OPT::dupcheck,putbefore, NULL); // untested NULL
+	}
 }
