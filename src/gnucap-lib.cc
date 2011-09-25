@@ -30,7 +30,6 @@ namespace gnucap_lib {
 		insertComponent("R1 2 0 1k");
 		CMD::cmdproc("print op v(nodes)");
 		CMD::cmdproc("op");
-
 	}
 
 	void GnucapController::runProbes() {
@@ -43,8 +42,23 @@ namespace gnucap_lib {
 		CARD_LIST::fat_iterator putbefore(scope, scope->end());
 
 		CS cmd(command);
-		
+
 		// check for dups, create, insert, parse
 		CARD* brh = check_create_insert_parse(cmd,OPT::dupcheck,putbefore, NULL); // untested NULL
+	}
+
+	Component::Component(char type)  : 
+	_type(type), active(false), leftNode(-1), rightNode(-1) {
+		switch (type) {
+		case 'R':
+		case 'C':
+		case 'V':
+			connections = new std::vector<Component*>[2];
+			break;
+		default:
+			std::cerr << "Unsupported type" << endl;
+			exit(-1);
+		}
+
 	}
 }
