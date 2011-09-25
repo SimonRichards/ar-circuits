@@ -1,0 +1,8 @@
+#!/bin/sh
+
+for file in *.cc; do
+ echo $file;
+ cp $file backup;
+ echo '' > $file;
+ cat backup >> $file;
+done

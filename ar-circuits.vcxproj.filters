@@ -12,15 +12,15 @@
     <Filter Include="Source Files\logic">
       <UniqueIdentifier>{54b802bf-8f24-424b-8091-9bd71bbba2cd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\dc">
-      <UniqueIdentifier>{5359d7e5-a772-4246-b993-6ae161ea3b3b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ac">
-      <UniqueIdentifier>{9713a697-40f7-4b7c-b13e-639bfea0cf81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\gnucap-lib">
+      <UniqueIdentifier>{7ac44216-f045-4f82-9f8f-ecd6d98ebf1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gnucap-lib">
+      <UniqueIdentifier>{c41592c1-c2eb-485a-87b9-2e72c5dd6d47}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,14 +54,389 @@
     <ClCompile Include="src\logic\Xor.cpp">
       <Filter>Source Files\logic</Filter>
     </ClCompile>
-    <ClCompile Include="src\ac\capacitor.cpp">
-      <Filter>Source Files\ac</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dc\bulb.cpp">
-      <Filter>Source Files\dc</Filter>
-    </ClCompile>
     <ClCompile Include="src\osg.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\ap_construct.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\ap_convert.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\ap_error.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\ap_get.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\ap_match.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\ap_skip.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm_complex.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm_cond.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm_exp.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm_fit.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm_generator.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm_model.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm_poly.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm_posy.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm_pulse.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm_pwl.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm_sffm.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm_sin.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm_tanh.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bm_value.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bmm_semi.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\bmm_table.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c__cmd.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_comand.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_delete.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_fanout.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_file.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_genrat.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_getckt.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_list.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_modify.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_nodset.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_param.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_prbcmd.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_sim.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_status.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_sweep.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\c_system.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_admit.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_bjt.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_cap.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_cccs.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_ccvs.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_coil.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_coment.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_cs.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_diode.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_dot.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_logic.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_logicmod.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_mos.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_mos_base.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_mos1.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_mos2.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_mos3.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_mos4.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_mos5.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_mos6.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_mos7.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_mos8.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_mos123.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_res.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_subckt.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_switch.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_trln.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_vcr.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_vcvs.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\d_vs.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\e_base.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\e_card.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\e_cardlist.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\e_ccsrc.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\e_compon.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\e_elemnt.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\e_model.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\e_node.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\e_storag.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\e_subckt.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\findbr.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\globals.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\io.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\io_contr.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\io_error.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\io_findf.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\io_getln.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\io_out.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\io_xopen.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\l_ftos.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\l_pmatch.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\l_timer.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\l_trim.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\l_wmatch.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\m_fft.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\m_spline.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\main.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\md.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\plot.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s__.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s__aux.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s__init.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s__map.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s__out.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s__solve.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s_ac.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s_ac_set.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s_ac_slv.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s_ac_swp.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s_dc.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s_dc_set.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s_dc_swp.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s_fo.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s_fo_out.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s_fo_set.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s_tr.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s_tr_rev.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s_tr_set.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\s_tr_swp.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\test_readline.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\u_nodemap.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\u_opt1.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\u_opt2.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\u_parameter.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\u_prblst.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\u_probe.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\u_sdp.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gnucap-lib\u_xprobe.cc">
+      <Filter>Source Files\gnucap-lib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +460,252 @@
     </ClInclude>
     <ClInclude Include="src\osg.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gnucap-lib\src\gnucap-lib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\ap.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\bm.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\bmm_semi.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\bmm_table.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\c_comand.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\c_nodset.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\constant.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_admit.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_bjt.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_cap.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_cccs.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_ccvs.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_coil.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_coment.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_cs.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_diode.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_dot.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_logic.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_mos.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_mos_base.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_mos1.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_mos2.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_mos3.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_mos4.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_mos5.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_mos6.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_mos7.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_mos8.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_mos123.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_res.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_subckt.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_switch.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_trln.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_vcr.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_vcvs.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\d_vs.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\declare.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\e_aux.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\e_base.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\e_card.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\e_cardlist.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\e_ccsrc.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\e_compon.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\e_elemnt.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\e_model.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\e_node.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\e_storag.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\e_subckt.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\io_.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\io_error.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\io_trace.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\l_compar.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\l_denoise.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\l_jmpbuf.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\l_lib.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\l_stlextra.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\l_timer.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\m_cpoly.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\m_divdiff.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\m_interp.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\m_matrix.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\m_spline.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\m_wave.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\md.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\mode.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\patchlev.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\s__.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\s_ac.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\s_dc.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\s_fo.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\s_tr.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\u_cardst.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\u_limit.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\u_nodemap.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\u_opt.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\u_parameter.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\u_prblst.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\u_probe.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\u_sdp.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\u_status.h">
+      <Filter>Header Files\gnucap-lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gnucap-lib\u_xprobe.h">
+      <Filter>Header Files\gnucap-lib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

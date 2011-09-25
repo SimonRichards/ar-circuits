@@ -2,6 +2,7 @@
 #include "RegistrationARToolkit.h"
 #include "ARScene.h"
 #include "osg.h"
+#include "../gnucap-lib/src/gnucap-lib.h"
 using namespace OPIRALibrary;
 using namespace std;
 
@@ -29,11 +30,15 @@ void initOGL(int argc, char **argv);
 void render(IplImage* frame_input, std::vector<MarkerTransform> mt);
 
 int main(int argc, char **argv) {  
+	gnucap_lib::GnucapController circuit;
+	circuit.test();
+
+
 	libconfig::Config cfg;
 	try {
 		cfg.readFile("ar-circuits.cfg");
 	} catch (const libconfig::ConfigException &e) {
-		cerr << "Could not open config file" << endl;
+		cerr << "Could not open config file: " << e.what() << endl;
 		return -1;
 	}
 
