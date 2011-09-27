@@ -41,21 +41,21 @@ int main(int argc, char **argv) {
 	return 0;
 #else
 
-	libconfig::Config cfg;
-	try {
-		cfg.readFile("ar-circuits.cfg");
-	} catch (const libconfig::ConfigException &e) {
-		cerr << "Could not open config file: " << e.what() << endl;
-		return -1;
-	}
+	//libconfig::Config cfg;
+	//try {
+	//	cfg.readFile("ar-circuits.cfg");
+	//} catch (const libconfig::ConfigException &e) {
+	//	cerr << "Could not open config file: " << e.what() << endl;
+	//	return -1;
+	//}
 
-	try {
-		string name = cfg.lookup("printme");
-		std::cout << name << endl;
-	} catch (libconfig::ConfigException &e) {
-		cerr << "Value not found in ar-circuits.cfg - " << e.what() << endl;
-		return -1;
-	}
+	//try {
+	//	string name = cfg.lookup("printme");
+	//	std::cout << name << endl;
+	//} catch (libconfig::ConfigException &e) {
+	//	cerr << "Value not found in ar-circuits.cfg - " << e.what() << endl;
+	//	return -1;
+	//}
 
 	unsigned int i;
 	Registration *registration = new RegistrationARToolkit();
