@@ -2,8 +2,10 @@
 
 #include "ARToolkit2.7OpenCV.h"
 #include "Book.h"
+#include <direct.h>
 
-string includeDir = "../resources/";
+
+string includeDir = "resources/";
 extern string markerDir;
 extern string modelDir;
 
@@ -16,7 +18,7 @@ int main(int argc, char **argv) {
 	//markerDir = "../resources/markers/";
 	//modelDir = "../resources/models/";
 	Config cfg;
-	string configFile = "book.cfg";
+	string configFile = "electro.cfg";
 	for(int i = 0; i < argc; i++){
 		string arg = argv[i];
 		if(arg == "-cfg"){
@@ -32,6 +34,9 @@ int main(int argc, char **argv) {
 		configFile = includeDir + configFile;
 		cfg.readFile(configFile.c_str());
 	} catch (const libconfig::FileIOException &e) {
+		char buff[50];
+		_getcwd(buff, 50);
+		cout << buff;
 		cerr << "Could not open config file: " << configFile << endl;
 		return -1;
 	} catch (const libconfig::ParseException &e) {

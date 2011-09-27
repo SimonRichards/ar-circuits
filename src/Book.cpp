@@ -8,7 +8,7 @@ Book::Book(const libconfig::Setting& config, int argc, char** argv)
 {
 	initOGL(argc, argv);
 
-	camera = new CvCamera(0, "../resources/camera.yml");
+	camera = new CvCamera(0, "resources/camera.yml");
 	fgCamera->setProjectionMatrix(osg::Matrix(calcProjection(camera->getParameters(), camera->getDistortion(), cvSize(camera->getWidth(), camera->getHeight()))));
 	
 	reg = new RegistrationARToolkit(camera->getParameters(), camera->getDistortion());
@@ -44,7 +44,7 @@ vector<ARScene*> Book::getScenes(int pageNum){
 }
 
 void Book::run(){
-	osg::Matrix mat = pages.at(0)->getScenes().at(0)->getSceneMatrix();
+//	osg::Matrix mat = pages.at(0)->getScenes().at(0)->getSceneMatrix();
 	int frameMult = 1;
 
 	bool running = true;
