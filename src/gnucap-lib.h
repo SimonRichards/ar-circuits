@@ -10,12 +10,12 @@ namespace gnucap_lib {
 	class GnucapController {
 	private:
 		unsigned int lCount, cCount, rCount, vCount;
-		string dtos(double d);
 		string makeName(char type, int id);
 		vector<Component*> components;
 		static void insertComponent(std::string command);
 		vector<Component*> vSupplies;
 		string transCommand;
+		Component* newSupply();
 
 	public:
 		GnucapController(double fps, int steps);
@@ -27,7 +27,6 @@ namespace gnucap_lib {
 		Component* newInductor(double l);
 		Component* newDCSupply(double v);
 		Component* newACSupply(double v, double f, double b = 0);
-		Component* newSupply();
 	};
 
 	struct Connection {
@@ -42,9 +41,11 @@ namespace gnucap_lib {
 		string _name;
 		bool changed;
 		int *nodes;
-		string value;
+		string _value;
 		string generateString();
 		Component(string name);
+		Component(string name, double value);
+		void init();
         int setNodes(int lead, int nodeVal, int nodeCount);
 		~Component();
 		void calculateVoltage(std::map<int, double> &voltages);

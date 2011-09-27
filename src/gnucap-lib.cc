@@ -21,7 +21,15 @@ void setProbeVoltage(unsigned int node, double voltage) {
 }
 
 namespace gnucap_lib {
-	GnucapController::GnucapController(double fps, int steps) :
+	
+std::string dtos(double d) {
+	std::stringstream conv;
+	conv << d;
+	return conv.str();
+}
+
+
+GnucapController::GnucapController(double fps, int steps) :
 	lCount(0), cCount(0), rCount(0), vCount(0) {
 	SET_RUN_MODE xx(rINTERACTIVE);
 	stringstream conv;
@@ -109,11 +117,6 @@ void GnucapController::insertComponent(std::string command) {
 }
 
 
-std::string GnucapController::dtos(double d) {
-	std::stringstream conv;
-	conv << d;
-	return conv.str();
-}
 
 std::string GnucapController::makeName(char type, int id) {
 	std::stringstream conv;
@@ -122,29 +125,26 @@ std::string GnucapController::makeName(char type, int id) {
 }
 
 Component* GnucapController::newResistor(double r){ 
-	auto resistor = new Component(makeName('R', rCount++));
-	resistor->value = dtos(r);
+	auto resistor = new Component(makeName('R', rCount++), r);
 	components.push_back(resistor);
 	return resistor;		
 }
 
 Component* GnucapController::newCapacitor(double c){ 
-	auto cap = new Component(makeName('C', cCount++));
-	cap->value = dtos(c);
+	auto cap = new Component(makeName('C', cCount++), c);
 	components.push_back(cap);
 	return cap;
 }
 
 Component* GnucapController::newInductor(double l){ 
-	auto inductor = new Component(makeName('L', lCount++));
-	inductor->value = dtos(l);
+	auto inductor = new Component(makeName('L', lCount++), l);
 	components.push_back(inductor);
 	return inductor;
 }
 
 Component* GnucapController::newDCSupply(double v) {
 	auto vSource = newSupply();
-	vSource->value = dtos(v);
+	vSource->_value = dtos(v);
 	components.push_back(vSource);
 	return vSource;
 }
@@ -153,7 +153,7 @@ Component* GnucapController::newACSupply(double v, double f, double b) {
 	auto vSource = newSupply();
 	std::stringstream conv;
 	conv << "sin(offset=" << b << ", amplitude=" << v << ", frequency=" << f << ")";
-	vSource->value = conv.str();
+	vSource->_value = conv.str();
 	components.push_back(vSource);
 	return vSource;		
 }
@@ -187,9 +187,19 @@ int Component::setNodes(int lead, int nodeVal, int nodeCount) {
 	return nodeCount;
 }
 
+Component::Component(string name, double value)  : 
+_name(name)  {
+	init();
+	_value = dtos(value);
+}
+
 Component::Component(string name)  : 
 _name(name)  {
-	switch (name.c_str()[0]) {
+	init();
+}
+
+void Component::init() {
+	switch (_name.c_str()[0]) {
 	case 'M'://osfet
 	case 'Q'://BJT
 		leads = 3;
@@ -218,7 +228,7 @@ string Component::generateString() {
 	conv << _name << ' ';
 	for (unsigned int i = 0; i < leads; i++) 
 		conv << nodes[i] << ' ';
-	conv << value;
+	conv << _value;
 	return conv.str();
 }
 
