@@ -3,7 +3,7 @@
 #include "ARScene.h"
 #include "osg.h"
 #include "gnucap-lib.h"
-#define GNUCAP_TESTING
+//#define GNUCAP_TESTING
 using namespace OPIRALibrary;
 using namespace std;
 
@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
 
 	initOGL(argc, argv);
 
-	Capture *camera = new CvCamera(0, cvSize(320,240), "resources/camera.yml");
+	Capture *camera = new CvCamera(0, "resources/camera.yml");
 	fgCamera->setProjectionMatrix(osg::Matrix(calcProjection(camera->getParameters(), camera->getDistortion(), cvSize(camera->getWidth(), camera->getHeight()))));
 	
 	int boxHL = 5;
