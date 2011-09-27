@@ -63,14 +63,13 @@ namespace gnucap_lib {
 			
 			mainSupply = *result;
 			mainSupply->nodes[0] = nodeCount;
-			//mainSupply->setNodes(
-
-			//Some sort of recursive node hunting technique goes here
+			mainSupply->setNodes(0, nodeCount++);
 
 			CMD::cmdproc("clear"); //Delete all components
 			for each(Component* c in components)  // Add all connected components
 				if (c->isActive())
 					insertComponent(c->generateString());
+		    //CMD::cmdproc("print op v(nodes)");
 		}
 		CMD::cmdproc("op"); // TODO: replace with ac analysis (once hooks are tested)
 	}
@@ -139,6 +138,10 @@ namespace gnucap_lib {
 		return vSupplies.back();
 	}
 
+    void Component::setNodes(int lead, int nodeCount) {
+        
+    }
+
 	Component::Component(string name)  : 
 	_name(name)  {
 		switch (name.c_str()[0]) {
@@ -152,6 +155,11 @@ namespace gnucap_lib {
 		nodes = new int[leads];
 		for (int i = 0; i < leads; i++) nodes[i] = -1;
 	}
+
+    Component::~Component() {
+        delete connections;
+        delete nodes;
+    }
 
 	bool Component::isActive() {
 		for (int i = 0; i < leads; i++) 

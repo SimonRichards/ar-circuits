@@ -36,7 +36,7 @@ namespace gnucap_lib {
 		string value;
 		string generateString();
 		Component(string name);
-		~Component() {}
+		~Component();
 		friend class GnucapController;
 
 	public:
@@ -44,6 +44,7 @@ namespace gnucap_lib {
 		int leads;
 		double voltage;
 		vector<Component*>* connections;
+        void setNodes(int lead, int nodeCount);
 		bool toggleConnection(Component *other, int lead, int otherLead); // returns true if components are connected following action
 		bool isActive();
 	};
