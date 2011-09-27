@@ -27,7 +27,7 @@
 #include "e_compon.h"
 /*--------------------------------------------------------------------------*/
 class SPLINE;
-class FPOLY1;
+struct FPOLY1;
 /*--------------------------------------------------------------------------*/
 class EVAL_BM_BASE : public COMMON_COMPONENT {
 protected:

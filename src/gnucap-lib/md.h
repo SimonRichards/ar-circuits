@@ -24,6 +24,9 @@
 //testing=trivial 2006.07.17
 #ifndef MD_H_INCLUDED
 #define MD_H_INCLUDED
+#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_NONSTDC_NO_DEPRECATE
+#define _SCL_SECURE_NO_WARNINGS
 /*--------------------------------------------------------------------------*/
 /* autoconf stuff */
 #ifdef HAVE_CONFIG_H
