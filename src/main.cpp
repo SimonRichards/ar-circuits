@@ -3,7 +3,7 @@
 #include "ARScene.h"
 #include "osg.h"
 #include "gnucap-lib.h"
-#define GNUCAP_TESTING
+//#define GNUCAP_TESTING
 using namespace OPIRALibrary;
 using namespace std;
 
@@ -32,9 +32,9 @@ void render(IplImage* frame_input, std::vector<MarkerTransform> mt);
 
 int main(int argc, char **argv) {  
 	gnucap_lib::GnucapController circuit;
-	circuit.test();
 
 #ifdef GNUCAP_TESTING
+	circuit.test();
 	cin.get();
 	return 0;
 #else
