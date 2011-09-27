@@ -64,3 +64,4 @@ ipch
 *.opensdf
 *.exe
 *.lastbuildstate
+*.rc
