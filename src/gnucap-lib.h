@@ -27,8 +27,15 @@ namespace gnucap_lib {
 		Component* newDCSupply(double v);
 		Component* newACSupply(double v, double f, double b = 0);
 		Component* newSupply();
-
 	};
+
+	struct Connection {
+		Component* other;
+		int otherLead;
+		Connection(Component* oc, int ol) :
+		other(oc), otherLead(ol) {}
+	};
+
 	class Component {
 		string _name;
 		bool changed;
@@ -36,6 +43,7 @@ namespace gnucap_lib {
 		string value;
 		string generateString();
 		Component(string name);
+        int setNodes(int lead, int nodeVal, int nodeCount);
 		~Component();
 		friend class GnucapController;
 
@@ -43,8 +51,7 @@ namespace gnucap_lib {
 
 		int leads;
 		double voltage;
-		vector<Component*>* connections;
-        void setNodes(int lead, int nodeCount);
+		vector<Connection>* connections;
 		bool toggleConnection(Component *other, int lead, int otherLead); // returns true if components are connected following action
 		bool isActive();
 	};
