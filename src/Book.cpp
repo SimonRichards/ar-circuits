@@ -44,7 +44,6 @@ vector<ARScene*> Book::getScenes(int pageNum){
 }
 
 void Book::run(){
-//	osg::Matrix mat = pages.at(0)->getScenes().at(0)->getSceneMatrix();
 	int frameMult = 1;
 
 	bool running = true;
@@ -52,11 +51,8 @@ void Book::run(){
 	while (running) {
 		IplImage *frame = camera->getFrame();
 		std::vector<MarkerTransform> mt = reg->performRegistration(frame);
-		//book->getScenes(0).at(2)->play();
 
 		render(frame, mt);
-
-
 
 		if(pauseNext){
 			pauseNext = false;
