@@ -727,5 +727,8 @@
     <ClInclude Include="src\Pages.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\dc\dc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
