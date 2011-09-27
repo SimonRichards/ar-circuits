@@ -50,11 +50,14 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level2</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalOptions>/Zm150 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zm150  /MP4 %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MinimalRebuild>false</MinimalRebuild>
+      <MultiProcessorCompilation>
+      </MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -603,9 +606,7 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ac\ac.h" />
     <ClInclude Include="src\ARScene.h" />
-    <ClInclude Include="src\dc\dc.h" />
     <ClInclude Include="src\gnucap-lib.h" />
     <ClInclude Include="src\gnucap-lib\ap.h" />
     <ClInclude Include="src\gnucap-lib\bm.h" />

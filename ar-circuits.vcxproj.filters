@@ -452,12 +452,6 @@
     <ClInclude Include="src\logic\Logic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ac\ac.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dc\dc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\osg.h">
       <Filter>Header Files</Filter>
     </ClInclude>

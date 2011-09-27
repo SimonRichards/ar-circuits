@@ -3,7 +3,7 @@
 #include "ARScene.h"
 #include "osg.h"
 #include "gnucap-lib.h"
-#define GNUCAP_TESTING
+//#define GNUCAP_TESTING
 using namespace OPIRALibrary;
 using namespace std;
 
