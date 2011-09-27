@@ -1,0 +1,873 @@
+PositionAttitudeTransform {
+  name "Switch"
+  nodeMask 0xffffffff
+  cullingActive TRUE
+  StateSet {
+    UniqueID StateSet_0
+    rendering_hint DEFAULT_BIN
+    renderBinMode INHERIT
+    GL_NORMALIZE ON
+  }
+  referenceFrame RELATIVE
+  position 0 0 0
+  attitude 0.707107 0 0 0.707107
+  scale 1 1 1
+  pivotPoint 0 0 0
+  num_children 1
+  Group {
+    name "world"
+    nodeMask 0xffffffff
+    cullingActive TRUE
+    num_children 5
+    MatrixTransform {
+      name "group"
+      nodeMask 0xffffffff
+      cullingActive TRUE
+      referenceFrame RELATIVE
+      Matrix {
+        2.22045e-016 0 -1 0
+        0 1 0 0
+        1 0 2.22045e-016 0
+        -6.58714 0 -1 1
+      }
+      num_children 1
+      MatrixTransform {
+        name "pasted__pCube2"
+        nodeMask 0xffffffff
+        cullingActive TRUE
+        referenceFrame RELATIVE
+        Matrix {
+          0.2 0 0 0
+          0 0.75 0 0
+          0 0 1.5 0
+          -1 0 -3.26146 1
+        }
+        num_children 1
+        Geode {
+          name "pasted__pCubeShape2"
+          nodeMask 0xffffffff
+          cullingActive TRUE
+          StateSet {
+            rendering_hint DEFAULT_BIN
+            renderBinMode INHERIT
+            GL_CULL_FACE OFF
+            Material {
+              name "lambert1"
+              ColorMode OFF
+              ambientColor 0 0 0 1
+              diffuseColor 0.4 0.4 0.4 1
+              specularColor 0 0 0 1
+              emissionColor 0 0 0 1
+              shininess 0
+            }
+            LightModel {
+              ambientIntensity 0 0 0 1
+              colorControl SINGLE_COLOR
+              localViewer TRUE
+              twoSided TRUE
+            }
+          }
+          num_drawables 1
+          Geometry {
+            useDisplayList TRUE
+            useVertexBufferObjects FALSE
+            PrimitiveSets 1
+            {
+              DrawArrays QUADS 0 24
+            }
+            VertexArray Vec3Array 8
+            {
+              -4 -1.25 4
+              4 -1.25 4
+              -4 1.25 4
+              4 1.25 4
+              -4 1.25 -4
+              4 1.25 -4
+              -4 -1.25 -4
+              4 -1.25 -4
+            }
+            VertexIndices UIntArray 24             {
+              0 1 3 2 2 3 5 4 4 5
+              7 6 6 7 1 0 1 7 5 3
+              6 0 2 4 
+            }
+            NormalBinding PER_VERTEX
+            NormalArray Vec3Array 24
+            {
+              0 0 1
+              0 0 1
+              0 0 1
+              0 0 1
+              0 1 0
+              0 1 0
+              0 1 0
+              0 1 0
+              0 0 -1
+              0 0 -1
+              0 0 -1
+              0 0 -1
+              0 -1 0
+              0 -1 0
+              0 -1 0
+              0 -1 0
+              1 0 0
+              1 0 0
+              1 0 0
+              1 0 0
+              -1 0 0
+              -1 0 0
+              -1 0 0
+              -1 0 0
+            }
+            NormalIndices UIntArray 24             {
+              0 1 2 3 4 5 6 7 8 9
+              10 11 12 13 14 15 16 17 18 19
+              20 21 22 23 
+            }
+          }
+        }
+      }
+    }
+    MatrixTransform {
+      name "group1"
+      nodeMask 0xffffffff
+      cullingActive TRUE
+      referenceFrame RELATIVE
+      Matrix {
+        1 0 0 0
+        0 1 0 0
+        0 0 1 0
+        17.9427 0 0 1
+      }
+      num_children 1
+      MatrixTransform {
+        name "pasted__group"
+        nodeMask 0xffffffff
+        cullingActive TRUE
+        referenceFrame RELATIVE
+        Matrix {
+          2.22045e-016 0 -1 0
+          0 1 0 0
+          1 0 2.22045e-016 0
+          -6.58714 0 -1 1
+        }
+        num_children 1
+        MatrixTransform {
+          name "pasted__pasted__pCube2"
+          nodeMask 0xffffffff
+          cullingActive TRUE
+          referenceFrame RELATIVE
+          Matrix {
+            0.2 0 0 0
+            0 0.75 0 0
+            0 0 1.5 0
+            -1 0 -1.77914 1
+          }
+          num_children 1
+          Geode {
+            name "pasted__pasted__pCubeShape2"
+            nodeMask 0xffffffff
+            cullingActive TRUE
+            StateSet {
+              rendering_hint DEFAULT_BIN
+              renderBinMode INHERIT
+              GL_CULL_FACE OFF
+              Material {
+                name "lambert1"
+                ColorMode OFF
+                ambientColor 0 0 0 1
+                diffuseColor 0.4 0.4 0.4 1
+                specularColor 0 0 0 1
+                emissionColor 0 0 0 1
+                shininess 0
+              }
+              LightModel {
+                ambientIntensity 0 0 0 1
+                colorControl SINGLE_COLOR
+                localViewer TRUE
+                twoSided TRUE
+              }
+            }
+            num_drawables 1
+            Geometry {
+              useDisplayList TRUE
+              useVertexBufferObjects FALSE
+              PrimitiveSets 1
+              {
+                DrawArrays QUADS 0 24
+              }
+              VertexArray Vec3Array 8
+              {
+                -4 -1.25 4
+                4 -1.25 4
+                -4 1.25 4
+                4 1.25 4
+                -4 1.25 -4
+                4 1.25 -4
+                -4 -1.25 -4
+                4 -1.25 -4
+              }
+              VertexIndices UIntArray 24               {
+                0 1 3 2 2 3 5 4 4 5
+                7 6 6 7 1 0 1 7 5 3
+                6 0 2 4 
+              }
+              NormalBinding PER_VERTEX
+              NormalArray Vec3Array 24
+              {
+                0 0 1
+                0 0 1
+                0 0 1
+                0 0 1
+                0 1 0
+                0 1 0
+                0 1 0
+                0 1 0
+                0 0 -1
+                0 0 -1
+                0 0 -1
+                0 0 -1
+                0 -1 0
+                0 -1 0
+                0 -1 0
+                0 -1 0
+                1 0 0
+                1 0 0
+                1 0 0
+                1 0 0
+                -1 0 0
+                -1 0 0
+                -1 0 0
+                -1 0 0
+              }
+              NormalIndices UIntArray 24               {
+                0 1 2 3 4 5 6 7 8 9
+                10 11 12 13 14 15 16 17 18 19
+                20 21 22 23 
+              }
+            }
+          }
+        }
+      }
+    }
+    MatrixTransform {
+      name "pCylinder5"
+      nodeMask 0xffffffff
+      cullingActive TRUE
+      referenceFrame RELATIVE
+      Matrix {
+        1.2 0 0 0
+        0 1.2 0 0
+        0 0 2 0
+        4.59696 0 0 1
+      }
+      num_children 1
+      Geode {
+        name "pCylinderShape5"
+        nodeMask 0xffffffff
+        cullingActive TRUE
+        StateSet {
+          rendering_hint DEFAULT_BIN
+          renderBinMode INHERIT
+          GL_CULL_FACE OFF
+          Material {
+            name "lambert1"
+            ColorMode OFF
+            ambientColor 0 0 0 1
+            diffuseColor 0.4 0.4 0.4 1
+            specularColor 0 0 0 1
+            emissionColor 0 0 0 1
+            shininess 0
+          }
+          LightModel {
+            ambientIntensity 0 0 0 1
+            colorControl SINGLE_COLOR
+            localViewer TRUE
+            twoSided TRUE
+          }
+        }
+        num_drawables 1
+        Geometry {
+          useDisplayList TRUE
+          useVertexBufferObjects FALSE
+          PrimitiveSets 2
+          {
+            DrawArrays QUADS 0 96
+            DrawArrays TRIANGLES 96 144
+          }
+          VertexArray Vec3Array 50
+          {
+            1.44889 0.388228 -2.5
+            1.29904 0.749999 -2.5
+            1.06066 1.06066 -2.5
+            0.75 1.29904 -2.5
+            0.388229 1.44889 -2.5
+            1.78814e-007 1.5 -2.5
+            -0.388228 1.44889 -2.5
+            -0.75 1.29904 -2.5
+            -1.06066 1.06066 -2.5
+            -1.29904 0.75 -2.5
+            -1.44889 0.388229 -2.5
+            -1.5 8.9407e-008 -2.5
+            -1.44889 -0.388228 -2.5
+            -1.29904 -0.75 -2.5
+            -1.06066 -1.06066 -2.5
+            -0.75 -1.29904 -2.5
+            -0.388229 -1.44889 -2.5
+            -4.47035e-008 -1.5 -2.5
+            0.388228 -1.44889 -2.5
+            0.75 -1.29904 -2.5
+            1.06066 -1.06066 -2.5
+            1.29904 -0.75 -2.5
+            1.44889 -0.388229 -2.5
+            1.5 -5.55112e-016 -2.5
+            1.44889 0.388228 2.5
+            1.29904 0.749999 2.5
+            1.06066 1.06066 2.5
+            0.75 1.29904 2.5
+            0.388229 1.44889 2.5
+            1.78814e-007 1.5 2.5
+            -0.388228 1.44889 2.5
+            -0.75 1.29904 2.5
+            -1.06066 1.06066 2.5
+            -1.29904 0.75 2.5
+            -1.44889 0.388229 2.5
+            -1.5 8.9407e-008 2.5
+            -1.44889 -0.388228 2.5
+            -1.29904 -0.75 2.5
+            -1.06066 -1.06066 2.5
+            -0.75 -1.29904 2.5
+            -0.388229 -1.44889 2.5
+            -4.47035e-008 -1.5 2.5
+            0.388228 -1.44889 2.5
+            0.75 -1.29904 2.5
+            1.06066 -1.06066 2.5
+            1.29904 -0.75 2.5
+            1.44889 -0.388229 2.5
+            1.5 5.55112e-016 2.5
+            0 -5.55112e-016 -2.5
+            0 5.55112e-016 2.5
+          }
+          VertexIndices UIntArray 240           {
+            0 1 25 24 1 2 26 25 2 3
+            27 26 3 4 28 27 4 5 29 28
+            5 6 30 29 6 7 31 30 7 8
+            32 31 8 9 33 32 9 10 34 33
+            10 11 35 34 11 12 36 35 12 13
+            37 36 13 14 38 37 14 15 39 38
+            15 16 40 39 16 17 41 40 17 18
+            42 41 18 19 43 42 19 20 44 43
+            20 21 45 44 21 22 46 45 22 23
+            47 46 23 0 24 47 1 0 48 2
+            1 48 3 2 48 4 3 48 5 4
+            48 6 5 48 7 6 48 8 7 48
+            9 8 48 10 9 48 11 10 48 12
+            11 48 13 12 48 14 13 48 15 14
+            48 16 15 48 17 16 48 18 17 48
+            19 18 48 20 19 48 21 20 48 22
+            21 48 23 22 48 0 23 48 24 25
+            49 25 26 49 26 27 49 27 28 49
+            28 29 49 29 30 49 30 31 49 31
+            32 49 32 33 49 33 34 49 34 35
+            49 35 36 49 36 37 49 37 38 49
+            38 39 49 39 40 49 40 41 49 41
+            42 49 42 43 49 43 44 49 44 45
+            49 45 46 49 46 47 49 47 24 49
+          }
+          NormalBinding PER_VERTEX
+          NormalArray Vec3Array 98
+          {
+            0.965926 0.25882 0
+            0.866025 0.5 0
+            0.866025 0.5 0
+            0.965926 0.25882 0
+            0.707107 0.707107 0
+            0.707107 0.707107 0
+            0.5 0.866025 0
+            0.5 0.866025 0
+            0.258819 0.965926 0
+            0.258819 0.965926 0
+            3.00595e-007 1 0
+            3.00595e-007 1 0
+            -0.258819 0.965926 0
+            -0.258819 0.965926 0
+            -0.5 0.866026 0
+            -0.5 0.866026 0
+            -0.707107 0.707107 0
+            -0.707107 0.707107 0
+            -0.866025 0.5 0
+            -0.866025 0.5 0
+            -0.965926 0.258819 0
+            -0.965926 0.258819 0
+            -1 7.51487e-009 0
+            -1 7.51487e-009 0
+            -0.965926 -0.258819 0
+            -0.965926 -0.258819 0
+            -0.866026 -0.5 0
+            -0.866026 -0.5 0
+            -0.707107 -0.707107 0
+            -0.707107 -0.707107 0
+            -0.5 -0.866025 0
+            -0.5 -0.866025 0
+            -0.258819 -0.965926 0
+            -0.258819 -0.965926 0
+            -1.50297e-007 -1 0
+            -1.50297e-007 -1 0
+            0.258819 -0.965926 0
+            0.258819 -0.965926 0
+            0.5 -0.866026 0
+            0.5 -0.866026 0
+            0.707107 -0.707107 0
+            0.707107 -0.707107 0
+            0.866025 -0.5 0
+            0.866025 -0.5 0
+            0.965926 -0.258819 0
+            0.965926 -0.258819 0
+            1 1.02202e-006 0
+            1 1.02202e-006 0
+            2.04707e-007 0 -1
+            2.04707e-007 0 -1
+            -2.13233e-009 0 -1
+            0 0 -1
+            0 0 -1
+            0 0 -1
+            0 0 -1
+            4.09413e-007 0 -1
+            2.55795e-013 0 -1
+            -4.09413e-007 0 -1
+            1.02353e-007 0 -1
+            7.67649e-008 0 -1
+            -1.27942e-007 0 -1
+            -1.02353e-007 0 -1
+            0 0 -1
+            0 0 -1
+            0 0 -1
+            -4.09413e-007 0 -1
+            -4.09413e-007 0 -1
+            0 0 -1
+            0 0 -1
+            2.04706e-007 0 -1
+            2.04706e-007 0 -1
+            0 0 -1
+            0 0 -1
+            1.02353e-007 0 1
+            1.02353e-007 0 1
+            3.62501e-008 0 1
+            0 0 1
+            0 0 1
+            0 0 1
+            0 0 1
+            4.09413e-007 0 1
+            4.09413e-007 0 1
+            0 0 1
+            0 0 1
+            0 0 1
+            -7.67649e-008 0 1
+            -7.67649e-008 0 1
+            0 0 1
+            0 0 1
+            4.09413e-007 0 1
+            2.84217e-014 0 1
+            -4.09413e-007 0 1
+            0 0 1
+            0 0 1
+            0 0 1
+            0 0 1
+            0 0 1
+            0 0 1
+          }
+          NormalIndices UIntArray 240           {
+            0 1 2 3 1 4 5 2 4 6
+            7 5 6 8 9 7 8 10 11 9
+            10 12 13 11 12 14 15 13 14 16
+            17 15 16 18 19 17 18 20 21 19
+            20 22 23 21 22 24 25 23 24 26
+            27 25 26 28 29 27 28 30 31 29
+            30 32 33 31 32 34 35 33 34 36
+            37 35 36 38 39 37 38 40 41 39
+            40 42 43 41 42 44 45 43 44 46
+            47 45 46 0 3 47 48 49 50 51
+            48 50 52 51 50 53 52 50 54 53
+            50 55 54 50 56 55 50 57 56 50
+            58 57 50 59 58 50 60 59 50 61
+            60 50 62 61 50 63 62 50 64 63
+            50 65 64 50 66 65 50 67 66 50
+            68 67 50 69 68 50 70 69 50 71
+            70 50 72 71 50 49 72 50 73 74
+            75 74 76 75 76 77 75 77 78 75
+            78 79 75 79 80 75 80 81 75 81
+            82 75 82 83 75 83 84 75 84 85
+            75 85 86 75 86 87 75 87 88 75
+            88 89 75 89 90 75 90 91 75 91
+            92 75 92 93 75 93 94 75 94 95
+            75 95 96 75 96 97 75 97 73 75
+          }
+        }
+      }
+    }
+    MatrixTransform {
+      name "group4"
+      nodeMask 0xffffffff
+      cullingActive TRUE
+      referenceFrame RELATIVE
+      Matrix {
+        1 0 0 0
+        0 1 0 0
+        0 0 1 0
+        -6 0 0 1
+      }
+      num_children 1
+      MatrixTransform {
+        name "pasted__pCylinder5"
+        nodeMask 0xffffffff
+        cullingActive TRUE
+        referenceFrame RELATIVE
+        Matrix {
+          1.2 0 0 0
+          0 1.2 0 0
+          0 0 2 0
+          1.07901 0 0 1
+        }
+        num_children 1
+        Geode {
+          name "pasted__pCylinderShape5"
+          nodeMask 0xffffffff
+          cullingActive TRUE
+          StateSet {
+            rendering_hint DEFAULT_BIN
+            renderBinMode INHERIT
+            GL_CULL_FACE OFF
+            Material {
+              name "lambert1"
+              ColorMode OFF
+              ambientColor 0 0 0 1
+              diffuseColor 0.4 0.4 0.4 1
+              specularColor 0 0 0 1
+              emissionColor 0 0 0 1
+              shininess 0
+            }
+            LightModel {
+              ambientIntensity 0 0 0 1
+              colorControl SINGLE_COLOR
+              localViewer TRUE
+              twoSided TRUE
+            }
+          }
+          num_drawables 1
+          Geometry {
+            useDisplayList TRUE
+            useVertexBufferObjects FALSE
+            PrimitiveSets 2
+            {
+              DrawArrays QUADS 0 96
+              DrawArrays TRIANGLES 96 144
+            }
+            VertexArray Vec3Array 50
+            {
+              1.44889 0.388228 -2.5
+              1.29904 0.749999 -2.5
+              1.06066 1.06066 -2.5
+              0.75 1.29904 -2.5
+              0.388229 1.44889 -2.5
+              1.78814e-007 1.5 -2.5
+              -0.388228 1.44889 -2.5
+              -0.75 1.29904 -2.5
+              -1.06066 1.06066 -2.5
+              -1.29904 0.75 -2.5
+              -1.44889 0.388229 -2.5
+              -1.5 8.9407e-008 -2.5
+              -1.44889 -0.388228 -2.5
+              -1.29904 -0.75 -2.5
+              -1.06066 -1.06066 -2.5
+              -0.75 -1.29904 -2.5
+              -0.388229 -1.44889 -2.5
+              -4.47035e-008 -1.5 -2.5
+              0.388228 -1.44889 -2.5
+              0.75 -1.29904 -2.5
+              1.06066 -1.06066 -2.5
+              1.29904 -0.75 -2.5
+              1.44889 -0.388229 -2.5
+              1.5 -5.55112e-016 -2.5
+              1.44889 0.388228 2.5
+              1.29904 0.749999 2.5
+              1.06066 1.06066 2.5
+              0.75 1.29904 2.5
+              0.388229 1.44889 2.5
+              1.78814e-007 1.5 2.5
+              -0.388228 1.44889 2.5
+              -0.75 1.29904 2.5
+              -1.06066 1.06066 2.5
+              -1.29904 0.75 2.5
+              -1.44889 0.388229 2.5
+              -1.5 8.9407e-008 2.5
+              -1.44889 -0.388228 2.5
+              -1.29904 -0.75 2.5
+              -1.06066 -1.06066 2.5
+              -0.75 -1.29904 2.5
+              -0.388229 -1.44889 2.5
+              -4.47035e-008 -1.5 2.5
+              0.388228 -1.44889 2.5
+              0.75 -1.29904 2.5
+              1.06066 -1.06066 2.5
+              1.29904 -0.75 2.5
+              1.44889 -0.388229 2.5
+              1.5 5.55112e-016 2.5
+              0 -5.55112e-016 -2.5
+              0 5.55112e-016 2.5
+            }
+            VertexIndices UIntArray 240             {
+              0 1 25 24 1 2 26 25 2 3
+              27 26 3 4 28 27 4 5 29 28
+              5 6 30 29 6 7 31 30 7 8
+              32 31 8 9 33 32 9 10 34 33
+              10 11 35 34 11 12 36 35 12 13
+              37 36 13 14 38 37 14 15 39 38
+              15 16 40 39 16 17 41 40 17 18
+              42 41 18 19 43 42 19 20 44 43
+              20 21 45 44 21 22 46 45 22 23
+              47 46 23 0 24 47 1 0 48 2
+              1 48 3 2 48 4 3 48 5 4
+              48 6 5 48 7 6 48 8 7 48
+              9 8 48 10 9 48 11 10 48 12
+              11 48 13 12 48 14 13 48 15 14
+              48 16 15 48 17 16 48 18 17 48
+              19 18 48 20 19 48 21 20 48 22
+              21 48 23 22 48 0 23 48 24 25
+              49 25 26 49 26 27 49 27 28 49
+              28 29 49 29 30 49 30 31 49 31
+              32 49 32 33 49 33 34 49 34 35
+              49 35 36 49 36 37 49 37 38 49
+              38 39 49 39 40 49 40 41 49 41
+              42 49 42 43 49 43 44 49 44 45
+              49 45 46 49 46 47 49 47 24 49
+            }
+            NormalBinding PER_VERTEX
+            NormalArray Vec3Array 98
+            {
+              0.965926 0.25882 0
+              0.866025 0.5 0
+              0.866025 0.5 0
+              0.965926 0.25882 0
+              0.707107 0.707107 0
+              0.707107 0.707107 0
+              0.5 0.866025 0
+              0.5 0.866025 0
+              0.258819 0.965926 0
+              0.258819 0.965926 0
+              3.00595e-007 1 0
+              3.00595e-007 1 0
+              -0.258819 0.965926 0
+              -0.258819 0.965926 0
+              -0.5 0.866026 0
+              -0.5 0.866026 0
+              -0.707107 0.707107 0
+              -0.707107 0.707107 0
+              -0.866025 0.5 0
+              -0.866025 0.5 0
+              -0.965926 0.258819 0
+              -0.965926 0.258819 0
+              -1 7.51487e-009 0
+              -1 7.51487e-009 0
+              -0.965926 -0.258819 0
+              -0.965926 -0.258819 0
+              -0.866026 -0.5 0
+              -0.866026 -0.5 0
+              -0.707107 -0.707107 0
+              -0.707107 -0.707107 0
+              -0.5 -0.866025 0
+              -0.5 -0.866025 0
+              -0.258819 -0.965926 0
+              -0.258819 -0.965926 0
+              -1.50297e-007 -1 0
+              -1.50297e-007 -1 0
+              0.258819 -0.965926 0
+              0.258819 -0.965926 0
+              0.5 -0.866026 0
+              0.5 -0.866026 0
+              0.707107 -0.707107 0
+              0.707107 -0.707107 0
+              0.866025 -0.5 0
+              0.866025 -0.5 0
+              0.965926 -0.258819 0
+              0.965926 -0.258819 0
+              1 1.02202e-006 0
+              1 1.02202e-006 0
+              2.04707e-007 0 -1
+              2.04707e-007 0 -1
+              -2.13233e-009 0 -1
+              0 0 -1
+              0 0 -1
+              0 0 -1
+              0 0 -1
+              4.09413e-007 0 -1
+              2.55795e-013 0 -1
+              -4.09413e-007 0 -1
+              1.02353e-007 0 -1
+              7.67649e-008 0 -1
+              -1.27942e-007 0 -1
+              -1.02353e-007 0 -1
+              0 0 -1
+              0 0 -1
+              0 0 -1
+              -4.09413e-007 0 -1
+              -4.09413e-007 0 -1
+              0 0 -1
+              0 0 -1
+              2.04706e-007 0 -1
+              2.04706e-007 0 -1
+              0 0 -1
+              0 0 -1
+              1.02353e-007 0 1
+              1.02353e-007 0 1
+              3.62501e-008 0 1
+              0 0 1
+              0 0 1
+              0 0 1
+              0 0 1
+              4.09413e-007 0 1
+              4.09413e-007 0 1
+              0 0 1
+              0 0 1
+              0 0 1
+              -7.67649e-008 0 1
+              -7.67649e-008 0 1
+              0 0 1
+              0 0 1
+              4.09413e-007 0 1
+              2.84217e-014 0 1
+              -4.09413e-007 0 1
+              0 0 1
+              0 0 1
+              0 0 1
+              0 0 1
+              0 0 1
+              0 0 1
+            }
+            NormalIndices UIntArray 240             {
+              0 1 2 3 1 4 5 2 4 6
+              7 5 6 8 9 7 8 10 11 9
+              10 12 13 11 12 14 15 13 14 16
+              17 15 16 18 19 17 18 20 21 19
+              20 22 23 21 22 24 25 23 24 26
+              27 25 26 28 29 27 28 30 31 29
+              30 32 33 31 32 34 35 33 34 36
+              37 35 36 38 39 37 38 40 41 39
+              40 42 43 41 42 44 45 43 44 46
+              47 45 46 0 3 47 48 49 50 51
+              48 50 52 51 50 53 52 50 54 53
+              50 55 54 50 56 55 50 57 56 50
+              58 57 50 59 58 50 60 59 50 61
+              60 50 62 61 50 63 62 50 64 63
+              50 65 64 50 66 65 50 67 66 50
+              68 67 50 69 68 50 70 69 50 71
+              70 50 72 71 50 49 72 50 73 74
+              75 74 76 75 76 77 75 77 78 75
+              78 79 75 79 80 75 80 81 75 81
+              82 75 82 83 75 83 84 75 84 85
+              75 85 86 75 86 87 75 87 88 75
+              88 89 75 89 90 75 90 91 75 91
+              92 75 92 93 75 93 94 75 94 95
+              75 95 96 75 96 97 75 97 73 75
+            }
+          }
+        }
+      }
+    }
+    MatrixTransform {
+      name "pCube1"
+      nodeMask 0xffffffff
+      cullingActive TRUE
+      referenceFrame RELATIVE
+      Matrix {
+        0.141421 0.141421 0 0
+        -1.41421 1.41421 0 0
+        0 0 2 0
+        0.63593 4.09165 0 1
+      }
+      num_children 1
+      Geode {
+        name "pCubeShape1"
+        nodeMask 0xffffffff
+        cullingActive TRUE
+        StateSet {
+          rendering_hint DEFAULT_BIN
+          renderBinMode INHERIT
+          GL_CULL_FACE OFF
+          Material {
+            name "lambert1"
+            ColorMode OFF
+            ambientColor 0 0 0 1
+            diffuseColor 0.4 0.4 0.4 1
+            specularColor 0 0 0 1
+            emissionColor 0 0 0 1
+            shininess 0
+          }
+          LightModel {
+            ambientIntensity 0 0 0 1
+            colorControl SINGLE_COLOR
+            localViewer TRUE
+            twoSided TRUE
+          }
+        }
+        num_drawables 1
+        Geometry {
+          useDisplayList TRUE
+          useVertexBufferObjects FALSE
+          PrimitiveSets 1
+          {
+            DrawArrays QUADS 0 24
+          }
+          VertexArray Vec3Array 8
+          {
+            -2.5 -2.5 2.5
+            2.5 -2.5 2.5
+            -2.5 2.5 2.5
+            2.5 2.5 2.5
+            -2.5 2.5 -2.5
+            2.5 2.5 -2.5
+            -2.5 -2.5 -2.5
+            2.5 -2.5 -2.5
+          }
+          VertexIndices UIntArray 24           {
+            0 1 3 2 2 3 5 4 4 5
+            7 6 6 7 1 0 1 7 5 3
+            6 0 2 4 
+          }
+          NormalBinding PER_VERTEX
+          NormalArray Vec3Array 24
+          {
+            0 0 1
+            0 0 1
+            0 0 1
+            0 0 1
+            0 1 0
+            0 1 0
+            0 1 0
+            0 1 0
+            0 0 -1
+            0 0 -1
+            0 0 -1
+            0 0 -1
+            0 -1 0
+            0 -1 0
+            0 -1 0
+            0 -1 0
+            1 0 0
+            1 0 0
+            1 0 0
+            1 0 0
+            -1 0 0
+            -1 0 0
+            -1 0 0
+            -1 0 0
+          }
+          NormalIndices UIntArray 24           {
+            0 1 2 3 4 5 6 7 8 9
+            10 11 12 13 14 15 16 17 18 19
+            20 21 22 23 
+          }
+        }
+      }
+    }
+  }
+}

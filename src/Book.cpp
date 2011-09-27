@@ -8,7 +8,7 @@ Book::Book(const libconfig::Setting& config, int argc, char** argv)
 {
 	initOGL(argc, argv);
 
-	camera = new Camera("../resources/camera.yml");
+	camera = new CvCamera(0, "../resources/camera.yml");
 	fgCamera->setProjectionMatrix(osg::Matrix(calcProjection(camera->getParameters(), camera->getDistortion(), cvSize(camera->getWidth(), camera->getHeight()))));
 	
 	reg = new RegistrationARToolkit(camera->getParameters(), camera->getDistortion());

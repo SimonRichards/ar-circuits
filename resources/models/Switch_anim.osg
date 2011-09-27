@@ -1528,7 +1528,7 @@ PositionAttitudeTransform {
       }
     }
     MatrixTransform {
-      name "Switch_animation"
+      name "pCube1"
       nodeMask 0xffffffff
       cullingActive TRUE
       UpdateCallbacks {
@@ -1537,7 +1537,7 @@ PositionAttitudeTransform {
           timeOffset 0
           timeMultiplier 1
           AnimationPath {
-            LoopMode NO_LOOPING
+            LoopMode LOOP
             ControlPoints {
               0.0416666666666667 0.301588028669357 2.98649191856384 0 0 0 -0.3066998179776 0.951806294186221 2 0.200000002980232 2
               0.0833333333333333 0.269346445798874 2.88529944419861 0 0 0 -0.296954016197693 0.954891780394019 2 0.200000002980232 2
