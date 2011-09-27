@@ -1,5 +1,4 @@
 #include "StdAfx.h"
-#include "RegistrationARToolkit.h"
 #include "ARScene.h"
 #include "osg.h"
 

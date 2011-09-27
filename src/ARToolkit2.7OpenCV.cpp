@@ -1,9 +1,12 @@
 #include "StdAfx.h"
-#include "RegistrationARToolkit.h"
+
+#include "ARToolkit2.7OpenCV.h"
 
 using namespace OPIRALibrary;
 
-RegistrationARToolkit::RegistrationARToolkit(){
+RegistrationARToolkit::RegistrationARToolkit(CvMat* captureParams, CvMat* captureDistortion)
+	: captureParams(captureParams), captureDistortion(captureDistortion)
+{
 	cParam = 0;
 }
 
@@ -11,7 +14,7 @@ RegistrationARToolkit::RegistrationARToolkit(const char *pattern_name) {
 	//Set the ARToolkit Camera Params to 0
 	cParam=0;
 
-	addMarker(pattern_name);
+	addMarker(pattern_name, 80, 80);
 
 }
 
@@ -20,15 +23,15 @@ RegistrationARToolkit::RegistrationARToolkit(std::vector<const char *> pattern_n
 	cParam=0;
 
 	for (unsigned int i=0; i<pattern_names.size(); i++ ){
-		addMarker(pattern_names.at(i));
+		addMarker(pattern_names.at(i), 80, 80);
 	}
 }
 
-bool RegistrationARToolkit::addMarker(string markerName) {
+bool RegistrationARToolkit::addMarker(string markerName, int width, int height) {
 	//Create a new marker for the pattern
 	Marker m;
 	m.name = markerName;
-	m.size.width = 80; m.size.height = 80;
+	m.size.width = width; m.size.height = height;
 
 	//Load the pattern
 	int pattID = (arLoadPatt(markerName.c_str()));
@@ -48,7 +51,7 @@ RegistrationARToolkit::~RegistrationARToolkit() {
 	delete cParam;
 }
 
-std::vector<MarkerTransform> RegistrationARToolkit::performRegistration(IplImage* frame_input, CvMat* captureParams, CvMat* captureDistortion) {
+std::vector<MarkerTransform> RegistrationARToolkit::performRegistration(IplImage* frame_input) {
 	//Our return MarkerTransform array
 	std::vector<MarkerTransform> retVal;
 
@@ -80,7 +83,7 @@ std::vector<MarkerTransform> RegistrationARToolkit::performRegistration(IplImage
 			mt.marker = markers.at(marker_info[i].id);
 			mt.viewPort = calcViewpoint(captureParams, captureDistortion, cvGetSize(frame_input));
 			mt.projMat = calcProjection(captureParams, captureDistortion, cvGetSize(frame_input));
-			calcAROpenGLTransform(marker_info[i].dir, marker_info[i].vertex, captureParams, captureDistortion, &mt.transMat);
+			calcAROpenGLTransform(marker_info[i].dir, marker_info[i].vertex, captureParams, captureDistortion, &mt.transMat, mt.marker);
 			mt.score = marker_info[i].cf; 		
 
 			//Add the MarkerTransform to the list
@@ -127,17 +130,22 @@ ARParam* RegistrationARToolkit::convertCameraParams(CvMat* captureParams, CvMat*
 }
 
 /*Process Matches to find Extrinsic Camera Parameters*/
-void RegistrationARToolkit::calcAROpenGLTransform(int direction, double vertex[4][2], CvMat* captureParams, CvMat* captureDistortion, double *transMat[16]) {
+void RegistrationARToolkit::calcAROpenGLTransform(int direction, double vertex[4][2], CvMat* captureParams, CvMat* captureDistortion, double *transMat[16],
+	Marker marker)
+{
 		//Known points on the object we're tracking
 		CvMat*	objectPoints = cvCreateMat( 4, 3, CV_32FC1 );
 
 		//Found points in the scene
 		CvMat* imagePoints = cvCreateMat(4,2, CV_32FC1);
+		
+		float halfX = marker.size.width/2;
+		float halfY = marker.size.height/2;
 
-		objectPoints->data.fl[0] = 0; objectPoints->data.fl[1] = 0; objectPoints->data.fl[2] = 0;
-		objectPoints->data.fl[3] = 10; objectPoints->data.fl[4] = 0; objectPoints->data.fl[5] = 0;
-		objectPoints->data.fl[6] = 10; objectPoints->data.fl[7] = 10; objectPoints->data.fl[8] = 0;
-		objectPoints->data.fl[9] = 0; objectPoints->data.fl[10] = 10; objectPoints->data.fl[11] = 0;
+		objectPoints->data.fl[0] = -halfX; objectPoints->data.fl[1] = -halfY; objectPoints->data.fl[2] = 0;
+		objectPoints->data.fl[3] = halfX; objectPoints->data.fl[4] = -halfY; objectPoints->data.fl[5] = 0;
+		objectPoints->data.fl[6] = halfX; objectPoints->data.fl[7] = halfY; objectPoints->data.fl[8] = 0;
+		objectPoints->data.fl[9] = -halfX; objectPoints->data.fl[10] = halfY; objectPoints->data.fl[11] = 0;
 
 		imagePoints->data.fl[direction*2] = vertex[0][0]; imagePoints->data.fl[(direction*2)+1] = vertex[0][1];
 		imagePoints->data.fl[((direction+1)%4)*2] = vertex[1][0]; imagePoints->data.fl[(((direction+1)%4)*2)+1] = vertex[1][1];

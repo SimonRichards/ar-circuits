@@ -15,9 +15,13 @@
 //OPIRA
 #include <CaptureLibrary.h>
 #include <OPIRALibrary.h>
-#include "AR\ar.h"
+#include <AR\ar.h>
 #include <libconfig.h++>
 
 #include <string>
 #include <iostream>
+#include <sstream>
 
+
+static string markerDir = "resources/markers/";
+static string modelDir = "resources/models/";

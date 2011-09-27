@@ -59,7 +59,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OPIRALibrary_d.lib;libARd.lib;osgd.lib;osgdbd.lib;osgGAd.lib;osgviewerd.lib;cv200d.lib;cxcore200d.lib;highgui200d.lib;libconfig++_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OPIRALibrary_d.lib;libARd.lib;osgd.lib;osgdbd.lib;osgGAd.lib;osgviewerd.lib;cv200d.lib;cxcore200d.lib;highgui200d.lib;videoinputd.lib;libconfig++_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/VERBOSE:LIB %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -83,6 +83,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\ARScene.cpp" />
+    <ClCompile Include="src\ARToolkit2.7OpenCV.cpp" />
+    <ClCompile Include="src\Book.cpp" />
     <ClCompile Include="src\gnucap-lib.cc" />
     <ClCompile Include="src\gnucap-lib\ap_construct.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -594,8 +596,12 @@
     <ClCompile Include="src\logic\Sink.cpp" />
     <ClCompile Include="src\logic\Source.cpp" />
     <ClCompile Include="src\logic\Xor.cpp" />
+    <ClCompile Include="src\MovieNode.cpp" />
     <ClCompile Include="src\osg.cpp" />
-    <ClCompile Include="src\RegistrationARToolkit.cpp" />
+    <ClCompile Include="src\Page.cpp" />
+    <ClCompile Include="src\Pages.cpp" />
+    <ClCompile Include="src\SelectablePage.cpp" />
+    <ClCompile Include="src\SimpleCircuit.cpp" />
     <ClCompile Include="src\StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -605,6 +611,8 @@
   <ItemGroup>
     <ClInclude Include="src\ac\ac.h" />
     <ClInclude Include="src\ARScene.h" />
+    <ClInclude Include="src\ARToolkit2.7OpenCV.h" />
+    <ClInclude Include="src\Book.h" />
     <ClInclude Include="src\dc\dc.h" />
     <ClInclude Include="src\gnucap-lib.h" />
     <ClInclude Include="src\gnucap-lib\ap.h" />
@@ -689,8 +697,10 @@
     <ClInclude Include="src\gnucap-lib\u_status.h" />
     <ClInclude Include="src\gnucap-lib\u_xprobe.h" />
     <ClInclude Include="src\logic\Logic.h" />
+    <ClInclude Include="src\MovieNode.h" />
     <ClInclude Include="src\osg.h" />
-    <ClInclude Include="src\RegistrationARToolkit.h" />
+    <ClInclude Include="src\Page.h" />
+    <ClInclude Include="src\Pages.h" />
     <ClInclude Include="src\StdAfx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

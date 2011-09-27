@@ -12,10 +12,6 @@
     <Filter Include="Source Files\logic">
       <UniqueIdentifier>{54b802bf-8f24-424b-8091-9bd71bbba2cd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Source Files\gnucap-lib">
       <UniqueIdentifier>{7ac44216-f045-4f82-9f8f-ecd6d98ebf1c}</UniqueIdentifier>
     </Filter>
@@ -31,9 +27,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\StdAfx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\RegistrationARToolkit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\logic\And.cpp">
@@ -438,15 +431,33 @@
     <ClCompile Include="src\gnucap-lib.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ARToolkit2.7OpenCV.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Book.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MovieNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Page.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pages.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SelectablePage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SimpleCircuit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\StdAfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ARScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RegistrationARToolkit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\logic\Logic.h">
@@ -705,6 +716,21 @@
       <Filter>Header Files\gnucap-lib</Filter>
     </ClInclude>
     <ClInclude Include="src\gnucap-lib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ARToolkit2.7OpenCV.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Book.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MovieNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Page.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pages.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
