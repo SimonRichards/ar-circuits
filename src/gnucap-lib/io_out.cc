@@ -150,6 +150,7 @@ OMSTREAM & OMSTREAM::operator<<(const char *str)
  */
 OMSTREAM & OMSTREAM::operator<<(char chr)
 {
+	/*
   if (_mask & 1) {
     unreachable(); 
     _mask &= ~1;
@@ -158,8 +159,8 @@ OMSTREAM & OMSTREAM::operator<<(char chr)
   }
 
   static int old = '\0';
-  static int cchr = 'w';		/* starting encryption seed	    */
-					/* arbitrary printable character    */
+  static int cchr = 'w';		//starting encryption seed	    
+					// arbitrary printable character    
   bool count;
   if (chr=='\t') {
     untested();
@@ -217,7 +218,7 @@ OMSTREAM & OMSTREAM::operator<<(char chr)
       }
     }else{
     }
-  }
+  }*/
   return *this;
 }
 /*--------------------------------------------------------------------------*/

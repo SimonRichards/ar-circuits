@@ -6,22 +6,27 @@
 #include "gnucap-lib\u_prblst.h"
 #include "gnucap-lib\e_card.h"
 #include "gnucap-lib\s__.h"
-
+//#define DEBUG
 // DO NOT USE ANY IO METHODS INCLUDING THE COMMANDS < and <<
 
 // Hooking into lower level functions in gnucap
 CARD*	check_create_insert_parse(CS&,bool,CARD_LIST::fat_iterator&, CARD*);
 
-int nodes[20];
+std::map<int, double> nodeVoltages;
 void setProbeVoltage(unsigned int node, double voltage) {
+	nodeVoltages[node] = voltage;
+#ifdef DEBUG
 	cout << "node " << node << ": " << voltage << "v" << endl;
+#endif
 }
 
 namespace gnucap_lib {
-	GnucapController::GnucapController() :
-lCount(0), cCount(0), rCount(0), vCount(0) {
+	GnucapController::GnucapController(double fps, int steps) :
+	lCount(0), cCount(0), rCount(0), vCount(0) {
 	SET_RUN_MODE xx(rINTERACTIVE);
-	CMD::cmdproc("print op v(nodes)");
+	stringstream conv;
+	conv << "trans " << 1/fps << " " << (1/fps) / (double)steps;
+	transCommand = conv.str();
 }
 
 GnucapController::~GnucapController() {
@@ -30,15 +35,24 @@ GnucapController::~GnucapController() {
 }
 
 void GnucapController::test() {
-	insertComponent("Vsupply 1 0 5");
-	insertComponent("R0 1 2 1k");
-	insertComponent("R1 2 0 1k");
-	//CMD::cmdproc("print op v(nodes)");
-	CMD::cmdproc("op");
+	auto r1 = newResistor(100);
+	auto r2 = newResistor(100);
+	auto v = newDCSupply(12);
+	auto c = newCapacitor(1e-9); // unused
+	r1->toggleConnection(v, 0, 0);
+	r2->toggleConnection(r1, 1, 1);
+	r2->toggleConnection(v, 0, 1);
+	
+	analyse();
+#ifdef DEBUG
+	for each (Component* c in components) 
+		cout << c->generateString() << " V = " << c->voltage << endl;
+#endif
 }
 
 
 void GnucapController::analyse() {
+	unsigned int i;
 	// Search for a changed circuit component
 	auto result = std::find_if(components.begin(), components.end(), 
 		[](Component* c) {return c->changed;});
@@ -48,7 +62,7 @@ void GnucapController::analyse() {
 		for each (Component* c in components) {
 			c->changed = false; // clear indicator (because we are going to re-analyse)
 			c->voltage = 0; // In case analysis fails
-			for (int i = 0; i < c->leads; i++) c->nodes[i] = -1; // reset netlist nodes
+			for (i = 0; i < c->leads; i++) c->nodes[i] = -1; // reset netlist nodes
 		}
 		// Find the first connected power supply, perhaps later we will be less arbitrary and focus only on relative voltages
 		result = std::find_if(vSupplies.begin(), vSupplies.end(), 
@@ -62,11 +76,12 @@ void GnucapController::analyse() {
 			return;  // voltages are alrady cleared so just go
 
 		mainSupply = *result;
-		//mainSupply->nodes[0] = nodeCount;
 		mainSupply->setNodes(0, 0, 0);
 
 		if (mainSupply->nodes[1] == -1) {
+#ifdef DEBUG
 			cout << "Circuit incomplete" << endl;
+#endif
 			return;
 		}
 
@@ -74,9 +89,14 @@ void GnucapController::analyse() {
 		for each(Component* c in components)  // Add all connected components
 			if (c->isActive())
 				insertComponent(c->generateString());
-		//CMD::cmdproc("print op v(nodes)");
+		CMD::cmdproc("print trans v(nodes)");
+		CMD::cmdproc(transCommand); 
 	}
-	CMD::cmdproc("op"); // TODO: replace with ac analysis (once hooks are tested)
+	
+	CMD::cmdproc("trans"); 
+	for each(Component* c in components) {
+		c->calculateVoltage(nodeVoltages);
+	}
 }
 
 
@@ -143,11 +163,27 @@ Component* GnucapController::newSupply() {
 	return vSupplies.back();
 }
 
+void Component::calculateVoltage(std::map<int, double> &voltages) {
+	voltage = voltages[nodes[0]] - voltages[nodes[1]]; //TODO: calculate more voltages for trannies and other components where leads!=2
+}
+
 int Component::setNodes(int lead, int nodeVal, int nodeCount) {
+	unsigned int i, j;
+	if (nodes[lead] != -1)
+		return nodeCount;
 	nodes[lead] = nodeCount;
-	for (unsigned int i = 0; i < connections[lead].size(); i++) {
+	for (i = 0; i < connections[lead].size(); i++) {
 		nodeCount = connections[lead][i].other->setNodes(connections[lead][i].otherLead, nodeVal, nodeCount);
 	}
+	for (j = 0; j < leads; j++) {
+		if (j != lead) {
+			nodeCount++;
+			for (i = 0; i < connections[j].size(); i++) {
+				nodeCount = connections[j][i].other->setNodes(connections[j][i].otherLead, nodeVal, nodeCount);
+			}
+		}
+	}
+
 	return nodeCount;
 }
 
@@ -162,16 +198,16 @@ _name(name)  {
 	}
 	connections = new std::vector<Connection>[leads];
 	nodes = new int[leads];
-	for (int i = 0; i < leads; i++) nodes[i] = -1;
+	for (unsigned int i = 0; i < leads; i++) nodes[i] = -1;
 }
 
 Component::~Component() {
-	delete connections;
+//	delete connections; TODO, FIXME: destructor fails
 	delete nodes;
 }
 
 bool Component::isActive() {
-	for (int i = 0; i < leads; i++) 
+	for (unsigned int i = 0; i < leads; i++) 
 		if (nodes[i] == -1) return false;
 
 	return true;
@@ -180,7 +216,7 @@ bool Component::isActive() {
 string Component::generateString() {
 	std::stringstream conv;
 	conv << _name << ' ';
-	for (int i = 0; i < leads; i++) 
+	for (unsigned int i = 0; i < leads; i++) 
 		conv << nodes[i] << ' ';
 	conv << value;
 	return conv.str();
@@ -195,6 +231,7 @@ bool Component::toggleConnection(Component *other, int lead, int otherLead) {
 	if (result == connections[lead].end()) { // if connections[lead] does not contain other
 		connections[lead].push_back(Connection(other, otherLead));
 		other->connections[otherLead].push_back(Connection(this, lead));
+		return true;
 	} else { // if it does
 		connections[lead].erase(result);
 		unsigned int i;
@@ -206,6 +243,8 @@ bool Component::toggleConnection(Component *other, int lead, int otherLead) {
 		}
 
 		if (i == other->connections[otherLead].size()) cerr << "connection toggle error" << endl;
+		return false;
 	}
 }
+
 }

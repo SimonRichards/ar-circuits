@@ -7,6 +7,9 @@
 using namespace OPIRALibrary;
 using namespace std;
 
+#define FPS 20
+#define STEPS 10
+
 osg::ref_ptr<osg::Camera> fgCamera;
 vector<ARScene *> scenes;
 
@@ -31,11 +34,10 @@ void initOGL(int argc, char **argv);
 void render(IplImage* frame_input, std::vector<MarkerTransform> mt);
 
 int main(int argc, char **argv) {  
-	gnucap_lib::GnucapController circuit;
+	gnucap_lib::GnucapController circuit(FPS, STEPS);
 
 #ifdef GNUCAP_TESTING
 	circuit.test();
-	cin.get();
 	return 0;
 #else
 

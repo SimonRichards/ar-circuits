@@ -15,9 +15,10 @@ namespace gnucap_lib {
 		vector<Component*> components;
 		static void insertComponent(std::string command);
 		vector<Component*> vSupplies;
+		string transCommand;
 
 	public:
-		GnucapController();
+		GnucapController(double fps, int steps);
 		~GnucapController();
 		void analyse();
 		void test();
@@ -34,6 +35,7 @@ namespace gnucap_lib {
 		int otherLead;
 		Connection(Component* oc, int ol) :
 		other(oc), otherLead(ol) {}
+		~Connection(){}
 	};
 
 	class Component {
@@ -45,11 +47,11 @@ namespace gnucap_lib {
 		Component(string name);
         int setNodes(int lead, int nodeVal, int nodeCount);
 		~Component();
+		void calculateVoltage(std::map<int, double> &voltages);
 		friend class GnucapController;
 
 	public:
-
-		int leads;
+		unsigned int leads;
 		double voltage;
 		vector<Connection>* connections;
 		bool toggleConnection(Component *other, int lead, int otherLead); // returns true if components are connected following action
