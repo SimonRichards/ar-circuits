@@ -4,28 +4,29 @@
 
 extern string markerDir;
 extern string modelDir;
-
+extern unsigned long proximityDelay;
+extern double proximityThreshold;
 ARScene::ARScene(const libconfig::Setting& modelCfg, string markerFile, gnucap_lib::Component* c, OPIRALibrary::RegistrationARToolkit* r)
-: markerVisible(false), markerMatrix(osg::Matrix::identity()), initialSceneMatrix(osg::Matrix::identity())
+	: markerVisible(false), markerMatrix(osg::Matrix::identity()), initialSceneMatrix(osg::Matrix::identity())
 {
 	component = c;
 
 	string modelFile = modelCfg["file"].c_str();
 
 	timers = new ConnectionTimer[component->leads];
-	
+
 	model = osgDB::readNodeFile(modelDir + modelFile);
 	if(modelCfg.exists("translation") && modelCfg["translation"].getLength() == 3)
 		initialSceneMatrix.preMultTranslate(
-			osg::Vec3d(modelCfg["translation"][0], modelCfg["translation"][1], modelCfg["translation"][2]));
+		osg::Vec3d(modelCfg["translation"][0], modelCfg["translation"][1], modelCfg["translation"][2]));
 	if(modelCfg.exists("rotation") && modelCfg["rotation"].getLength() == 3)
 		initialSceneMatrix.preMultRotate(
-			osg::Quat(osg::DegreesToRadians((float)modelCfg["rotation"][0]), osg::X_AXIS,
-			osg::DegreesToRadians((float)modelCfg["rotation"][1]), osg::Y_AXIS,
-			osg::DegreesToRadians((float)modelCfg["rotation"][2]), osg::Z_AXIS));
+		osg::Quat(osg::DegreesToRadians((float)modelCfg["rotation"][0]), osg::X_AXIS,
+		osg::DegreesToRadians((float)modelCfg["rotation"][1]), osg::Y_AXIS,
+		osg::DegreesToRadians((float)modelCfg["rotation"][2]), osg::Z_AXIS));
 	if(modelCfg.exists("scale") && modelCfg["scale"].getLength() == 3)
 		initialSceneMatrix.preMultScale(
-			osg::Vec3d(modelCfg["scale"][0], modelCfg["scale"][1], modelCfg["scale"][2]));
+		osg::Vec3d(modelCfg["scale"][0], modelCfg["scale"][1], modelCfg["scale"][2]));
 	initialSceneMatrix.preMultRotate(osg::Quat(osg::PI, osg::X_AXIS));
 	sceneTransform = new osg::MatrixTransform(initialSceneMatrix);
 	originTransform = new osg::MatrixTransform();
@@ -37,19 +38,19 @@ ARScene::ARScene(const libconfig::Setting& modelCfg, string markerFile, gnucap_l
 	r->addMarker(markerID, 80, 80);
 
 	osg::Group* modelNodes = model->asGroup();
-	
+
 	for(int i = 0; i < modelCfg["animNodes"].getLength(); i++){
 		nodesWithAnimations.push_back(findNamedNode(modelCfg["animNodes"][i]["name"], model));
 	}/*
-	for(int i = 0; i < modelCfg["movieNodes"].getLength(); i++){
-		vector<string> imgPaths;
-		for(int j = 0; j < modelCfg["movieNodes"][i]["texturePaths"].getLength(); j++){
-			imgPaths.push_back(modelCfg["movieNodes"][i]["texturePaths"][j]);
-		}
-		bool autoPlay = true;
-		modelCfg["movieNodes"][i].lookupValue("autoPlay", autoPlay);
-		nodesWithMovies.push_back(new MovieNode(findNamedNode(modelCfg["movieNodes"][i]["name"], model), imgPaths, autoPlay));
-	}*/
+	 for(int i = 0; i < modelCfg["movieNodes"].getLength(); i++){
+	 vector<string> imgPaths;
+	 for(int j = 0; j < modelCfg["movieNodes"][i]["texturePaths"].getLength(); j++){
+	 imgPaths.push_back(modelCfg["movieNodes"][i]["texturePaths"][j]);
+	 }
+	 bool autoPlay = true;
+	 modelCfg["movieNodes"][i].lookupValue("autoPlay", autoPlay);
+	 nodesWithMovies.push_back(new MovieNode(findNamedNode(modelCfg["movieNodes"][i]["name"], model), imgPaths, autoPlay));
+	 }*/
 	//setUpdateCallback(new ARSceneCallback);
 }
 
@@ -106,7 +107,7 @@ void ARScene::play(){
 	play(vector<Node*>());
 	/*
 	for each(MovieNode* node in nodesWithMovies){
-		node->nextFrame(); //TODO [test]
+	node->nextFrame(); //TODO [test]
 	}*/
 }
 void ARScene::play(vector<osg::Node*> nodesToPlay){
@@ -210,9 +211,9 @@ void ARScene::updateTextures(){
 	//cout << "up\n";
 	/*
 	for each (MovieNode* movie in nodesWithMovies){
-		if(movie->isPlaying()){
-			movie->nextFrame();
-		}
+	if(movie->isPlaying()){
+	movie->nextFrame();
+	}
 	}*/
 	goToAndPlay(0.5);
 }
@@ -222,17 +223,42 @@ ARScene::~ARScene(void)
 	delete timers;
 }
 
-osg::Vec3d ARScene::getLeadCoord(int lead) {
+osg::Vec3d ARScene::getCoord(int lead) {
 	//TODO
 	osg::Vec3d result;
 	return result;
 }
 
-
+#define PROXIMITY_THRESH 20.
+#define PROXIMITY_DELAY 1000
+/**
+*@param target the ARScene to check against
+*@param lead the local lead to check
+*/
 void ARScene::proximityCheck(ARScene* target, int lead) {
-	for (int i = 0; i < component->leads; i++) {
-		if (timers[i].active) {
-			if (0);
+	for (int i = 0; i < target->numLeads(); i++) {
+		if (timers[lead].active && timers[lead].component == target && timers[lead].otherLead == i) {
+			if ((getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold) {
+				if (GetTickCount() - timers[lead].startTime > proximityDelay) {
+					if (component->toggleConnection(target->component, lead, i)) {
+						wires.push_back(Wire());
+					} else {
+						for (auto w = wires.begin(); w != wires.end(); w++) {
+							if (w->compA == this && w->compB == target) {
+								wires.erase(w);
+								break;
+							}
+						}
+					} 
+				}
+			} else {
+				timers[lead].active = false;
+			}
+		} else if (!timers[lead].active && ((getCoord(lead) - target->getCoord(i)).length2() < PROXIMITY_THRESH)) {
+			timers[lead].active = true;
+			timers[lead].component = target;
+			timers[lead].otherLead = i;
+			timers[lead].startTime = GetTickCount();
 		}
 	}
 }
