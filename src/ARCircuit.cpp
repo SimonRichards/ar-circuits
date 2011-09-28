@@ -47,8 +47,9 @@ void ARCircuit::updateARCircuit(){
 				}
 			}
 		}
-		for each (Wire w in subject->wires) {
-			w.render();
+
+        for (i = 0; i < subject->getNumChildren(); i++) {
+            (dynamic_cast<Wire *> (subject->getChild(i)))->update();
 		}
 	}
 }

@@ -5,15 +5,16 @@
 
 class ARScene;
 
-class Wire : public osg::Node
+class Wire : public osg::Geode
 {
 private:
 
 public:
-	Wire(ARScene *cA, ARScene *cB, int lA, int lB) :
-	  compA(cA), compB(cB), leadA(lA), leadB(lB) {}
+	Wire(ARScene *cA, ARScene *cB, int lA, int lB);
 	~Wire();
 	ARScene *compA, *compB;
 	int leadA, leadB;
-	void render();
+	void update();
+
+    bool is(ARScene* s1, ARScene* s2, int l1, int l2);
 };

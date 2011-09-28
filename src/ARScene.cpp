@@ -231,20 +231,21 @@ osg::Vec3d ARScene::getCoord(int lead) {
 
 
 /**
-*@param target the ARScene to check against
-*@param lead the local lead to check
-*/
+ *@param target the ARScene to check against
+ *@param lead the local lead to check
+ */
 void ARScene::proximityCheck(ARScene* target, int lead) {
 	for (int i = 0; i < target->numLeads(); i++) {
 		if (timers[lead].active && timers[lead].component == target && timers[lead].otherLead == i) {
 			if ((getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold) {
 				if (GetTickCount() - timers[lead].startTime > proximityDelay) {
 					if (component->toggleConnection(target->component, lead, i)) {
-						this->addChild(Wire(this, target, lead, i));
+						this->addChild(new Wire(this, target, lead, i));
 					} else {
-						for (auto w = wires.begin(); w != wires.end(); w++) {
-							if (w->compA == this && w->compB == target) {
-								wires.erase(w);
+                        for (int j = 0; j < getNumChildren(); j++) {
+                            auto w = dynamic_cast<Wire*>(getChild(i));
+							if (w->is(this, target, lead, i)) {
+                                removeChild(i);
 								break;
 							}
 						}
