@@ -5,9 +5,9 @@
 
 namespace gnucap_lib {
 	class Component;
-	class GnucapController;
+	class GnucapWrapper;
 
-	class GnucapController {
+	class GnucapWrapper {
 	private:
 		unsigned int lCount, cCount, rCount, vCount;
 		string makeName(char type, int id);
@@ -18,8 +18,8 @@ namespace gnucap_lib {
 		Component* newSupply();
 
 	public:
-		GnucapController(double fps, int steps);
-		~GnucapController();
+		GnucapWrapper(double fps, int steps);
+		~GnucapWrapper();
 		void analyse();
 		void test();
 		Component* newResistor(double r);
@@ -49,7 +49,7 @@ namespace gnucap_lib {
         int setNodes(int lead, int nodeVal, int nodeCount);
 		~Component();
 		void calculateVoltage(std::map<int, double> &voltages);
-		friend class GnucapController;
+		friend class GnucapWrapper;
 
 	public:
 		unsigned int leads;

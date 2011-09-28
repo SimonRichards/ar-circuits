@@ -29,7 +29,7 @@ std::string dtos(double d) {
 }
 
 
-GnucapController::GnucapController(double fps, int steps) :
+GnucapWrapper::GnucapWrapper(double fps, int steps) :
 	lCount(0), cCount(0), rCount(0), vCount(0) {
 	SET_RUN_MODE xx(rINTERACTIVE);
 	stringstream conv;
@@ -37,12 +37,12 @@ GnucapController::GnucapController(double fps, int steps) :
 	transCommand = conv.str();
 }
 
-GnucapController::~GnucapController() {
+GnucapWrapper::~GnucapWrapper() {
 	for each (Component* c in components) 
 		delete c;
 }
 
-void GnucapController::test() {
+void GnucapWrapper::test() {
 	auto r1 = newResistor(100);
 	auto r2 = newResistor(100);
 	auto v = newDCSupply(12);
@@ -59,7 +59,7 @@ void GnucapController::test() {
 }
 
 
-void GnucapController::analyse() {
+void GnucapWrapper::analyse() {
 	unsigned int i;
 	// Search for a changed circuit component
 	auto result = std::find_if(components.begin(), components.end(), 
@@ -108,7 +108,7 @@ void GnucapController::analyse() {
 }
 
 
-void GnucapController::insertComponent(std::string command) {
+void GnucapWrapper::insertComponent(std::string command) {
 	CARD_LIST* scope = &CARD_LIST::card_list;
 	assert(scope);
 	CARD_LIST::fat_iterator putbefore(scope, scope->end());
@@ -118,38 +118,38 @@ void GnucapController::insertComponent(std::string command) {
 
 
 
-std::string GnucapController::makeName(char type, int id) {
+std::string GnucapWrapper::makeName(char type, int id) {
 	std::stringstream conv;
 	conv << type << id;
 	return conv.str();
 }
 
-Component* GnucapController::newResistor(double r){ 
+Component* GnucapWrapper::newResistor(double r){ 
 	auto resistor = new Component(makeName('R', rCount++), r);
 	components.push_back(resistor);
 	return resistor;		
 }
 
-Component* GnucapController::newCapacitor(double c){ 
+Component* GnucapWrapper::newCapacitor(double c){ 
 	auto cap = new Component(makeName('C', cCount++), c);
 	components.push_back(cap);
 	return cap;
 }
 
-Component* GnucapController::newInductor(double l){ 
+Component* GnucapWrapper::newInductor(double l){ 
 	auto inductor = new Component(makeName('L', lCount++), l);
 	components.push_back(inductor);
 	return inductor;
 }
 
-Component* GnucapController::newDCSupply(double v) {
+Component* GnucapWrapper::newDCSupply(double v) {
 	auto vSource = newSupply();
 	vSource->_value = dtos(v);
 	components.push_back(vSource);
 	return vSource;
 }
 
-Component* GnucapController::newACSupply(double v, double f, double b) {
+Component* GnucapWrapper::newACSupply(double v, double f, double b) {
 	auto vSource = newSupply();
 	std::stringstream conv;
 	conv << "sin(offset=" << b << ", amplitude=" << v << ", frequency=" << f << ")";
@@ -158,7 +158,7 @@ Component* GnucapController::newACSupply(double v, double f, double b) {
 	return vSource;		
 }
 
-Component* GnucapController::newSupply() {
+Component* GnucapWrapper::newSupply() {
 	vSupplies.push_back(new Component(makeName('V', vCount++)));
 	return vSupplies.back();
 }
