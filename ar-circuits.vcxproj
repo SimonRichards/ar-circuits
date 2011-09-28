@@ -606,7 +606,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\wire.cpp" />
+    <ClCompile Include="src\Wire.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ARScene.h" />

@@ -440,7 +440,7 @@
     <ClCompile Include="src\ARCircuit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\wire.cpp">
+    <ClCompile Include="src\Wire.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

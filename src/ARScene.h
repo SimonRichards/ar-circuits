@@ -61,7 +61,6 @@ public:
 	/*virtual*/ int numLeads();
 	void proximityCheck(ARScene* target, int lead);
 	osg::Vec3d getCoord(int lead);
-	vector<Wire*> wires;
 	~ARScene(void);
 
 protected:
