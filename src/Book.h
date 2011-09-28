@@ -4,6 +4,7 @@
 
 #include "ARCircuit.h"
 #include "ARToolkit2.7OpenCV.h"
+#include "gnucap-lib.h"
 
 using namespace OPIRALibrary;
 
@@ -12,9 +13,10 @@ class Book
 public:
 	Book(const libconfig::Setting& config, int argc, char** argv);
 	~Book(void);
-
 	vector<ARScene*> getScenes(int ARCircuitNum);
 	void run();
+
+	gnucap_lib::GnucapWrapper gnucap;
 
 private:
 	void goToAndPlay(float time);

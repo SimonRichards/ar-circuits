@@ -7,7 +7,7 @@
 class ARCircuit
 {
 public:
-	ARCircuit(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r);
+	ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper gnucap, OPIRALibrary::RegistrationARToolkit* r);
 	ARCircuit(){}
 	~ARCircuit(void);
 	vector<ARScene*> getScenes();
@@ -15,8 +15,5 @@ public:
 
 protected:
 	vector<ARScene*> scenes;
-
-private:
-	void initComponents(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r);
 };
 

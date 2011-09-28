@@ -2,9 +2,8 @@
 
 #include "Book.h"
 
-
 Book::Book(const libconfig::Setting& config, int argc, char** argv)
-	: camWidth(800), camHeight(600)
+	: camWidth(800), camHeight(600), gnucap(20, 5)
 {
 	initOGL(argc, argv);
 
@@ -14,7 +13,7 @@ Book::Book(const libconfig::Setting& config, int argc, char** argv)
 	reg = new RegistrationARToolkit(camera->getParameters(), camera->getDistortion());
 
 	for(int i = 0; i < config["circuits"].getLength(); i++){
-			ARCircuits.push_back(new ARCircuit(config["circuits"][i], reg));
+			ARCircuits.push_back(new ARCircuit(config["circuits"][i], gnucap, reg));
 	}	
 	for each (ARCircuit* ARCircuit in ARCircuits){
 		for each (ARScene* scene in ARCircuit->getScenes()){

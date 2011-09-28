@@ -6,7 +6,6 @@
 
 #include "ARToolkit2.7OpenCV.h"
 #include "MovieNode.h"
-#include "gnucap-lib.h"
 
 class ARScene;
 
@@ -21,10 +20,7 @@ class ARScene :
 	public osg::Group
 {
 public:
-	ARScene(osg::Node* n, std::string markerPath, OPIRALibrary::Registration* r);
-	ARScene(std::string modelPath, std::string markerPath, OPIRALibrary::Registration* r);
-	ARScene(libconfig::Setting const &config, OPIRALibrary::RegistrationARToolkit* r);
-	ARScene(libconfig::Setting const &config, OPIRALibrary::RegistrationARToolkit* r, Compenent* c);
+	ARScene(libconfig::Setting const &modelCfg, string markerPath, gnucap_lib::Component* c, OPIRALibrary::RegistrationARToolkit* r);
 
 	bool isMarkerVisible();
 	void setMarkerVisible(bool visible);

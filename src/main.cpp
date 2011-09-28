@@ -6,8 +6,8 @@
 
 
 string includeDir = "resources/";
-extern string markerDir;
-extern string modelDir;
+string markerDir = "markers/";
+string modelDir = "models/";
 
 using namespace OPIRALibrary;
 using namespace libconfig;
@@ -15,8 +15,6 @@ using namespace libconfig;
 Book* book;
 
 int main(int argc, char **argv) {
-	//markerDir = "../resources/markers/";
-	//modelDir = "../resources/models/";
 	Config cfg;
 	string configFile = "electro.cfg";
 	for(int i = 0; i < argc; i++){

@@ -5,14 +5,12 @@
 extern string markerDir;
 extern string modelDir;
 
-ARScene::ARScene(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r)
+ARScene::ARScene(const libconfig::Setting& modelCfg, string markerFile, gnucap_lib::Component* c, OPIRALibrary::RegistrationARToolkit* r)
 : markerVisible(false), markerMatrix(osg::Matrix::identity()), initialSceneMatrix(osg::Matrix::identity())
 {
-	string markerFile, modelFile;
-	libconfig::Setting& modelCfg = config["model"];
-	libconfig::Setting& markerCfg = config["marker"];
-	modelFile = modelCfg["file"].c_str();
-	markerFile = markerCfg["file"].c_str();
+	component = c;
+
+	string modelFile = modelCfg["file"].c_str();
 
 	timers = new ConnectionTimer[component->leads];
 	
@@ -35,8 +33,8 @@ ARScene::ARScene(const libconfig::Setting& config, OPIRALibrary::RegistrationART
 	visible = new osg::Switch();
 	visible->addChild(originTransform); originTransform->addChild(sceneTransform); sceneTransform->addChild(model); //transform->addChild(createLights(this));
 	this->addChild(visible);
-	markerID = markerDir + markerFile;
-	r->addMarker(markerID, markerCfg["width"], markerCfg["height"]);
+	markerID = markerFile + markerDir;
+	r->addMarker(markerID, 80, 80);
 
 	osg::Group* modelNodes = model->asGroup();
 	
@@ -234,7 +232,7 @@ osg::Vec3d ARScene::getLeadCoord(int lead) {
 void ARScene::proximityCheck(ARScene* target, int lead) {
 	for (int i = 0; i < component->leads; i++) {
 		if (timers[i].active) {
-			if (
+			if (0);
 		}
 	}
 }

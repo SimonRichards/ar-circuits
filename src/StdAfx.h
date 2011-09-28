@@ -21,7 +21,3 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-
-
-static string markerDir = "resources/markers/";
-static string modelDir = "resources/models/";

@@ -3,17 +3,23 @@
 #include "ARCircuit.h"
 
 
-ARCircuit::ARCircuit(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r)
+ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper gnucap, OPIRALibrary::RegistrationARToolkit* r)
 {
-	initComponents(config["resistors"], r);
-	initComponents(config["capacitors"], r);
-	initComponents(config["inductors"], r);
-	initComponents(config["acsupplies"], r);
-}
-
-void ARCircuit::initComponents(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r){
-	for(int i = 0; i < config["markers"].getLength(); i++){
-		scenes.push_back(new ARScene(config["markers"][i], r));
+	for(int i = 0; i < (int)config["resistors"]["number"]; i++){
+		string markerFile = config["resistors"]["markerProto"];
+		scenes.push_back(new ARScene(config["model"], markerFile, gnucap.newResistor(config["values"][i]), r));
+	}
+	for(int i = 0; i < (int)config["capacitors"]["number"]; i++){
+		string markerFile = config["capacitors"]["markerProto"];
+		scenes.push_back(new ARScene(config["model"], markerFile, gnucap.newResistor(config["values"][i]), r));
+	}
+	for(int i = 0; i < (int)config["inductors"]["number"]; i++){
+		string markerFile = config["inductors"]["markerProto"];
+		scenes.push_back(new ARScene(config["model"], markerFile, gnucap.newResistor(config["values"][i]), r));
+	}
+	for(int i = 0; i < (int)config["acsupplies"]["number"]; i++){
+		string markerFile = config["acsupplies"]["markerProto"];
+		scenes.push_back(new ARScene(config["model"], markerFile, gnucap.newResistor(config["values"][i]), r));
 	}
 }
 
