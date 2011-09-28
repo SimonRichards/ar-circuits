@@ -1,6 +1,7 @@
 #pragma once
 
 #include "StdAfx.h"
+#include "gnucap-lib.h"
 
 #include "ARToolkit2.7OpenCV.h"
 #include "MovieNode.h"
@@ -48,6 +49,8 @@ public:
 
 	void updateTextures();
 
+	/*virtual*/ int numLeads();
+
 	~ARScene(void);
 
 protected:
@@ -61,7 +64,7 @@ protected:
 	string markerID;
 	vector<osg::AnimationPathCallback*> animCallbacks;
 	vector<osg::Node*> nodesWithAnimations;
-	vector<MovieNode*> nodesWithMovies;
+//	vector<MovieNode*> nodesWithMovies;
 
 	void init(osg::Node* n, std::string markerPath, OPIRALibrary::Registration* r);
 	void findSpecialNodes(osg::Group* modelNodes);
@@ -69,7 +72,7 @@ protected:
 	osg::Node* findNamedNode(std::string const &searchName, osg::Node* currNode);
 
 private:
-	vector<Component*> components;
+	vector<gnucap_lib::Component*> components;
 };
 
 

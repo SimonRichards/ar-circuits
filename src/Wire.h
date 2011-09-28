@@ -5,6 +5,9 @@
 
 class Wire
 {
+private:
+
+public:
 	Wire();
 	~Wire();
 	void render();

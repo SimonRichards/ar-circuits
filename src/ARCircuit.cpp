@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include "Wire.h"
 
 #include "ARCircuit.h"
 
@@ -19,6 +20,20 @@ void ARCircuit::updateARCircuit(){
 		scene->setVisibility(scene->isMarkerVisible());
 		scene->updateTextures();
 		scene->setOriginMatrix(scene->getMarkerMatrix());
+	}
+
+	for each (ARScene* subject in scenes) {
+		for each (ARScene* target in scenes) {
+			if (subject != target) {
+				for (int i = 0; i < target->numLeads(); i++) {
+
+				}
+			}
+		}
+	}
+
+	for each (Wire w in wires) {
+		w.render();
 	}
 }
 
