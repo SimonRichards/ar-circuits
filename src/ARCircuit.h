@@ -16,5 +16,8 @@ public:
 
 protected:
 	vector<ARScene*> scenes;
+
+private:
+	void initComponents(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r);
 };
 

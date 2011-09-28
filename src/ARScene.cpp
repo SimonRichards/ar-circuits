@@ -99,7 +99,7 @@ void ARScene::setVisibility(bool vis){
 }
 
 int ARScene::numLeads() {
-	return components[0]->leads;
+	return components.at(0)->leads;
 }
 
 void ARScene::play(){

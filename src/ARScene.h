@@ -15,6 +15,7 @@ public:
 	ARScene(osg::Node* n, std::string markerPath, OPIRALibrary::Registration* r);
 	ARScene(std::string modelPath, std::string markerPath, OPIRALibrary::Registration* r);
 	ARScene(libconfig::Setting const &config, OPIRALibrary::RegistrationARToolkit* r);
+	ARScene(libconfig::Setting const &config, OPIRALibrary::RegistrationARToolkit* r, Compenent* c);
 
 	bool isMarkerVisible();
 	void setMarkerVisible(bool visible);

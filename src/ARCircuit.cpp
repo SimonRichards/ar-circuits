@@ -6,8 +6,15 @@
 
 ARCircuit::ARCircuit(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r)
 {
-	for(int i = 0; i < config["scenes"].getLength(); i++){
-		scenes.push_back(new ARScene(config["scenes"][i], r));
+	initComponents(config["resistors"], r);
+	initComponents(config["capacitors"], r);
+	initComponents(config["inductors"], r);
+	initComponents(config["acsupplies"], r);
+}
+
+void ARCircuit::initComponents(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r){
+	for(int i = 0; i < config["markers"].getLength(); i++){
+		scenes.push_back(new ARScene(config["markers"][i], r));
 	}
 }
 

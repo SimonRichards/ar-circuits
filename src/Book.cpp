@@ -13,20 +13,8 @@ Book::Book(const libconfig::Setting& config, int argc, char** argv)
 	
 	reg = new RegistrationARToolkit(camera->getParameters(), camera->getDistortion());
 
-	for(int i = 0; i < config["ARCircuits"].getLength(); i++){/*
-		if(config["ARCircuits"][i].exists("type")){
-			string ARCircuitName = config["ARCircuits"][i]["type"];
-			if(ARCircuitName == "SelectableARCircuit")
-				ARCircuits.push_back(new SelectableARCircuit(config["ARCircuits"][i], reg));
-			else if(ARCircuitName == "ARCircuit1_3")
-				ARCircuits.push_back(new ARCircuit1_3(config["ARCircuits"][i], reg));
-			else if(ARCircuitName == "SimpleCircuit")
-				ARCircuits.push_back(new SimpleCircuit(config["ARCircuits"][i], reg));
-			else
-				cout << "Unrecognized ARCircuit name: " << config["ARCircuits"][i]["type"].c_str() << endl;
-		}
-		else*/
-			ARCircuits.push_back(new ARCircuit(config["ARCircuits"][i], reg));
+	for(int i = 0; i < config["circuits"].getLength(); i++){
+			ARCircuits.push_back(new ARCircuit(config["circuits"][i], reg));
 	}	
 	for each (ARCircuit* ARCircuit in ARCircuits){
 		for each (ARScene* scene in ARCircuit->getScenes()){
