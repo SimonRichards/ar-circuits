@@ -33,8 +33,8 @@ ARScene::ARScene(const libconfig::Setting& config, OPIRALibrary::RegistrationART
 	visible = new osg::Switch();
 	visible->addChild(originTransform); originTransform->addChild(sceneTransform); sceneTransform->addChild(model); //transform->addChild(createLights(this));
 	this->addChild(visible);
-	r->addMarker(markerDir + markerFile, markerCfg["width"], markerCfg["height"]);
 	markerID = markerDir + markerFile;
+	r->addMarker(markerID, markerCfg["width"], markerCfg["height"]);
 
 	osg::Group* modelNodes = model->asGroup();
 	

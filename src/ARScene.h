@@ -4,6 +4,7 @@
 
 #include "ARToolkit2.7OpenCV.h"
 #include "MovieNode.h"
+#include "gnucap-lib.h"
 
 
 class ARScene :
@@ -69,7 +70,7 @@ protected:
 	osg::Node* findNamedNode(std::string const &searchName, osg::Node* currNode);
 
 private:
-	vector<Component*> components;
+	vector<gnucap_lib::Component*> components;
 };
 
 

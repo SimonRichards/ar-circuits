@@ -76,6 +76,7 @@ std::vector<MarkerTransform> RegistrationARToolkit::performRegistration(IplImage
 
 	//For all Markers
 	for (int i=0; i<marker_num; i++) {
+		marker_info[i].id = 0;
 		if (marker_info[i].id>-1) {
 			MarkerTransform mt;
 
