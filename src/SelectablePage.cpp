@@ -1,14 +1,14 @@
 #include "StdAfx.h"
+/*
+#include "ARCircuits.h"
 
-#include "Pages.h"
 
-
-SelectablePage::SelectablePage(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r)
-	: Page(config, r), lastMissingScene(scenes.at(0))
+SelectableARCircuit::SelectableARCircuit(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r)
+	: ARCircuit(config, r), lastMissingScene(scenes.at(0))
 {
 }
 
-void SelectablePage::updatePage(){
+void SelectableARCircuit::updateARCircuit(){
 	for each (ARScene* scene in scenes){
 		if(scene->isMarkerVisible()){
 			if(scene == lastMissingScene){
@@ -25,4 +25,4 @@ void SelectablePage::updatePage(){
 			lastMissingScene = scene;
 		}
 	}
-}
+}*/

@@ -1,6 +1,6 @@
 #include "StdAfx.h"
-
-#include "Pages.h"
+/*
+#include "ARCircuits.h"
 //#include "CircuitComponent.h"
 
 SimpleCircuit::SimpleCircuit(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r)
@@ -10,7 +10,7 @@ SimpleCircuit::SimpleCircuit(const libconfig::Setting& config, OPIRALibrary::Reg
 	}
 }
 
-void SimpleCircuit::updatePage(){
+void SimpleCircuit::updateARCircuit(){
 	//for each (CircuitComponent* subject in scenes){
 	//	if(subject->isMarkerVisible()){
 	//		subject->setVisibility(subject->isMarkerVisible());
@@ -22,4 +22,4 @@ void SimpleCircuit::updatePage(){
 	//		}
 	//	}
 	//}
-}
+}*/

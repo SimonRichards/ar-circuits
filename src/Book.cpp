@@ -13,23 +13,23 @@ Book::Book(const libconfig::Setting& config, int argc, char** argv)
 	
 	reg = new RegistrationARToolkit(camera->getParameters(), camera->getDistortion());
 
-	for(int i = 0; i < config["pages"].getLength(); i++){
-		if(config["pages"][i].exists("type")){
-			string pageName = config["pages"][i]["type"];
-			if(pageName == "SelectablePage")
-				pages.push_back(new SelectablePage(config["pages"][i], reg));
-			else if(pageName == "Page1_3")
-				pages.push_back(new Page1_3(config["pages"][i], reg));
-			else if(pageName == "SimpleCircuit")
-				pages.push_back(new SimpleCircuit(config["pages"][i], reg));
+	for(int i = 0; i < config["ARCircuits"].getLength(); i++){/*
+		if(config["ARCircuits"][i].exists("type")){
+			string ARCircuitName = config["ARCircuits"][i]["type"];
+			if(ARCircuitName == "SelectableARCircuit")
+				ARCircuits.push_back(new SelectableARCircuit(config["ARCircuits"][i], reg));
+			else if(ARCircuitName == "ARCircuit1_3")
+				ARCircuits.push_back(new ARCircuit1_3(config["ARCircuits"][i], reg));
+			else if(ARCircuitName == "SimpleCircuit")
+				ARCircuits.push_back(new SimpleCircuit(config["ARCircuits"][i], reg));
 			else
-				cout << "Unrecognized page name: " << config["pages"][i]["type"].c_str() << endl;
+				cout << "Unrecognized ARCircuit name: " << config["ARCircuits"][i]["type"].c_str() << endl;
 		}
-		else
-			pages.push_back(new Page(config["pages"][i], reg));
+		else*/
+			ARCircuits.push_back(new ARCircuit(config["ARCircuits"][i], reg));
 	}	
-	for each (Page* page in pages){
-		for each (ARScene* scene in page->getScenes()){
+	for each (ARCircuit* ARCircuit in ARCircuits){
+		for each (ARScene* scene in ARCircuit->getScenes()){
 			fgCamera->addChild(scene);
 		}
 	}
@@ -39,8 +39,8 @@ Book::~Book(void)
 {
 }
 
-vector<ARScene*> Book::getScenes(int pageNum){
-	return pages.at(pageNum)->getScenes();
+vector<ARScene*> Book::getScenes(int ARCircuitNum){
+	return ARCircuits.at(ARCircuitNum)->getScenes();
 }
 
 void Book::run(){
@@ -127,15 +127,15 @@ void Book::render(IplImage* frame_input, std::vector<MarkerTransform> mt) {
 	cvResize(frame_input, scaleImage); cvCvtColor(scaleImage, scaleImage, CV_RGB2BGR);
  	mVideoImage->setImage(scaleImage->width, scaleImage->height, 0, 3, GL_RGB, GL_UNSIGNED_BYTE, (unsigned char*)scaleImage->imageData, osg::Image::NO_DELETE);
 	
-	for each (Page* page in pages){
-		for each (ARScene* scene in page->getScenes()){
+	for each (ARCircuit* ARCircuit in ARCircuits){
+		for each (ARScene* scene in ARCircuit->getScenes()){
 			scene->setMarkerVisible(false);  //TODO: add safety for when no markers are added
 		}
 	}
 
 	for each (MarkerTransform transform in mt) {
-		for each (Page* page in pages){
-			for each (ARScene* scene in page->getScenes()){
+		for each (ARCircuit* ARCircuit in ARCircuits){
+			for each (ARScene* scene in ARCircuit->getScenes()){
 				if (transform.marker.name == scene->getMarkerID()){// && transform.score > 5) {
 					scene->setMarkerVisible(true);
 					scene->setMarkerMatrix(osg::Matrix(transform.transMat));
@@ -144,8 +144,8 @@ void Book::render(IplImage* frame_input, std::vector<MarkerTransform> mt) {
 		}
 	}
 
-	for each (Page* page in pages){
-		page->updatePage();
+	for each (ARCircuit* ARCircuit in ARCircuits){
+		ARCircuit->updateARCircuit();
 	}
 
 	viewer.frame();

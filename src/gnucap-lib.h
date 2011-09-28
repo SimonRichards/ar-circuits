@@ -38,6 +38,7 @@ namespace gnucap_lib {
 	};
 
 	class Component {
+	private:
 		string _name;
 		bool changed;
 		int *nodes;

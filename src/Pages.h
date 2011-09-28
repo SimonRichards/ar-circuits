@@ -2,22 +2,22 @@
 
 #include "StdAfx.h"
 
-#include "Page.h"
+#include "ARCircuit.h"
 
-class SelectablePage : public Page
+class SelectableARCircuit : public ARCircuit
 {
 public:
-	SelectablePage(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r);
-	virtual void updatePage();
+	SelectableARCircuit(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r);
+	virtual void updateARCircuit();
 private:
 	ARScene* lastMissingScene;
 };
 
-class Page1_3 : public Page
+class ARCircuit1_3 : public ARCircuit
 {
 public:
-	Page1_3(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r);
-	virtual void updatePage();
+	ARCircuit1_3(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r);
+	virtual void updateARCircuit();
 private:
 	ARScene* nail;
 	ARScene* northPole;
@@ -27,11 +27,11 @@ private:
 	ARScene* activePole;
 };
 
-class SimpleCircuit : public Page
+class SimpleCircuit : public ARCircuit
 {
 public:
 	SimpleCircuit(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r);
-	virtual void updatePage();
+	virtual void updateARCircuit();
 private:
 	int connectionTimer;
 	static const int CONNECTION_HOLD = 10;

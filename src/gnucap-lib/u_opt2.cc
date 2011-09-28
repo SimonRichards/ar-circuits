@@ -46,7 +46,7 @@ bool OPT::set_values(CS& cmd)
       || get(cmd, "ACCT",	 &acct)
       || get(cmd, "LIST",	 &listing)
       || get(cmd, "MOD",	 &mod)
-      || get(cmd, "PAGE",	 &page)
+      || get(cmd, "ARCircuit",	 &ARCircuit)
       || get(cmd, "NODE",	 &node)
       || get(cmd, "OPTS",	 &opts)
       || get(cmd, "GMIN",	 &gmin,		mPOSITIVE)
@@ -198,7 +198,7 @@ void OPT::print(OMSTREAM& where)
   where << ((acct)   ?"  acct" :"  noacct");
   where << ((listing)?"  list" :"  nolist");
   where << ((mod)    ?"  mod"  :"  nomod");
-  where << ((page)   ?"  page" :"  nopage");
+  where << ((ARCircuit)   ?"  ARCircuit" :"  noARCircuit");
   where << ((node)   ?"  node" :"  nonode");
   where << ((opts)   ?"  opts" :"  noopts");
   where << "  gmin="   << gmin;

@@ -1,10 +1,10 @@
 #include "StdAfx.h"
 
-#include "Pages.h"
+#include "ARCircuits.h"
 
 
-Page1_3::Page1_3(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r)
-: Page(config, r), latch_dist(10), latched(0)
+ARCircuit1_3::ARCircuit1_3(const libconfig::Setting& config, OPIRALibrary::RegistrationARToolkit* r)
+: ARCircuit(config, r), latch_dist(10), latched(0)
 {
 	activePole = NULL;
 	if(scenes.size() >= 3){
@@ -12,11 +12,11 @@ Page1_3::Page1_3(const libconfig::Setting& config, OPIRALibrary::RegistrationART
 		northPole = scenes.at(1);
 		southPole = scenes.at(2);
 		if(scenes.size() > 3){
-			cout << "Extra models defined for Page1_3 will be ignored\n";
+			cout << "Extra models defined for ARCircuit1_3 will be ignored\n";
 		}
 	}
 	else{
-		cerr << "Not enough models defined for Page1_3\n";
+		cerr << "Not enough models defined for ARCircuit1_3\n";
 		return;
 	}
 	//scenes.at(0)->findNamedNode("
@@ -41,7 +41,7 @@ Page1_3::Page1_3(const libconfig::Setting& config, OPIRALibrary::RegistrationART
 	}
 }
 
-void Page1_3::updatePage(){
+void ARCircuit1_3::updateARCircuit(){
 	for each (ARScene* scene in scenes){
 		scene->setVisibility(scene->isMarkerVisible());
 		scene->setOriginMatrix(scene->getMarkerMatrix());

@@ -98,7 +98,7 @@ public:
   static bool acct;	    // flag: print accounting info
   static bool listing;	    // flag: print listing
   static bool mod;	    // flag: print models
-  static bool page;	    // flag: do page ejects
+  static bool ARCircuit;	    // flag: do ARCircuit ejects
   static bool node;	    // flag: print node table
   static bool opts;	    // flag: print options
   static double gmin;	    // minimum conductance allowed

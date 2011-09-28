@@ -67,6 +67,9 @@ protected:
 	void findSpecialNodes(osg::Group* modelNodes);
 	void findAnimCBNodes(osg::Group* modelNodes);
 	osg::Node* findNamedNode(std::string const &searchName, osg::Node* currNode);
+
+private:
+	vector<Component*> components;
 };
 
 
