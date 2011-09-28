@@ -40,7 +40,7 @@ ARScene::ARScene(const libconfig::Setting& config, OPIRALibrary::RegistrationART
 	
 	for(int i = 0; i < modelCfg["animNodes"].getLength(); i++){
 		nodesWithAnimations.push_back(findNamedNode(modelCfg["animNodes"][i]["name"], model));
-	}
+	}/*
 	for(int i = 0; i < modelCfg["movieNodes"].getLength(); i++){
 		vector<string> imgPaths;
 		for(int j = 0; j < modelCfg["movieNodes"][i]["texturePaths"].getLength(); j++){
@@ -49,7 +49,7 @@ ARScene::ARScene(const libconfig::Setting& config, OPIRALibrary::RegistrationART
 		bool autoPlay = true;
 		modelCfg["movieNodes"][i].lookupValue("autoPlay", autoPlay);
 		nodesWithMovies.push_back(new MovieNode(findNamedNode(modelCfg["movieNodes"][i]["name"], model), imgPaths, autoPlay));
-	}
+	}*/
 	//setUpdateCallback(new ARSceneCallback);
 }
 
@@ -84,6 +84,7 @@ osg::Matrix const &ARScene::getInitialSceneMatrix(){
 bool ARScene::isMarkerVisible(){
 	return markerVisible;
 }
+
 void ARScene::setMarkerVisible(bool visible){
 	markerVisible = visible;
 }
@@ -97,12 +98,16 @@ void ARScene::setVisibility(bool vis){
 	}
 }
 
+int ARScene::numLeads() {
+	return components[0]->leads;
+}
+
 void ARScene::play(){
 	play(vector<Node*>());
-
+	/*
 	for each(MovieNode* node in nodesWithMovies){
 		node->nextFrame(); //TODO [test]
-	}
+	}*/
 }
 void ARScene::play(vector<osg::Node*> nodesToPlay){
 	if(nodesToPlay.size() == 0){
@@ -203,11 +208,12 @@ osg::Node* ARScene::findNamedNode(const std::string& searchName, osg::Node* curr
 
 void ARScene::updateTextures(){
 	//cout << "up\n";
+	/*
 	for each (MovieNode* movie in nodesWithMovies){
 		if(movie->isPlaying()){
 			movie->nextFrame();
 		}
-	}
+	}*/
 	goToAndPlay(0.5);
 }
 
