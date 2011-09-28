@@ -68,9 +68,8 @@ void ARCircuit::updateARCircuit(){
 			}
 		}
 
-        for (i = 0; i < subject->getNumChildren(); i++) {
-            (dynamic_cast<Wire *> (subject->getChild(i)))->update();
-		}
+        for each (Wire* w in subject->wires)
+            w->update();		
 	}
 }
 

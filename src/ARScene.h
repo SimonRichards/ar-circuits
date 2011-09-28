@@ -24,6 +24,8 @@ class ARScene :
 public:
 	ARScene(libconfig::Setting const &modelCfg, string markerPath, gnucap_lib::Component* c, OPIRALibrary::RegistrationARToolkit* r);
 
+    vector<Wire*> wires;
+
 	bool isMarkerVisible();
 	void setMarkerVisible(bool visible);
 
