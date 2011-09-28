@@ -5,16 +5,15 @@
 
 class ARScene;
 
-class Wire
+class Wire : public osg::Node
 {
 private:
 
 public:
-	Wire();
+	Wire(ARScene *cA, ARScene *cB, int lA, int lB) :
+	  compA(cA), compB(cB), leadA(lA), leadB(lB) {}
 	~Wire();
-	ARScene *compA;
-	ARScene *compB;
+	ARScene *compA, *compB;
 	int leadA, leadB;
 	void render();
-	//void setEndPoints(coords);
 };

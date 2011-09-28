@@ -233,8 +233,7 @@ osg::Vec3d ARScene::getCoord(int lead) {
 	return result;
 }
 
-#define PROXIMITY_THRESH 20.
-#define PROXIMITY_DELAY 1000
+
 /**
 *@param target the ARScene to check against
 *@param lead the local lead to check
@@ -245,7 +244,7 @@ void ARScene::proximityCheck(ARScene* target, int lead) {
 			if ((getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold) {
 				if (GetTickCount() - timers[lead].startTime > proximityDelay) {
 					if (component->toggleConnection(target->component, lead, i)) {
-						wires.push_back(Wire());
+						wires.push_back(Wire(this, target, lead, i));
 					} else {
 						for (auto w = wires.begin(); w != wires.end(); w++) {
 							if (w->compA == this && w->compB == target) {
@@ -258,7 +257,7 @@ void ARScene::proximityCheck(ARScene* target, int lead) {
 			} else {
 				timers[lead].active = false;
 			}
-		} else if (!timers[lead].active && ((getCoord(lead) - target->getCoord(i)).length2() < PROXIMITY_THRESH)) {
+		} else if (!timers[lead].active && ((getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold)) {
 			timers[lead].active = true;
 			timers[lead].component = target;
 			timers[lead].otherLead = i;
