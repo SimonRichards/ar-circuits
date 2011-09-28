@@ -14,6 +14,8 @@ ARScene::ARScene(const libconfig::Setting& config, OPIRALibrary::RegistrationART
 	modelFile = modelCfg["file"].c_str();
 	markerFile = markerCfg["file"].c_str();
 
+	timers = new ConnectionTimer[component->leads];
+	
 	model = osgDB::readNodeFile(modelDir + modelFile);
 	if(modelCfg.exists("translation") && modelCfg["translation"].getLength() == 3)
 		initialSceneMatrix.preMultTranslate(
@@ -99,7 +101,7 @@ void ARScene::setVisibility(bool vis){
 }
 
 int ARScene::numLeads() {
-	return components.at(0)->leads;
+	return component->leads;
 }
 
 void ARScene::play(){
@@ -219,4 +221,20 @@ void ARScene::updateTextures(){
 
 ARScene::~ARScene(void)
 {
+	delete timers;
+}
+
+osg::Vec3d ARScene::getLeadCoord(int lead) {
+	//TODO
+	osg::Vec3d result;
+	return result;
+}
+
+
+void ARScene::proximityCheck(ARScene* target, int lead) {
+	for (int i = 0; i < component->leads; i++) {
+		if (timers[i].active) {
+			if (
+		}
+	}
 }

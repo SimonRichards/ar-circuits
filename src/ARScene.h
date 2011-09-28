@@ -2,11 +2,20 @@
 
 #include "StdAfx.h"
 #include "gnucap-lib.h"
+#include "Wire.h"
 
 #include "ARToolkit2.7OpenCV.h"
 #include "MovieNode.h"
 #include "gnucap-lib.h"
 
+class ARScene;
+
+struct ConnectionTimer {
+	ARScene* component;
+	int otherLead;
+	DWORD startTime;
+	bool active;
+};
 
 class ARScene :
 	public osg::Group
@@ -52,7 +61,9 @@ public:
 	void updateTextures();
 
 	/*virtual*/ int numLeads();
-
+	void proximityCheck(ARScene* target, int lead);
+	osg::Vec3d getLeadCoord(int lead);
+	vector<Wire> wires;
 	~ARScene(void);
 
 protected:
@@ -74,7 +85,8 @@ protected:
 	osg::Node* findNamedNode(std::string const &searchName, osg::Node* currNode);
 
 private:
-	vector<gnucap_lib::Component*> components;
+	gnucap_lib::Component* component;
+	ConnectionTimer* timers;
 };
 
 
