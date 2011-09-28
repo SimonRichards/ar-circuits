@@ -241,7 +241,7 @@ void ARScene::proximityCheck(ARScene* target, int lead) {
 			if ((getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold) {
 				if (GetTickCount() - timers[lead].startTime > proximityDelay) {
 					if (component->toggleConnection(target->component, lead, i)) {
-						wires.push_back(Wire());
+						this->addChild(Wire());
 					} else {
 						for (auto w = wires.begin(); w != wires.end(); w++) {
 							if (w->compA == this && w->compB == target) {
