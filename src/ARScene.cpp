@@ -34,7 +34,7 @@ ARScene::ARScene(const libconfig::Setting& modelCfg, string markerFile, gnucap_l
 	visible = new osg::Switch();
 	visible->addChild(originTransform); originTransform->addChild(sceneTransform); sceneTransform->addChild(model); //transform->addChild(createLights(this));
 	this->addChild(visible);
-	markerID = markerFile + markerDir;
+	markerID = markerDir + markerFile;
 	r->addMarker(markerID, 80, 80);
 
 	osg::Group* modelNodes = model->asGroup();
@@ -234,30 +234,4 @@ osg::Vec3d ARScene::getCoord(int lead) {
 *@param target the ARScene to check against
 *@param lead the local lead to check
 */
-void ARScene::proximityCheck(ARScene* target, int lead) {
-	for (int i = 0; i < target->numLeads(); i++) {
-		if (timers[lead].active && timers[lead].component == target && timers[lead].otherLead == i) {
-			if ((getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold) {
-				if (GetTickCount() - timers[lead].startTime > proximityDelay) {
-					if (component->toggleConnection(target->component, lead, i)) {
-						this->addChild(Wire(this, target, lead, i));
-					} else {
-						for (auto w = wires.begin(); w != wires.end(); w++) {
-							if (w->compA == this && w->compB == target) {
-								wires.erase(w);
-								break;
-							}
-						}
-					} 
-				}
-			} else {
-				timers[lead].active = false;
-			}
-		} else if (!timers[lead].active && ((getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold)) {
-			timers[lead].active = true;
-			timers[lead].component = target;
-			timers[lead].otherLead = i;
-			timers[lead].startTime = GetTickCount();
-		}
-	}
-}
+void ARScene::proximityCheck(ARScene* target, int lead) {}

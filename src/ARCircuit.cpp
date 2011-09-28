@@ -5,21 +5,41 @@
 
 ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper gnucap, OPIRALibrary::RegistrationARToolkit* r)
 {
-	for(int i = 0; i < (int)config["resistors"]["number"]; i++){
-		string markerFile = config["resistors"]["markerProto"];
-		scenes.push_back(new ARScene(config["model"], markerFile, gnucap.newResistor(config["values"][i]), r));
+	double value = 100.;
+	if(config.exists("resistors")){
+		for(int i = 0; i < (int)config["resistors"]["number"]; i++){
+			string markerFile = config["resistors"]["markerProto"];
+			config.lookupValue("values[i]", value);
+			scenes.push_back(new ARScene(config["resistors"]["model"], markerFile, gnucap.newResistor(value), r));
+		}
 	}
-	for(int i = 0; i < (int)config["capacitors"]["number"]; i++){
-		string markerFile = config["capacitors"]["markerProto"];
-		scenes.push_back(new ARScene(config["model"], markerFile, gnucap.newResistor(config["values"][i]), r));
+	if(config.exists("capacitors")){
+		for(int i = 0; i < (int)config["capacitors"]["number"]; i++){
+			string markerFile = config["capacitors"]["markerProto"];
+			config.lookupValue("values[i]", value);
+			scenes.push_back(new ARScene(config["capacitors"]["model"], markerFile, gnucap.newCapacitor(value), r));
+		}
 	}
-	for(int i = 0; i < (int)config["inductors"]["number"]; i++){
-		string markerFile = config["inductors"]["markerProto"];
-		scenes.push_back(new ARScene(config["model"], markerFile, gnucap.newResistor(config["values"][i]), r));
+	if(config.exists("inductors")){
+		for(int i = 0; i < (int)config["inductors"]["number"]; i++){
+			string markerFile = config["inductors"]["markerProto"];
+			config.lookupValue("values[i]", value);
+			scenes.push_back(new ARScene(config["inductors"]["model"], markerFile, gnucap.newInductor(value), r));
+		}
 	}
-	for(int i = 0; i < (int)config["acsupplies"]["number"]; i++){
-		string markerFile = config["acsupplies"]["markerProto"];
-		scenes.push_back(new ARScene(config["model"], markerFile, gnucap.newResistor(config["values"][i]), r));
+	if(config.exists("dcsupplies")){
+		for(int i = 0; i < (int)config["dcsupplies"]["number"]; i++){
+			string markerFile = config["dcsupplies"]["markerProto"];
+			config.lookupValue("values[i]", value);
+			scenes.push_back(new ARScene(config["dcsupplies"]["model"], markerFile, gnucap.newDCSupply(value), r));
+		}
+	}
+	if(config.exists("acsupplies")){
+		for(int i = 0; i < (int)config["acsupplies"]["number"]; i++){
+			string markerFile = config["acsupplies"]["markerProto"];
+			config.lookupValue("values[i]", value);
+			scenes.push_back(new ARScene(config["acsupplies"]["model"], markerFile, gnucap.newACSupply(value, 50), r)); //TODO: 50Hz
+		}
 	}
 }
 
@@ -47,8 +67,8 @@ void ARCircuit::updateARCircuit(){
 				}
 			}
 		}
-		for each (Wire w in subject->wires) {
-			w.render();
+		for each (Wire* w in subject->wires) {
+			w->render();
 		}
 	}
 }

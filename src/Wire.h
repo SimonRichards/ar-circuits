@@ -5,7 +5,7 @@
 
 class ARScene;
 
-class Wire : public osg::Node
+class Wire : public osg::Group
 {
 private:
 

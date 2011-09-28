@@ -13,7 +13,7 @@ Book::Book(const libconfig::Setting& config, int argc, char** argv)
 	reg = new RegistrationARToolkit(camera->getParameters(), camera->getDistortion());
 
 	for(int i = 0; i < config["circuits"].getLength(); i++){
-			ARCircuits.push_back(new ARCircuit(config["circuits"][i], gnucap, reg));
+		ARCircuits.push_back(new ARCircuit(config["circuits"][i], gnucap, reg));
 	}	
 	for each (ARCircuit* ARCircuit in ARCircuits){
 		for each (ARScene* scene in ARCircuit->getScenes()){
