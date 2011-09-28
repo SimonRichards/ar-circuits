@@ -16,7 +16,7 @@ vector<ARScene*> ARCircuit::getScenes(){
 }
 
 void ARCircuit::updateARCircuit(){
-	for each (ARScene* scene in scenes){
+	for each (ARScene* scene in scenes){ //TODO: if markers are lost keep displaying their model in the last known location.
 		scene->setVisibility(scene->isMarkerVisible());
 		scene->updateTextures();
 		scene->setOriginMatrix(scene->getMarkerMatrix());
@@ -32,7 +32,10 @@ void ARCircuit::updateARCircuit(){
 		}
 	}
 
+	// Check proximity, adding/removing wires and togglingConnections()
+
 	for each (Wire w in wires) {
+		//w.setEndpoints();
 		w.render();
 	}
 }

@@ -437,19 +437,10 @@
     <ClCompile Include="src\Book.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MovieNode.cpp">
+    <ClCompile Include="src\ARCircuit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Page.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Pages.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SelectablePage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SimpleCircuit.cpp">
+    <ClCompile Include="src\wire.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -718,16 +709,13 @@
     <ClInclude Include="src\Book.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MovieNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Page.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Pages.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\dc\dc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ARCircuit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Wire.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
