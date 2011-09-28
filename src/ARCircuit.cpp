@@ -29,7 +29,7 @@ void ARCircuit::updateARCircuit(){
 		for (j = i+1; j < scenes.size(); j++) {
 			target = scenes[j];
 			if (subject != target) {
-				for (int i = 0; i < target->numLeads(); i++) {
+				for (int i = 0; i < subject->numLeads(); i++) {
 					subject->proximityCheck(target, i);
 				}
 			}

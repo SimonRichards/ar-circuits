@@ -9,6 +9,9 @@ string includeDir = "resources/";
 extern string markerDir;
 extern string modelDir;
 
+unsigned long proximityDelay = 1000;
+double proximityThreshold = 20.;
+
 using namespace OPIRALibrary;
 using namespace libconfig;
 

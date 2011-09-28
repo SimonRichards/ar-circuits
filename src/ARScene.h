@@ -12,8 +12,10 @@ class ARScene;
 struct ConnectionTimer {
 	ARScene* component;
 	int otherLead;
-	DWORD startTime;
+	unsigned long startTime;
 	bool active;
+	ConnectionTimer() :
+	active(false){}
 };
 
 class ARScene :
@@ -60,7 +62,7 @@ public:
 
 	/*virtual*/ int numLeads();
 	void proximityCheck(ARScene* target, int lead);
-	osg::Vec3d getLeadCoord(int lead);
+	osg::Vec3d getCoord(int lead);
 	vector<Wire> wires;
 	~ARScene(void);
 
