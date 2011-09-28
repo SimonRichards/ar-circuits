@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 #include "Wire.h"
-
 #include "ARCircuit.h"
 
 
@@ -22,21 +21,22 @@ void ARCircuit::updateARCircuit(){
 		scene->setOriginMatrix(scene->getMarkerMatrix());
 	}
 
-	for each (ARScene* subject in scenes) {
-		for each (ARScene* target in scenes) {
+	// Check for node proximity
+	unsigned int i, j;
+	ARScene *subject, *target;
+	for (i = 0; i < scenes.size(); i++) {
+		subject = scenes[i];
+		for (j = i+1; j < scenes.size(); j++) {
+			target = scenes[j];
 			if (subject != target) {
 				for (int i = 0; i < target->numLeads(); i++) {
-
+					subject->proximityCheck(target, i);
 				}
 			}
 		}
-	}
-
-	// Check proximity, adding/removing wires and togglingConnections()
-
-	for each (Wire w in wires) {
-		//w.setEndpoints();
-		w.render();
+		for each (Wire w in subject->wires) {
+			w.render();
+		}
 	}
 }
 
