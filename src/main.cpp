@@ -64,7 +64,6 @@ int main(int argc, char **argv) {
         return -1;
 	}
     
-    _CrtDumpMemoryLeaks();
     cout << "Game Over" << endl;
     return 0;
 }

@@ -53,6 +53,10 @@ Book::Book(const libconfig::Setting& config, int argc, char** argv)
 
 Book::~Book(void)
 {
+    fgCamera.release();
+    //reg->
+    delete camera;
+    //delete reg;
 }
 
 vector<ARScene*> Book::getScenes(int ARCircuitNum){
@@ -79,6 +83,7 @@ void Book::run(){
 		switch(cvWaitKey(1)) {
 			case 27:
 				running = false; 
+                return;
 				break;
 			case 'q':
 				break;
