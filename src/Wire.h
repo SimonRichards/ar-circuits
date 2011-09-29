@@ -9,6 +9,7 @@ class Wire : public osg::Geode
 {
 private:
     osg::ref_ptr<osg::Cylinder> wireShape;
+    osg::ref_ptr<osg::ShapeDrawable> wireDrawable;
 public:
 	Wire(ARScene *cA, ARScene *cB, int lA, int lB);
 	~Wire();

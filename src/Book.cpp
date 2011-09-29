@@ -87,6 +87,7 @@ void Book::run(){
 			case 'q':
 				break;
 		}
+        gnucap.analyse();
         
 		cvReleaseImage(&frame);
 		for (int i=0; i<mt.size(); i++) mt.at(i).clear(); mt.clear();

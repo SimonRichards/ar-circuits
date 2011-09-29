@@ -35,6 +35,8 @@ GnucapWrapper::GnucapWrapper(double fps, int steps) :
 	stringstream conv;
 	conv << "trans " << 1/fps << " " << (1/fps) / (double)steps;
 	transCommand = conv.str();
+	CMD::cmdproc("print trans v(nodes)");
+	CMD::cmdproc(transCommand); 
 }
 
 GnucapWrapper::~GnucapWrapper() {
