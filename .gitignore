@@ -65,3 +65,4 @@ ipch
 *.exe
 *.lastbuildstate
 *.rc
+/resources/markers/build

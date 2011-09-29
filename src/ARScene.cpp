@@ -8,6 +8,7 @@ extern string markerDir;
 extern string modelDir;
 extern unsigned long proximityDelay;
 extern double proximityThreshold;
+
 ARScene::ARScene(const libconfig::Setting& modelCfg, string markerFile, gnucap_lib::Component* c, OPIRALibrary::RegistrationARToolkit* r)
 	: markerVisible(false), markerMatrix(osg::Matrix::identity()), initialSceneMatrix(osg::Matrix::identity())
 {
@@ -259,6 +260,7 @@ void ARScene::proximityCheck(ARScene* target, int lead) {
         //auto d = (getCoord(lead) - target->getCoord(i)).length2();
         //cout << d << endl;
         bool prox = (getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold;
+		cout << proximityDelay << proximityThreshold << endl;
 
         // If this is the target and the timer is already running
 		if (timers[lead].active && timers[lead].is(target, i)) {
