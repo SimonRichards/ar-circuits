@@ -72,7 +72,7 @@ std::vector<MarkerTransform> RegistrationARToolkit::performRegistration(IplImage
 	cvCvtColor(frame_input, bgraImage, CV_RGB2BGRA);
 
 	//Find Markers
-	arDetectMarkerConf((ARUint8 *)bgraImage->imageData, 100, &marker_info, &marker_num, 0.1);
+	arDetectMarkerConf((ARUint8 *)bgraImage->imageData, 100, &marker_info, &marker_num, 0.5);
 
 	//For all Markers
 	for (int i=0; i<marker_num; i++) {
