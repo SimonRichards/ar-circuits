@@ -150,6 +150,7 @@ OMSTREAM & OMSTREAM::operator<<(const char *str)
  */
 OMSTREAM & OMSTREAM::operator<<(char chr)
 {
+    //std::cout << chr;
 	/*
   if (_mask & 1) {
     unreachable(); 

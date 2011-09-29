@@ -111,7 +111,9 @@ void SIM::print(double x)
     }
     for (PROBELIST::const_iterator
 	    p=printlist().begin();  p!=printlist().end();  ++p) {
-            setProbe(p->_what, p->value(), p->label());
+            if (p->_what.c_str()[0] == 'v' ||
+                p->_what.c_str()[0] == 'i')
+                setProbe(p->_what, p->value(), p->label());
             
 			//int node = p->label().c_str()[2] - '0';
 			//int voltage = p->value();

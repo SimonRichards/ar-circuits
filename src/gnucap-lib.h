@@ -40,7 +40,7 @@ namespace gnucap_lib {
 	class Component {
 	private:
 		bool changed;
-		int *nodes;
+		int nodes[2];
 		string _value;
 		string generateString();
 		Component(string name);
@@ -49,13 +49,16 @@ namespace gnucap_lib {
         int setNodes(int lead, int nodeVal, int nodeCount);
 		~Component();
 		void calculateVoltage(std::map<int, double> &voltages);
+        bool minimiseNodes();
 		friend class GnucapWrapper;
 
 	public:
 		string _name;
 		unsigned int leads;
 		double voltage, current;
-		vector<Connection>* connections;
+		vector<Connection> connections[2];
+        vector<Connection>* connectionA;
+        vector<Connection>* connectionB;
 		bool toggleConnection(Component *other, int lead, int otherLead); // returns true if components are connected following action
 		bool isActive();
 	};

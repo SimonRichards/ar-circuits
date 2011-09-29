@@ -22,12 +22,13 @@ std::map<int, double> nodeVoltages;
 std::map<string, double> componentCurrents;
 
 void setProbe(std::string what, double value, std::string label) {
-    cout << what << ' ' << value << ' '<< label << endl;
+    //cout << what << ' ' << value << ' '<< label << endl;
     switch(what.c_str()[0]) {
     case 'v':
         nodeVoltages[atoi(stripLabel(label).c_str())] = value;
         break;
     case 'i':
+        //cout << "current = " << value << endl;
         componentCurrents[stripLabel(label)] = value;
         break;
     default:
@@ -109,6 +110,17 @@ namespace gnucap_lib {
             mainSupply = *result;
             mainSupply->setNodes(0, 0, 0);
 
+            bool change = false;
+            do {
+                for each (Component* c in components) {
+                    if (c->minimiseNodes()) {
+                        change = true;
+                    }
+                }
+            } while (change);
+                
+
+
             if (mainSupply->nodes[1] == -1) {
 #ifdef DEBUG
                 cout << "Circuit incomplete" << endl;
@@ -139,9 +151,12 @@ namespace gnucap_lib {
         CMD::cmdproc("trans"); 
         for each(Component* c in components) {
             c->calculateVoltage(nodeVoltages);
+            if (componentCurrents.find(c->_name) == componentCurrents.end())
+                cerr << "Component current not found\n"; 
             c->current = componentCurrents[c->_name];
 
         }
+        //CMD::cmdproc("list");
     }
 
 
@@ -201,11 +216,18 @@ namespace gnucap_lib {
     }
 
     void Component::calculateVoltage(std::map<int, double> &voltages) {
+        
+        auto n1 = nodes[0];
+        auto n2 = nodes[1];
         voltage = voltages[nodes[0]] - voltages[nodes[1]]; //TODO: calculate more voltages for trannies and other components where leads!=2
     }
 
     int Component::setNodes(int lead, int nodeVal, int nodeCount) {
         unsigned int i, j;
+        auto n1 = nodes[0];
+        auto n2 = nodes[1];
+        cout << "started setNodes()" << endl;
+
         if (nodes[lead] != -1)
             return nodeCount;
         nodes[lead] = nodeCount;
@@ -215,13 +237,14 @@ namespace gnucap_lib {
         for (j = 0; j < leads; j++) {
             if (j != lead) {
                 nodeCount++;
+                //nodes[j] = nodeCount;
                 for (i = 0; i < connections[j].size(); i++) {
                     nodeCount = connections[j][i].other->setNodes(connections[j][i].otherLead, nodeVal, nodeCount);
                 }
             }
         }
-
-        return nodeCount;
+        cout << "completed setNodes()" << endl;
+        return nodeCount - 1;
     }
 
     Component::Component(string name, double value)  : 
@@ -237,6 +260,8 @@ namespace gnucap_lib {
 
     void Component::init() {
         //cout << "new component" <<endl;
+        connectionA = connections;
+        connectionB = connections + 1;
         switch (_name.c_str()[0]) {
         case 'M'://osfet
         case 'Q'://BJT
@@ -244,14 +269,14 @@ namespace gnucap_lib {
         default:
             leads = 2;  
         }
-        connections = new std::vector<Connection>[leads];
-        nodes = new int[leads];
+        //connections = new std::vector<Connection>[leads];
+        //nodes = new int[leads];
         for (unsigned int i = 0; i < leads; i++) nodes[i] = -1;
     }
 
     Component::~Component() {
         //	delete connections; TODO, FIXME: destructor fails
-        delete nodes;
+//        delete nodes;
     }
 
     bool Component::isActive() {
@@ -271,6 +296,8 @@ namespace gnucap_lib {
     }
 
     bool Component::toggleConnection(Component *other, int lead, int otherLead) {
+        auto c0 = connections[0];
+        auto c1 = connections[1];
         other->changed = changed = true;
         vector<Connection>::iterator c;
         for (c = connections[lead].begin(); c != connections[lead].end(); c++) {
@@ -281,7 +308,9 @@ namespace gnucap_lib {
 
         if (c == connections[lead].end()) { // if connections[lead] does not contain other
             connections[lead].push_back(Connection(other, otherLead));
+            cout << connections[lead].size() << ", ";
             other->connections[otherLead].push_back(Connection(this, lead));
+            cout << other->connections[otherLead].size() << endl;
             return true;
         } else { // if it does
             connections[lead].erase(c);
@@ -293,11 +322,26 @@ namespace gnucap_lib {
                     break;
                 }
             }
+            cout << connections[lead].size() << ", ";
+            cout << other->connections[otherLead].size() << endl;
 
             if (i == size) cerr << "connection toggle error" << endl;
 
             return false;
         }
+    }
+
+    
+    bool Component::minimiseNodes() {
+        for (int i = 0; i < leads; i++) {
+            for each (Connection c in connections[i]) {
+                if (c.other->nodes[c.otherLead] < nodes[i]) {
+                    nodes[i] = c.other->nodes[c.otherLead];
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }
