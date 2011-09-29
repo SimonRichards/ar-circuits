@@ -1,46 +1,20 @@
 #include "StdAfx.h"
 
 #include "Book.h"
-//#define PERFORMANCE_OUTPUT
-
-#ifdef PERFORMANCE_OUTPUT
-LARGE_INTEGER myCounter, frequency;
-long long last;
-void tic() {
-    QueryPerformanceCounter(&myCounter);
-    last = myCounter.QuadPart;
-}
-
-void toc(string name) {
-    QueryPerformanceCounter(&myCounter);
-    cout << name << " took " << double(myCounter.QuadPart - last) / double(frequency.QuadPart) << 's' << endl;
-}
-#else
-#define tic()
-#define toc(x)
-#define QueryPerformanceFrequency(x)
-#endif
 
 Book::Book(const libconfig::Setting& config, int argc, char** argv)
 	: camWidth(800), camHeight(600), gnucap(20, 5)
 {
-    //gnucap.test();
-    QueryPerformanceFrequency(&frequency);
-
-    tic();
  	initOGL(argc, argv);
-    toc("initOGL");
     
-    tic();
 	camera = new CvCamera(0, "resources/camera.yml");
 	fgCamera->setProjectionMatrix(osg::Matrix(calcProjection(camera->getParameters(), camera->getDistortion(), cvSize(camera->getWidth(), camera->getHeight()))));
-    toc("camera init");
 	
-    tic();
+
 	reg = new RegistrationARToolkit(camera->getParameters(), camera->getDistortion());
-    toc("registrationAR");
+
     
-    tic();
+
 	for(int i = 0; i < config["circuits"].getLength(); i++){
 		ARCircuits.push_back(new ARCircuit(config["circuits"][i], gnucap, reg));
 	}	
@@ -49,7 +23,6 @@ Book::Book(const libconfig::Setting& config, int argc, char** argv)
 			fgCamera->addChild(scene);
 		}
 	}
-    toc("ARCircuits");
 }
 
 Book::~Book(void)
@@ -70,13 +43,13 @@ void Book::run(){
 	bool pauseNext = false;
 	while (running) {
 		IplImage *frame = camera->getFrame();
-        tic();
+        //tic();
 		std::vector<MarkerTransform> mt = reg->performRegistration(frame);
-        toc("performing registration");
+        //toc("performing registration");
 
-        tic();
+        //tic();
 		render(frame, mt);
-        toc("rendering");
+        //toc("rendering");
 
 		if(pauseNext){
 			pauseNext = false;
@@ -91,7 +64,7 @@ void Book::run(){
         gnucap.analyse();
         
 		cvReleaseImage(&frame);
-		for (int i=0; i<mt.size(); i++) mt.at(i).clear(); mt.clear();
+		for (unsigned int i=0; i<mt.size(); i++) mt.at(i).clear(); mt.clear();
 	}
 }
 
