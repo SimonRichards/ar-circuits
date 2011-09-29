@@ -38,7 +38,7 @@ ARScene::ARScene(const libconfig::Setting& modelCfg, string markerFile, gnucap_l
 	visible->addChild(originTransform); originTransform->addChild(sceneTransform); sceneTransform->addChild(model); //transform->addChild(createLights(this));
 	this->addChild(visible);
 	markerID = markerDir + markerFile;
-	r->addMarker(markerID, 80, 80);
+	r->addMarker(markerID, 20, 20);
 	osg::Group* modelNodes = model->asGroup();
 
 	for(int i = 0; i < modelCfg["animNodes"].getLength(); i++){
@@ -47,11 +47,11 @@ ARScene::ARScene(const libconfig::Setting& modelCfg, string markerFile, gnucap_l
     osg::ref_ptr<osg::Geode> leadGeode = new osg::Geode;
     modelNodes->addChild(leadGeode);
 
-    osg::ref_ptr<osg::Sphere> leftLead(new osg::Sphere(osg::Vec3f(-LEAD_OFFSET,0,0),LEAD_RADIUS));
+    leftLead = new osg::Sphere(osg::Vec3f(-LEAD_OFFSET,0,0),LEAD_RADIUS);
     leftLeadDrawable = new osg::ShapeDrawable(leftLead);
     leadGeode->addDrawable(leftLeadDrawable);
 
-    osg::ref_ptr<osg::Sphere> rightLead(new osg::Sphere(osg::Vec3f(LEAD_OFFSET,0,0),LEAD_RADIUS));
+    rightLead = new osg::Sphere(osg::Vec3f(LEAD_OFFSET,0,0),LEAD_RADIUS);
     rightLeadDrawable =new osg::ShapeDrawable(rightLead);
     leadGeode->addDrawable(rightLeadDrawable);
     
@@ -239,11 +239,11 @@ ARScene::~ARScene(void) {
 #define LEAD_OFFSET_OSG 65
 
 osg::Vec3d ARScene::getCoord(int lead) {
-    osg::Vec3d offset(lead == 0 ? LEAD_OFFSET_OSG : -LEAD_OFFSET_OSG, 0, 0);
+	osg::Vec3d offset = lead != 0 ? leftLead->getCenter() : rightLead->getCenter();
     auto quat = markerMatrix.getRotate();
     auto trans = markerMatrix.getTrans();
     offset = markerMatrix.getRotate() * offset;
-	return  markerMatrix.getTrans() + offset;;
+	return  markerMatrix.getTrans() + offset;
 }
 
 void ARScene::setNodeColours(ARScene* other, int otherLead, int lead, osg::Vec4 colour) {
