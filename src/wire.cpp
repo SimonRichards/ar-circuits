@@ -21,9 +21,8 @@ void Wire::update() {
     wireShape->setCenter((start+end)/2);
     wireShape->setHeight((start - end).length());
     osg::Quat q;
-    q.makeRotate(start, end);
+    q.makeRotate(end, start);
     //cout << q << endl;
-    wireShape->setRotation(q);
     wireDrawable->dirtyDisplayList();
 }
 
