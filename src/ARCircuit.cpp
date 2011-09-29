@@ -27,7 +27,6 @@ ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper
                 buffer.str("");
 				buffer << type << ".values.[" << i << "]";
 				string st = buffer.str();
-				bool up;
 				try{
 					value = (int) config[type]["values"][i];
 				} catch (libconfig::SettingNotFoundException e){
