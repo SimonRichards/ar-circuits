@@ -30,7 +30,7 @@ Wire::~Wire() {
     //removeDrawables(getNumDrawables());
 }
 
-void Wire::update(osg::Vec3d normal, float viHeight) {
+void Wire::update(osg::Vec3d normal, float viHeight, float viRadius) {
     osg::Vec3d &start = compA->getCoord(leadA);
     osg::Vec3d &end   = compB->getCoord(leadB);
     osg::Quat q;
@@ -42,10 +42,10 @@ void Wire::update(osg::Vec3d normal, float viHeight) {
     wireDrawable->dirtyDisplayList();
 	
     viShape->setCenter((start+end)/2);
-	viShape->setCenter(osg::Vec3d(viShape->getCenter().x(), viShape->getCenter().y() + viHeight, viShape->getCenter().z()));
     viShape->setHeight((start - end).length());
 	viShape->setRotation(q);
 	viShape->setCenter(viShape->getCenter() + normal*viHeight);
+	viShape->setRadius(viRadius);
     viDrawable->dirtyDisplayList();
 }
 

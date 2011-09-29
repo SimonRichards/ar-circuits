@@ -17,7 +17,7 @@ public:
 	~Wire();
 	ARScene *compA, *compB;
 	int leadA, leadB;
-	void update(osg::Vec3d normal, float viHeight = 0.0);
+	void update(osg::Vec3d normal, float viHeight = 0.0, float viRadius = 2);
 
     bool is(ARScene* s1, ARScene* s2, int l1, int l2);
 };
