@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
 	root.lookupValue("markerDir", markerDir);
 	root.lookupValue("modelDir", modelDir);
 	root.lookupValue("proximityThreshold", proximityThreshold);
-	unsigned long long temp = proximityDelay;
+	int temp = proximityDelay;
 	root.lookupValue("proximityDelay", temp);
 	proximityDelay = temp;
 	markerDir = includeDir + markerDir;

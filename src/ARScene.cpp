@@ -6,6 +6,7 @@ extern string markerDir;
 extern string modelDir;
 extern unsigned long proximityDelay;
 extern double proximityThreshold;
+
 ARScene::ARScene(const libconfig::Setting& modelCfg, string markerFile, gnucap_lib::Component* c, OPIRALibrary::RegistrationARToolkit* r)
 	: markerVisible(false), markerMatrix(osg::Matrix::identity()), initialSceneMatrix(osg::Matrix::identity())
 {
