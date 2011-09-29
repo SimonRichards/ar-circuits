@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 
 #include "Book.h"
-#define PERFORMANCE_OUTPUT
+//#define PERFORMANCE_OUTPUT
 
 #ifdef PERFORMANCE_OUTPUT
 LARGE_INTEGER myCounter, frequency;
