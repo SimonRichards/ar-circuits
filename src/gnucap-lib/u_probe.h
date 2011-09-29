@@ -29,12 +29,12 @@
 class CKT_BASE;
 /*--------------------------------------------------------------------------*/
 class PROBE {
-private:
-  std::string	_what;    
+private:   
   int		_node;
   const CKT_BASE* _brh;
   double	_lo,_hi;
 public:
+  std::string	_what; 
   explicit  PROBE(const std::string& what, int node, double lo=0, double hi=0);
   explicit  PROBE(const std::string& what, const CKT_BASE *brh,
 		  double lo=0, double hi=0);

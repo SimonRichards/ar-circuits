@@ -24,10 +24,11 @@ void toc(string name) {
 Book::Book(const libconfig::Setting& config, int argc, char** argv)
 	: camWidth(800), camHeight(600), gnucap(20, 5)
 {
+    //gnucap.test();
     QueryPerformanceFrequency(&frequency);
 
     tic();
-	initOGL(argc, argv);
+ 	initOGL(argc, argv);
     toc("initOGL");
     
     tic();

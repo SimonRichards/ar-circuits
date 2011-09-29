@@ -56,7 +56,7 @@ const char* octal(int x)
  * If already beyond, start new line, then tab to column.
  */
 OMSTREAM & OMSTREAM::tab(int count)
-{
+{/*
   for (int ii=0, mm=1;   ii<=MAXHANDLE;   ++ii, mm<<=1) {
     if (_mask & mm) {
       OMSTREAM this_file(_mask & mm);
@@ -69,7 +69,7 @@ OMSTREAM & OMSTREAM::tab(int count)
       }
     }else{
     }
-  }
+  }*/
   return *this;
 }
 /*--------------------------------------------------------------------------*/
