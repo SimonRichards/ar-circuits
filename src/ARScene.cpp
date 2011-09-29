@@ -54,7 +54,6 @@ ARScene::ARScene(const libconfig::Setting& modelCfg, string markerFile, gnucap_l
     rightLead = new osg::Sphere(osg::Vec3f(LEAD_OFFSET,0,0),LEAD_RADIUS);
     rightLeadDrawable =new osg::ShapeDrawable(rightLead);
     leadGeode->addDrawable(rightLeadDrawable);
-    
     /*
 	 for(int i = 0; i < modelCfg["movieNodes"].getLength(); i++){
 	 vector<string> imgPaths;
@@ -239,9 +238,15 @@ ARScene::~ARScene(void) {
 #define LEAD_OFFSET_OSG 65
 
 osg::Vec3d ARScene::getCoord(int lead) {
+<<<<<<< HEAD
 	osg::Vec3d offset = lead != 0 ? leftLead->getCenter() : rightLead->getCenter();
     auto quat = markerMatrix.getRotate();
     auto trans = markerMatrix.getTrans();
+=======
+    osg::Vec3d offset(lead == 0 ? LEAD_OFFSET_OSG : -LEAD_OFFSET_OSG, 0, 0);
+    //auto quat = markerMatrix.getRotate();
+    //auto trans = markerMatrix.getTrans();
+>>>>>>> c18d8d69a69a61a57093091fb0c4811bdc0fba0e
     offset = markerMatrix.getRotate() * offset;
 	return  markerMatrix.getTrans() + offset;
 }
@@ -269,19 +274,20 @@ void ARScene::proximityCheck(ARScene* target, int lead) {
             continue;
 
         // Calculate if leads are within threshold distance
-        auto d = (getCoord(lead) - target->getCoord(i)).length2();
+        //auto d = (getCoord(lead) - target->getCoord(i)).length2();
         //cout << d << ' ' << getCoord(lead) << ' ' << target->getCoord(i) << endl;
         bool prox = (getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold;
 		//cout << proximityDelay << proximityThreshold << endl;
+        /*
         if (prox) {
             cout << this->component->_name << '.' << lead << " is close to " << target->component->_name << '.' << i << endl;
-        }
+        }*/
         // If this is the target and the timer is already running
 		if (timers[lead].active && timers[lead].is(target, i)) {
 			if (prox) { // And it is still in range
 				if (GetTickCount() - timers[lead].startTime > proximityDelay) { // and the connection timer is complete
                     cout << GetTickCount() - timers[lead].startTime << endl;
-                    setNodeColours(target, i, lead, osg::Vec4(255,0,255,255));
+                    setNodeColours(target, i, lead, osg::Vec4(0,1,0,1));
 					if (component->toggleConnection(target->component, lead, i)) { // toggle: if a new connection is formed
 
                         // Add a wire
@@ -306,7 +312,7 @@ void ARScene::proximityCheck(ARScene* target, int lead) {
                     timers[lead].complete = true; 
 				}
 			} else { //No longer in range
-                setNodeColours(target, i, lead, osg::Vec4(150,150,150,255));
+                setNodeColours(target, i, lead, osg::Vec4(1,1,1,1));
 				timers[lead].active = false;
 			}
 		} else if (!timers[lead].active && !timers[lead].complete && prox) { // If this is the first iteration inside proximity on an unused timer
@@ -316,10 +322,10 @@ void ARScene::proximityCheck(ARScene* target, int lead) {
 			timers[lead].otherLead = i;
 			timers[lead].startTime = GetTickCount();
 
-            setNodeColours(target, i, lead, osg::Vec4(255,255,0,255));
+            setNodeColours(target, i, lead, osg::Vec4(1,1,0,1));
 		} else if (timers[lead].complete && !prox && timers[lead].is(target, i)) { // If the timer has recently completed but is yet to have its complete flag cleared.
             // Clear the flag
-            setNodeColours(target, i, lead, osg::Vec4(150,150,150, 255));
+            setNodeColours(target, i, lead, osg::Vec4(1,1,1, 1));
             timers[lead].complete = false;
         }
 	}

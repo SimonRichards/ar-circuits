@@ -48,7 +48,7 @@ bool RegistrationARToolkit::addMarker(string markerName, int width, int height) 
 
 RegistrationARToolkit::~RegistrationARToolkit() {
 	//Clean up afterwards
-	delete cParam;
+	//delete cParam;
 }
 
 std::vector<MarkerTransform> RegistrationARToolkit::performRegistration(IplImage* frame_input) {
@@ -102,7 +102,8 @@ std::vector<MarkerTransform> RegistrationARToolkit::performRegistration(IplImage
 //Convert OpenCV Camera Parameters into ARToolkit Camera Parameters
 ARParam* RegistrationARToolkit::convertCameraParams(CvMat* captureParams, CvMat* captureDistortion, int captureWidth, int captureHeight) {
 	//Allocate Space
-	ARParam *cparam = (ARParam*)malloc(sizeof(ARParam));
+    cout << "convertCameraParams" << endl;
+    ARParam *cparam = new ARParam;
 	//Copy the Width and Size
 	cparam->xsize = captureWidth; cparam->ysize = captureHeight;
 	

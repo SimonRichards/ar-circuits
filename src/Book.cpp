@@ -53,6 +53,10 @@ Book::Book(const libconfig::Setting& config, int argc, char** argv)
 
 Book::~Book(void)
 {
+    fgCamera.release();
+    //reg->
+    delete camera;
+    //delete reg;
 }
 
 vector<ARScene*> Book::getScenes(int ARCircuitNum){
@@ -83,6 +87,7 @@ void Book::run(){
 			case 'q':
 				break;
 		}
+        gnucap.analyse();
         
 		cvReleaseImage(&frame);
 		for (int i=0; i<mt.size(); i++) mt.at(i).clear(); mt.clear();
