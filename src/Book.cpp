@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 
 #include "Book.h"
-//#define PERFORMANCE_OUTPUT
+#define PERFORMANCE_OUTPUT
 
 #ifdef PERFORMANCE_OUTPUT
 LARGE_INTEGER myCounter, frequency;
@@ -65,7 +65,9 @@ void Book::run(){
 	bool pauseNext = false;
 	while (running) {
 		IplImage *frame = camera->getFrame();
+        tic();
 		std::vector<MarkerTransform> mt = reg->performRegistration(frame);
+        toc("performing registration");
 
         tic();
 		render(frame, mt);
@@ -142,6 +144,7 @@ void Book::render(IplImage* frame_input, std::vector<MarkerTransform> mt) {
 	IplImage *scaleImage = cvCreateImage(cvSize(512,512), IPL_DEPTH_8U, 3);
 	cvResize(frame_input, scaleImage); cvCvtColor(scaleImage, scaleImage, CV_RGB2BGR);
  	mVideoImage->setImage(scaleImage->width, scaleImage->height, 0, 3, GL_RGB, GL_UNSIGNED_BYTE, (unsigned char*)scaleImage->imageData, osg::Image::NO_DELETE);
+    //toc("retrieving image");
 	
 	for each (ARCircuit* ARCircuit in ARCircuits){
 		for each (ARScene* scene in ARCircuit->getScenes()){
