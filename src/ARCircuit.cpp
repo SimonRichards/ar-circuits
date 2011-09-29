@@ -27,7 +27,7 @@ ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper
                 buffer.str("");
                 buffer << type << ".values.[" << i + 1 << ']';
 				string st = buffer.str();
-                config.lookupValue(buffer.str(), value);
+                bool up = config.lookupValue(buffer.str(), value);
 				gnucap_lib::Component *c;
                 switch (type.c_str()[0]) { 
                 case 'r': c = gnucap.newResistor(value); break;
