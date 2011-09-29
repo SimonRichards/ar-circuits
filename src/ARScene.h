@@ -80,6 +80,8 @@ private:
 	ConnectionTimer* timers;
     osg::ref_ptr<osg::ShapeDrawable> leftLeadDrawable;
     osg::ref_ptr<osg::ShapeDrawable> rightLeadDrawable;
+	osg::ref_ptr<osg::Sphere> leftLead;
+	osg::ref_ptr<osg::Sphere> rightLead;
 };
 
 
