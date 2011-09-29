@@ -7,16 +7,7 @@
 #include "ARToolkit2.7OpenCV.h"
 #include "MovieNode.h"
 
-class ARScene;
-
-struct ConnectionTimer {
-	ARScene* component;
-	int otherLead;
-	unsigned long startTime;
-	bool active;
-	ConnectionTimer() :
-	active(false){}
-};
+struct ConnectionTimer; 
 
 class ARScene :
 	public osg::Group
@@ -98,4 +89,18 @@ public:
       ARScene* nodeToUpdate = dynamic_cast<ARScene*> (node);
 	  nodeToUpdate->updateTextures();
    }
+};
+
+
+struct ConnectionTimer {
+	ARScene* component;
+	int otherLead;
+	unsigned long startTime;
+	bool active;
+    bool complete;
+	ConnectionTimer() :
+	active(false), complete(false){}
+    bool is(ARScene* scene, int lead) {
+        return (component == scene && lead == otherLead);
+    }
 };

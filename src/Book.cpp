@@ -1,17 +1,45 @@
 #include "StdAfx.h"
 
 #include "Book.h"
+#define PERFORMANCE_OUTPUT
+
+#ifdef PERFORMANCE_OUTPUT
+LARGE_INTEGER myCounter, frequency;
+long long last;
+void tic() {
+    QueryPerformanceCounter(&myCounter);
+    last = myCounter.QuadPart;
+}
+
+void toc(string name) {
+    QueryPerformanceCounter(&myCounter);
+    cout << name << " took " << double(myCounter.QuadPart - last) / double(frequency.QuadPart) << 's' << endl;
+}
+#else
+#define tic()
+#define toc(x)
+#define QueryPerformanceFrequency(x)
+#endif
 
 Book::Book(const libconfig::Setting& config, int argc, char** argv)
 	: camWidth(800), camHeight(600), gnucap(20, 5)
 {
-	initOGL(argc, argv);
+    QueryPerformanceFrequency(&frequency);
 
+    tic();
+	initOGL(argc, argv);
+    toc("initOGL");
+    
+    tic();
 	camera = new CvCamera(0, "resources/camera.yml");
 	fgCamera->setProjectionMatrix(osg::Matrix(calcProjection(camera->getParameters(), camera->getDistortion(), cvSize(camera->getWidth(), camera->getHeight()))));
+    toc("camera init");
 	
+    tic();
 	reg = new RegistrationARToolkit(camera->getParameters(), camera->getDistortion());
-
+    toc("registrationAR");
+    
+    tic();
 	for(int i = 0; i < config["circuits"].getLength(); i++){
 		ARCircuits.push_back(new ARCircuit(config["circuits"][i], gnucap, reg));
 	}	
@@ -20,6 +48,7 @@ Book::Book(const libconfig::Setting& config, int argc, char** argv)
 			fgCamera->addChild(scene);
 		}
 	}
+    toc("ARCircuits");
 }
 
 Book::~Book(void)
@@ -32,33 +61,33 @@ vector<ARScene*> Book::getScenes(int ARCircuitNum){
 
 void Book::run(){
 	int frameMult = 1;
-
 	bool running = true;
 	bool pauseNext = false;
 	while (running) {
 		IplImage *frame = camera->getFrame();
 		std::vector<MarkerTransform> mt = reg->performRegistration(frame);
 
+        tic();
 		render(frame, mt);
+        toc("rendering");
 
 		if(pauseNext){
 			pauseNext = false;
 		}
-		switch(cvWaitKey(20)) {
+		switch(cvWaitKey(1)) {
 			case 27:
 				running = false; 
 				break;
 			case 'q':
 				break;
 		}
-
+        
 		cvReleaseImage(&frame);
 		for (int i=0; i<mt.size(); i++) mt.at(i).clear(); mt.clear();
 	}
 }
 
 void Book::initOGL(int argc, char **argv) {
-
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_STENCIL);
 	glutInitWindowSize(camWidth, camHeight);

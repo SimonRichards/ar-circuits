@@ -1,76 +1,68 @@
 #include "StdAfx.h"
 #include "Wire.h"
 #include "ARCircuit.h"
+#include <iostream>
 
 
-ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper gnucap, OPIRALibrary::RegistrationARToolkit* r)
+ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper &gnucap, OPIRALibrary::RegistrationARToolkit* r)
 {
-	double value = 100.;
-	if(config.exists("resistors")){
-		for(int i = 0; i < (int)config["resistors"]["number"]; i++){
-			string markerFile = config["resistors"]["markerProto"];
-			config.lookupValue("values[i]", value);
-			scenes.push_back(new ARScene(config["resistors"]["model"], markerFile, gnucap.newResistor(value), r));
-		}
-	}
-	if(config.exists("capacitors")){
-		for(int i = 0; i < (int)config["capacitors"]["number"]; i++){
-			string markerFile = config["capacitors"]["markerProto"];
-			config.lookupValue("values[i]", value);
-			scenes.push_back(new ARScene(config["capacitors"]["model"], markerFile, gnucap.newCapacitor(value), r));
-		}
-	}
-	if(config.exists("inductors")){
-		for(int i = 0; i < (int)config["inductors"]["number"]; i++){
-			string markerFile = config["inductors"]["markerProto"];
-			config.lookupValue("values[i]", value);
-			scenes.push_back(new ARScene(config["inductors"]["model"], markerFile, gnucap.newInductor(value), r));
-		}
-	}
-	if(config.exists("dcsupplies")){
-		for(int i = 0; i < (int)config["dcsupplies"]["number"]; i++){
-			string markerFile = config["dcsupplies"]["markerProto"];
-			config.lookupValue("values[i]", value);
-			scenes.push_back(new ARScene(config["dcsupplies"]["model"], markerFile, gnucap.newDCSupply(value), r));
-		}
-	}
-	if(config.exists("acsupplies")){
-		for(int i = 0; i < (int)config["acsupplies"]["number"]; i++){
-			string markerFile = config["acsupplies"]["markerProto"];
-			config.lookupValue("values[i]", value);
-			scenes.push_back(new ARScene(config["acsupplies"]["model"], markerFile, gnucap.newACSupply(value, 50), r)); //TODO: 50Hz
-		}
-	}
+    string types[] = {"resistors", "capacitors", "inductors", "dcsupplies", "acsupplies"};
+    stringstream valueBuf;
+    gnucap_lib::Component *c;
+
+    for each (string type in types) {
+        if(config.exists(type)) {
+            int num = (int)config[type]["number"];
+            for(int i = 0; i < num; i++){
+                double value = 100;
+                string markerFile = config[type]["markerProto"];
+                valueBuf.clear();
+                valueBuf << "values[" << i << ']';
+                config.lookupValue(valueBuf.str(), value);
+                switch (type.c_str()[0]) { //apologies to anyone who wishes to add a type with the same initial as a previous one
+                case 'r': c = gnucap.newResistor(value);
+                case 'c': c = gnucap.newCapacitor(value);
+                case 'i': c = gnucap.newInductor(value);
+                case 'd': c = gnucap.newDCSupply(value);
+                case 'a': c = gnucap.newACSupply(value, 50);
+                default: cerr << "invalid component type" <<endl;
+                }
+                scenes.push_back(new ARScene(config[type]["model"], markerFile, c, r));
+            }
+        }
+    }
 }
 
 vector<ARScene*> ARCircuit::getScenes(){
-	return scenes;
+    return scenes;
 }
 
 void ARCircuit::updateARCircuit(){
-	for each (ARScene* scene in scenes){ //TODO: if markers are lost keep displaying their model in the last known location.
-		scene->setVisibility(scene->isMarkerVisible());
-		scene->updateTextures();
-		scene->setOriginMatrix(scene->getMarkerMatrix());
-	}
+    for each (ARScene* scene in scenes){ //TODO: if markers are lost keep displaying their model in the last known location.
+        scene->setVisibility(scene->isMarkerVisible());
+        scene->updateTextures();
+        scene->setOriginMatrix(scene->getMarkerMatrix());
+    }
 
-	// Check for node proximity
-	unsigned int i, j;
-	ARScene *subject, *target;
-	for (i = 0; i < scenes.size(); i++) {
-		subject = scenes[i];
-		for (j = i+1; j < scenes.size(); j++) {
-			target = scenes[j];
-			if (subject != target) {
-				for (int i = 0; i < subject->numLeads(); i++) {
-					subject->proximityCheck(target, i);
-				}
-			}
-		}
+    // Check for node proximity
+    unsigned int i, j;
+    ARScene *subject, *target;
+    for (i = 0; i < scenes.size(); i++) {
+        subject = scenes[i];
+        if (!subject->isMarkerVisible()) continue;
+        for (j = i+1; j < scenes.size(); j++) {
+            target = scenes[j];
+            if (!target->isMarkerVisible()) continue;
+            if (subject != target) {
+                for (int i = 0; i < subject->numLeads(); i++) {
+                    subject->proximityCheck(target, i);
+                }
+            }
+        }
 
         for each (Wire* w in subject->wires)
             w->update();		
-	}
+    }
 }
 
 ARCircuit::~ARCircuit(void)

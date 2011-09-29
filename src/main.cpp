@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 
+#include "vld.h"
 #include "ARToolkit2.7OpenCV.h"
 #include "Book.h"
 #include <direct.h>
@@ -52,10 +53,15 @@ int main(int argc, char **argv) {
 	modelDir = includeDir + modelDir;
 
 	try{
-		book = new Book(root["book"], argc, argv);
-		book->run();
+		Book book(root["book"], argc, argv);
+		book.run();
 	}
 	catch(libconfig::SettingNotFoundException e){
 		cerr << "book not defined" << endl;
+        return -1;
 	}
+    
+    _CrtDumpMemoryLeaks();
+    cout << "Game Over" << endl;
+    return 0;
 }

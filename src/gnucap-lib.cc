@@ -199,6 +199,7 @@ _name(name)  {
 }
 
 void Component::init() {
+    cout << "new component" <<endl;
 	switch (_name.c_str()[0]) {
 	case 'M'://osfet
 	case 'Q'://BJT

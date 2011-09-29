@@ -36,7 +36,6 @@ ARScene::ARScene(const libconfig::Setting& modelCfg, string markerFile, gnucap_l
 	this->addChild(visible);
 	markerID = markerDir + markerFile;
 	r->addMarker(markerID, 80, 80);
-
 	osg::Group* modelNodes = model->asGroup();
 
 	for(int i = 0; i < modelCfg["animNodes"].getLength(); i++){
@@ -218,13 +217,11 @@ void ARScene::updateTextures(){
 	goToAndPlay(0.5);
 }
 
-ARScene::~ARScene(void)
-{
+ARScene::~ARScene(void) {
 	delete timers;
 }
 
 osg::Vec3d ARScene::getCoord(int lead) {
-	//TODO
 	osg::Vec3d result;
 	return result;
 }
@@ -236,31 +233,51 @@ osg::Vec3d ARScene::getCoord(int lead) {
  */
 void ARScene::proximityCheck(ARScene* target, int lead) {
 	for (int i = 0; i < target->numLeads(); i++) {
-		if (timers[lead].active && timers[lead].component == target && timers[lead].otherLead == i) {
-			if ((getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold) {
-				if (GetTickCount() - timers[lead].startTime > proximityDelay) {
-					if (component->toggleConnection(target->component, lead, i)) {
+        // Check timer is not running on another target/lead
+        if (timers[lead].active && ! timers[lead].is(target, i) )
+            continue;
+
+        // Calculate if leads are within threshold distance
+        bool prox = (getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold;
+
+        // If this is the target and the timer is already running
+		if (timers[lead].active && timers[lead].is(target, i)) {
+			if (prox) { // And it is still in range
+				if (GetTickCount() - timers[lead].startTime > proximityDelay) { // and the connection timer is complete
+					if (component->toggleConnection(target->component, lead, i)) { // toggle: if a new connection is formed
+
+                        // Add a wire
                         auto w = new Wire(this, target, lead, i);
 						this->addChild(w);
                         wires.push_back(w);
-					} else {
+
+					} else { //If an old connection is broken
+
+                        // Find and remove wire
                         for (unsigned int j = 0; j < wires.size(); j++)  {
                             if (wires[j]->is(this, target, lead, i)) {
-                                removeChild(wires[j]); //may not work
+                                removeChild(wires[j]); 
                                 wires.erase(wires.begin()+j);
 								break;
 							}
 						}
-					} 
+					}
+                    // Disable the timer and mark it as complete (cannot be restarted until removed from proximity)
+                    timers[lead].active = false;
+                    timers[lead].complete = true; 
 				}
-			} else {
+			} else { //No longer in range
 				timers[lead].active = false;
 			}
-		} else if (!timers[lead].active && ((getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold)) {
+		} else if (!timers[lead].active && !timers[lead].complete && prox) { // If this is the first iteration inside proximity on an unused timer
+            // Get the timer running
 			timers[lead].active = true;
 			timers[lead].component = target;
 			timers[lead].otherLead = i;
 			timers[lead].startTime = GetTickCount();
-		}
+		} else if (timers[lead].complete && !prox && timers[lead].complete) { // If the timer has recently completed but is yet to have its complete flag cleared.
+            // Clear the flag
+            timers[lead].complete = false;
+        }
 	}
 }
