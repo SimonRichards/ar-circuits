@@ -16,8 +16,11 @@ ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper
             for(int i = 0; i < num; i++){
                 double value = 100;
                 string markerFile = config[type]["markerProto"];
+                cout << markerFile << endl;
                 buffer.clear();
+                buffer.str("");
                 buffer << i;
+                cout << buffer.str() << endl;
                 if (markerFile.find_first_of('X') == -1) {
                     cerr << "markerFile " << markerFile << " did not contain an X." << endl;
                     exit(-1);
