@@ -54,7 +54,7 @@ void ARCircuit::updateARCircuit(){
     }
 
     // Check for node proximity
-    unsigned int i, j;
+    unsigned int i, j, k;
     ARScene *subject, *target;
     for (i = 0; i < scenes.size(); i++) {
         subject = scenes[i];
@@ -63,8 +63,8 @@ void ARCircuit::updateARCircuit(){
             target = scenes[j];
             if (!target->isMarkerVisible()) continue;
             if (subject != target) {
-                for (int i = 0; i < subject->numLeads(); i++) {
-                    subject->proximityCheck(target, i);
+                for (k = 0; k < subject->numLeads(); k++) {
+                    subject->proximityCheck(target, k);
                 }
             }
         }

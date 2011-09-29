@@ -16,7 +16,6 @@ double proximityThreshold = 16000.;
 using namespace OPIRALibrary;
 using namespace libconfig;
 
-Book* book;
 
 int main(int argc, char **argv) {
 	Config cfg;
