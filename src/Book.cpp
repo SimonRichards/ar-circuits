@@ -144,7 +144,6 @@ void Book::render(IplImage* frame_input, std::vector<MarkerTransform> mt) {
 	IplImage *scaleImage = cvCreateImage(cvSize(512,512), IPL_DEPTH_8U, 3);
 	cvResize(frame_input, scaleImage); cvCvtColor(scaleImage, scaleImage, CV_RGB2BGR);
  	mVideoImage->setImage(scaleImage->width, scaleImage->height, 0, 3, GL_RGB, GL_UNSIGNED_BYTE, (unsigned char*)scaleImage->imageData, osg::Image::NO_DELETE);
-    //toc("retrieving image");
 	
 	for each (ARCircuit* ARCircuit in ARCircuits){
 		for each (ARScene* scene in ARCircuit->getScenes()){
@@ -166,13 +165,13 @@ void Book::render(IplImage* frame_input, std::vector<MarkerTransform> mt) {
 	for each (ARCircuit* ARCircuit in ARCircuits){
 		ARCircuit->updateARCircuit();
 	}
-
+    
 	viewer.frame();
 
 	IplImage* outImage = cvCreateImage(cvSize(camWidth,camHeight), IPL_DEPTH_8U, 3);
 	glReadPixels(0,0,camWidth,camHeight,GL_RGB, GL_UNSIGNED_BYTE, outImage->imageData);
 	cvCvtColor( outImage, outImage, CV_BGR2RGB );
-	cvFlip(outImage, outImage);
+	cvFlip(outImage, 0, -1);
 
 	cvShowImage("Rendered Image", outImage);
 	cvReleaseImage(&outImage);

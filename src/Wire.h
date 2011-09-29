@@ -8,7 +8,7 @@ class ARScene;
 class Wire : public osg::Geode
 {
 private:
-
+    osg::ref_ptr<osg::Cylinder> wireShape;
 public:
 	Wire(ARScene *cA, ARScene *cB, int lA, int lB);
 	~Wire();

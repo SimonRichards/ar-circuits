@@ -77,6 +77,7 @@ protected:
 private:
 	gnucap_lib::Component* component;
 	ConnectionTimer* timers;
+
 };
 
 

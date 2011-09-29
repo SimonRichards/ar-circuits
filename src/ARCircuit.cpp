@@ -16,21 +16,19 @@ ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper
             for(int i = 0; i < num; i++){
                 double value = 100;
                 string markerFile = config[type]["markerProto"];
-                cout << markerFile << endl;
                 buffer.clear();
                 buffer.str("");
                 buffer << i;
-                cout << buffer.str() << endl;
                 if (markerFile.find_first_of('X') == -1) {
                     cerr << "markerFile " << markerFile << " did not contain an X." << endl;
                     exit(-1);
                 }
                 markerFile.replace(markerFile.find_first_of('X'), 1, buffer.str());
-                cout << markerFile << endl;
                 buffer.clear();
+                buffer.str("");
                 buffer << "values[" << i << ']';
                 config.lookupValue(buffer.str(), value);
-                switch (type.c_str()[0]) { //apologies to anyone who wishes to add a type with the same initial as a previous one
+                switch (type.c_str()[0]) { 
                 case 'r': c = gnucap.newResistor(value); break;
                 case 'c': c = gnucap.newCapacitor(value); break;
                 case 'i': c = gnucap.newInductor(value); break;
@@ -71,6 +69,7 @@ void ARCircuit::updateARCircuit(){
             }
         }
 
+        cout << subject->wires.size() << endl;
         for each (Wire* w in subject->wires)
             w->update();		
     }

@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 
 #include "ARScene.h"
+#define LEAD_OFFSET 10
+#define LEAD_RADIUS 2
 
 extern string markerDir;
 extern string modelDir;
@@ -40,7 +42,18 @@ ARScene::ARScene(const libconfig::Setting& modelCfg, string markerFile, gnucap_l
 
 	for(int i = 0; i < modelCfg["animNodes"].getLength(); i++){
 		nodesWithAnimations.push_back(findNamedNode(modelCfg["animNodes"][i]["name"], model));
-	}/*
+	}
+    osg::ref_ptr<osg::Geode> leadGeode = new osg::Geode;
+    modelNodes->addChild(leadGeode);
+    osg::ref_ptr<osg::Sphere> leftLead(new osg::Sphere(osg::Vec3f(-LEAD_OFFSET,0,0),LEAD_RADIUS));
+    osg::ref_ptr<osg::ShapeDrawable> leftLeadDrawable(new osg::ShapeDrawable(leftLead));
+    leadGeode->addDrawable(leftLeadDrawable);
+
+    osg::ref_ptr<osg::Sphere> rightLead(new osg::Sphere(osg::Vec3f(LEAD_OFFSET,0,0),LEAD_RADIUS));
+    osg::ref_ptr<osg::ShapeDrawable> rightLeadDrawable(new osg::ShapeDrawable(rightLead));
+    leadGeode->addDrawable(rightLeadDrawable);
+    
+    /*
 	 for(int i = 0; i < modelCfg["movieNodes"].getLength(); i++){
 	 vector<string> imgPaths;
 	 for(int j = 0; j < modelCfg["movieNodes"][i]["texturePaths"].getLength(); j++){
@@ -221,8 +234,9 @@ ARScene::~ARScene(void) {
 	delete timers;
 }
 
+
 osg::Vec3d ARScene::getCoord(int lead) {
-    osg::Vec3d offset(lead == 0 ? 10 : -10, 0, 0);
+    osg::Vec3d offset(lead == 0 ? LEAD_OFFSET : -LEAD_OFFSET, 0, 0);
     auto quat = markerMatrix.getRotate();
     auto trans = markerMatrix.getTrans();
     offset = markerMatrix.getRotate() * offset;
@@ -235,13 +249,15 @@ osg::Vec3d ARScene::getCoord(int lead) {
  *@param lead the local lead to check
  */
 void ARScene::proximityCheck(ARScene* target, int lead) {
+    cout << "proximityCheck on " << this << endl;
 	for (int i = 0; i < target->numLeads(); i++) {
         // Check timer is not running on another target/lead
         if (timers[lead].active && ! timers[lead].is(target, i) )
             continue;
 
         // Calculate if leads are within threshold distance
-        auto d = (getCoord(lead) - target->getCoord(i)).length2();
+        //auto d = (getCoord(lead) - target->getCoord(i)).length2();
+        //cout << d << endl;
         bool prox = (getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold;
 
         // If this is the target and the timer is already running
@@ -256,6 +272,7 @@ void ARScene::proximityCheck(ARScene* target, int lead) {
                         wires.push_back(w);
 
 					} else { //If an old connection is broken
+                         cout << "man down\n";
 
                         // Find and remove wire
                         for (unsigned int j = 0; j < wires.size(); j++)  {

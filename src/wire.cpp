@@ -6,23 +6,23 @@ using namespace std;
 
 Wire::Wire(ARScene *cA, ARScene *cB, int lA, int lB) :
 compA(cA), compB(cB), leadA(lA), leadB(lB) {
-    osg::ref_ptr<osg::Cylinder> wireShape(new osg::Cylinder(osg::Vec3f(),1,2));
-    wireShape->setRadius(20);
+    wireShape = new osg::Cylinder(osg::Vec3f(),3,0);
     osg::ref_ptr<osg::ShapeDrawable> wireDrawable(new osg::ShapeDrawable(wireShape));
     this->addDrawable(wireDrawable);
 }
 
-Wire::~Wire(){}
+Wire::~Wire() {
+    removeDrawables(getNumDrawables());
+}
 
 void Wire::update() {
     osg::Vec3d &start = compA->getCoord(leadA);
     osg::Vec3d &end   = compB->getCoord(leadB);
-    auto c = dynamic_cast<osg::Cylinder*>(getDrawable(0)->getShape());
-    c->setCenter((start+end)/2);
-    c->setHeight((start - end).length());
+    wireShape->setCenter((start+end)/2);
+    wireShape->setHeight((start - end).length());
     osg::Quat q;
     q.makeRotate(start, end);
-    c->setRotation(q);
+    wireShape->setRotation(q);
 }
 
 bool Wire::is(ARScene* s1, ARScene* s2, int l1, int l2) {

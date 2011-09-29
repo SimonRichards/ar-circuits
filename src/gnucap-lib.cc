@@ -235,25 +235,30 @@ string Component::generateString() {
 
 bool Component::toggleConnection(Component *other, int lead, int otherLead) {
 	other->changed = changed = true;
+    vector<Connection>::iterator c;
+    for (c = connections[lead].begin(); c != connections[lead].end(); c++) {
+        if (c->other == other && c->otherLead == otherLead) {
+            break;
+        }
+    }
 
-	auto result = std::find_if(connections[lead].begin(), connections[lead].end(), 
-		[](Connection connection) {return connection.other == 0;});
-
-	if (result == connections[lead].end()) { // if connections[lead] does not contain other
+    if (c == connections[lead].end()) { // if connections[lead] does not contain other
 		connections[lead].push_back(Connection(other, otherLead));
 		other->connections[otherLead].push_back(Connection(this, lead));
 		return true;
 	} else { // if it does
-		connections[lead].erase(result);
+		connections[lead].erase(c);
 		unsigned int i;
-		for (i = 0; i < other->connections[otherLead].size(); i++) {
+        unsigned int size = other->connections[otherLead].size();
+		for (i = 0; i < size; i++) {
 			if (other->connections[otherLead][i].other == this) {
 				other->connections[otherLead].erase(other->connections[otherLead].begin() + i);
 				break;
 			}
 		}
 
-		if (i == other->connections[otherLead].size()) cerr << "connection toggle error" << endl;
+		if (i == size) cerr << "connection toggle error" << endl;
+
 		return false;
 	}
 }
