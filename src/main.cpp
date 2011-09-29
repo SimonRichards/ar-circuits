@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 
-#include "vld.h"
+//#include "vld.h"
 #include "ARToolkit2.7OpenCV.h"
 #include "Book.h"
 #include <direct.h>

@@ -222,8 +222,9 @@ ARScene::~ARScene(void) {
 }
 
 osg::Vec3d ARScene::getCoord(int lead) {
-	osg::Vec3d result;
-	return result;
+    osg::Vec3d offset(lead == 0 ? 10 : -10, 0, 0);
+    offset = markerMatrix.getRotate() * offset;
+	return  markerMatrix.getTrans() + offset;;
 }
 
 

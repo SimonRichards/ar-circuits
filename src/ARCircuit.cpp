@@ -20,12 +20,12 @@ ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper
                 valueBuf << "values[" << i << ']';
                 config.lookupValue(valueBuf.str(), value);
                 switch (type.c_str()[0]) { //apologies to anyone who wishes to add a type with the same initial as a previous one
-                case 'r': c = gnucap.newResistor(value);
-                case 'c': c = gnucap.newCapacitor(value);
-                case 'i': c = gnucap.newInductor(value);
-                case 'd': c = gnucap.newDCSupply(value);
-                case 'a': c = gnucap.newACSupply(value, 50);
-                default: cerr << "invalid component type" <<endl;
+                case 'r': c = gnucap.newResistor(value); break;
+                case 'c': c = gnucap.newCapacitor(value); break;
+                case 'i': c = gnucap.newInductor(value); break;
+                case 'd': c = gnucap.newDCSupply(value); break;
+                case 'a': c = gnucap.newACSupply(value, 50); break;
+                default: cerr << "invalid component type " << type <<endl;
                 }
                 scenes.push_back(new ARScene(config[type]["model"], markerFile, c, r));
             }
