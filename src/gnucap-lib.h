@@ -54,7 +54,7 @@ namespace gnucap_lib {
 	public:
 		string _name;
 		unsigned int leads;
-		double voltage;
+		double voltage, current;
 		vector<Connection>* connections;
 		bool toggleConnection(Component *other, int lead, int otherLead); // returns true if components are connected following action
 		bool isActive();

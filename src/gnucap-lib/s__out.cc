@@ -27,6 +27,7 @@
 #include "declare.h"	/* plottr, plopen */
 #include "s__.h"
 void setProbeVoltage(unsigned int node, double voltage); // hooking into the wrapper class
+void setProbe(std::string what, double value, std::string label);
 /*--------------------------------------------------------------------------*/
 //	PROBELIST& SIM::alarmlist()
 //	PROBELIST& SIM::plotlist()
@@ -74,7 +75,6 @@ void SIM::outdata(double x)
 /*--------------------------------------------------------------------------*/
 /* SIM::head: print column headings and draw plot borders
  */
-void setProbeVoltage(unsigned int node, int voltage);
 void SIM::head(double start, double stop, const char *col1)
 {
   if (!plopen(start,stop)) {
@@ -111,9 +111,12 @@ void SIM::print(double x)
     }
     for (PROBELIST::const_iterator
 	    p=printlist().begin();  p!=printlist().end();  ++p) {
-			int node = p->label().c_str()[2] - '0';
+            setProbe(p->_what, p->value(), p->label());
+            
+			//int node = p->label().c_str()[2] - '0';
 			//int voltage = p->value();
-			setProbeVoltage(node, p->value()); 
+            //p->
+			//setProbeVoltage(node, p->value()); 
 			//std::cout << voltage << std::endl;
 			//out << p->value();
     }
