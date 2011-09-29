@@ -83,7 +83,6 @@ void Book::run(){
 		switch(cvWaitKey(1)) {
 			case 27:
 				running = false; 
-                return;
 				break;
 			case 'q':
 				break;
