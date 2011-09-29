@@ -6,13 +6,9 @@ using namespace std;
 
 Wire::Wire(ARScene *cA, ARScene *cB, int lA, int lB) :
 compA(cA), compB(cB), leadA(lA), leadB(lB) {
-<<<<<<< HEAD
-    wireShape = new osg::Cylinder(osg::Vec3f(),3,0);
-    osg::ref_ptr<osg::ShapeDrawable> wireDrawable(new osg::ShapeDrawable(wireShape));
-=======
-    wireShape = new osg::Cylinder(osg::Vec3f(),65,0);
+    wireShape = new osg::Cylinder(osg::Vec3f(),1,0);
     wireDrawable = new osg::ShapeDrawable(wireShape);
->>>>>>> c18d8d69a69a61a57093091fb0c4811bdc0fba0e
+	wireDrawable->setColor(osg::Vec4(0.5,0.5,0.5,1));
     this->addDrawable(wireDrawable);
 }
 
@@ -26,7 +22,7 @@ void Wire::update() {
     wireShape->setCenter((start+end)/2);
     wireShape->setHeight((start - end).length());
     osg::Quat q;
-    q.makeRotate(start, end);
+    q.makeRotate(osg::Vec3d(0, 0, 1), end - start);
     //cout << q << endl;
     wireShape->setRotation(q);
     wireDrawable->dirtyDisplayList();

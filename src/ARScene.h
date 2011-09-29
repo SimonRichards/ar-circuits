@@ -55,6 +55,7 @@ public:
 	void proximityCheck(ARScene* target, int lead);
 	osg::Vec3d getCoord(int lead);
 	~ARScene(void);
+	gnucap_lib::Component* component;
 
 protected:
 	osg::ref_ptr<osg::Node> model;
@@ -76,12 +77,12 @@ protected:
 
 private:
     void setNodeColours(ARScene* other, int otherLead, int lead, osg::Vec4 colour);
-	gnucap_lib::Component* component;
 	ConnectionTimer* timers;
     osg::ref_ptr<osg::ShapeDrawable> leftLeadDrawable;
     osg::ref_ptr<osg::ShapeDrawable> rightLeadDrawable;
 	osg::ref_ptr<osg::Sphere> leftLead;
 	osg::ref_ptr<osg::Sphere> rightLead;
+	osg::Vec4 prevStateColour;
 };
 
 

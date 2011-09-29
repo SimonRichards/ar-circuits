@@ -17,6 +17,7 @@ ARScene::ARScene(const libconfig::Setting& modelCfg, string markerFile, gnucap_l
 	string modelFile = modelCfg["file"].c_str();
 
 	timers = new ConnectionTimer[component->leads];
+	prevStateColour = osg::Vec4(1,1,1,1);
 
 	model = osgDB::readNodeFile(modelDir + modelFile);
 	if(modelCfg.exists("translation") && modelCfg["translation"].getLength() == 3)
@@ -238,15 +239,9 @@ ARScene::~ARScene(void) {
 #define LEAD_OFFSET_OSG 65
 
 osg::Vec3d ARScene::getCoord(int lead) {
-<<<<<<< HEAD
 	osg::Vec3d offset = lead != 0 ? leftLead->getCenter() : rightLead->getCenter();
-    auto quat = markerMatrix.getRotate();
-    auto trans = markerMatrix.getTrans();
-=======
-    osg::Vec3d offset(lead == 0 ? LEAD_OFFSET_OSG : -LEAD_OFFSET_OSG, 0, 0);
     //auto quat = markerMatrix.getRotate();
     //auto trans = markerMatrix.getTrans();
->>>>>>> c18d8d69a69a61a57093091fb0c4811bdc0fba0e
     offset = markerMatrix.getRotate() * offset;
 	return  markerMatrix.getTrans() + offset;
 }
@@ -289,7 +284,8 @@ void ARScene::proximityCheck(ARScene* target, int lead) {
                     cout << GetTickCount() - timers[lead].startTime << endl;
                     setNodeColours(target, i, lead, osg::Vec4(0,1,0,1));
 					if (component->toggleConnection(target->component, lead, i)) { // toggle: if a new connection is formed
-
+						prevStateColour = osg::Vec4(.5,.5,.5, 1);
+						setNodeColours(target, i, lead, prevStateColour);
                         // Add a wire
                         auto w = new Wire(this, target, lead, i);
 						this->addChild(w);
@@ -297,6 +293,8 @@ void ARScene::proximityCheck(ARScene* target, int lead) {
 
 					} else { //If an old connection is broken
                         // cout << "man down\n";
+						prevStateColour = osg::Vec4(1,1,1,1);
+						setNodeColours(target, i, lead, prevStateColour);
 
                         // Find and remove wire
                         for (unsigned int j = 0; j < wires.size(); j++)  {
@@ -312,7 +310,7 @@ void ARScene::proximityCheck(ARScene* target, int lead) {
                     timers[lead].complete = true; 
 				}
 			} else { //No longer in range
-                setNodeColours(target, i, lead, osg::Vec4(1,1,1,1));
+				setNodeColours(target, i, lead, prevStateColour);
 				timers[lead].active = false;
 			}
 		} else if (!timers[lead].active && !timers[lead].complete && prox) { // If this is the first iteration inside proximity on an unused timer
@@ -325,7 +323,7 @@ void ARScene::proximityCheck(ARScene* target, int lead) {
             setNodeColours(target, i, lead, osg::Vec4(1,1,0,1));
 		} else if (timers[lead].complete && !prox && timers[lead].is(target, i)) { // If the timer has recently completed but is yet to have its complete flag cleared.
             // Clear the flag
-            setNodeColours(target, i, lead, osg::Vec4(1,1,1, 1));
+			setNodeColours(target, i, lead, prevStateColour);
             timers[lead].complete = false;
         }
 	}

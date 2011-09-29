@@ -8,7 +8,6 @@ ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper
 {
     string types[] = {"resistors", "capacitors", "diodes", "inductors", "dcsupplies", "acsupplies"};
     stringstream buffer;
-    gnucap_lib::Component *c;
 
     for each (string type in types) {
         if(config.exists(type)) {
@@ -26,8 +25,10 @@ ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper
                 markerFile.replace(markerFile.find_first_of('X'), 1, buffer.str());
                 buffer.clear();
                 buffer.str("");
-                buffer << "values[" << i << ']';
+                buffer << type << ".values.[" << i + 1 << ']';
+				string st = buffer.str();
                 config.lookupValue(buffer.str(), value);
+				gnucap_lib::Component *c;
                 switch (type.c_str()[0]) { 
                 case 'r': c = gnucap.newResistor(value); break;
                 case 'c': c = gnucap.newCapacitor(value); break;
@@ -70,8 +71,10 @@ void ARCircuit::updateARCircuit(){
         }
 
         //cout << subject->wires.size() << endl;
-        for each (Wire* w in subject->wires)
-            w->update();		
+        for each (Wire* w in subject->wires){
+            w->update();
+			cout << subject->component->voltage << endl;
+		}
     }
 }
 
