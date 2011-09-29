@@ -243,6 +243,7 @@ void ARScene::proximityCheck(ARScene* target, int lead) {
         // Calculate if leads are within threshold distance
         auto d = (getCoord(lead) - target->getCoord(i)).length2();
         bool prox = (getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold;
+		cout << proximityDelay << proximityThreshold << endl;
 
         // If this is the target and the timer is already running
 		if (timers[lead].active && timers[lead].is(target, i)) {

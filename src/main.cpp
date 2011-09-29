@@ -49,6 +49,10 @@ int main(int argc, char **argv) {
 	const Setting& root = cfg.getRoot();
 	root.lookupValue("markerDir", markerDir);
 	root.lookupValue("modelDir", modelDir);
+	root.lookupValue("proximityThreshold", proximityThreshold);
+	unsigned long long temp = proximityDelay;
+	root.lookupValue("proximityDelay", temp);
+	proximityDelay = temp;
 	markerDir = includeDir + markerDir;
 	modelDir = includeDir + modelDir;
 
