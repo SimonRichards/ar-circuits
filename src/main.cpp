@@ -10,8 +10,8 @@ string includeDir = "resources/";
 string markerDir = "markers/";
 string modelDir = "models/";
 
-unsigned long proximityDelay = 1000;
-double proximityThreshold = 16000.;
+unsigned long proximityDelay = 5000;
+int proximityThreshold = 800;
 
 using namespace OPIRALibrary;
 using namespace libconfig;

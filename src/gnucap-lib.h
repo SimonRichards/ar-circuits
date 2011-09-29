@@ -39,7 +39,6 @@ namespace gnucap_lib {
 
 	class Component {
 	private:
-		string _name;
 		bool changed;
 		int *nodes;
 		string _value;
@@ -53,6 +52,7 @@ namespace gnucap_lib {
 		friend class GnucapWrapper;
 
 	public:
+		string _name;
 		unsigned int leads;
 		double voltage;
 		vector<Connection>* connections;

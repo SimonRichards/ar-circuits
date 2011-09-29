@@ -6,7 +6,7 @@
 
 ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper &gnucap, OPIRALibrary::RegistrationARToolkit* r)
 {
-    string types[] = {"resistors", "capacitors", "inductors", "dcsupplies", "acsupplies"};
+    string types[] = {"resistors", "capacitors", "diodes", "inductors", "dcsupplies", "acsupplies"};
     stringstream buffer;
     gnucap_lib::Component *c;
 
@@ -69,7 +69,7 @@ void ARCircuit::updateARCircuit(){
             }
         }
 
-        cout << subject->wires.size() << endl;
+        //cout << subject->wires.size() << endl;
         for each (Wire* w in subject->wires)
             w->update();		
     }

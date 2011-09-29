@@ -75,9 +75,11 @@ protected:
 	osg::Node* findNamedNode(std::string const &searchName, osg::Node* currNode);
 
 private:
+    void setNodeColours(ARScene* other, int otherLead, int lead, osg::Vec4 colour);
 	gnucap_lib::Component* component;
 	ConnectionTimer* timers;
-
+    osg::ref_ptr<osg::ShapeDrawable> leftLeadDrawable;
+    osg::ref_ptr<osg::ShapeDrawable> rightLeadDrawable;
 };
 
 
