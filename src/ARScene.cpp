@@ -223,6 +223,8 @@ ARScene::~ARScene(void) {
 
 osg::Vec3d ARScene::getCoord(int lead) {
     osg::Vec3d offset(lead == 0 ? 10 : -10, 0, 0);
+    auto quat = markerMatrix.getRotate();
+    auto trans = markerMatrix.getTrans();
     offset = markerMatrix.getRotate() * offset;
 	return  markerMatrix.getTrans() + offset;;
 }
@@ -239,6 +241,7 @@ void ARScene::proximityCheck(ARScene* target, int lead) {
             continue;
 
         // Calculate if leads are within threshold distance
+        auto d = (getCoord(lead) - target->getCoord(i)).length2();
         bool prox = (getCoord(lead) - target->getCoord(i)).length2() < proximityThreshold;
 
         // If this is the target and the timer is already running

@@ -7,7 +7,7 @@
 ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper &gnucap, OPIRALibrary::RegistrationARToolkit* r)
 {
     string types[] = {"resistors", "capacitors", "inductors", "dcsupplies", "acsupplies"};
-    stringstream valueBuf;
+    stringstream buffer;
     gnucap_lib::Component *c;
 
     for each (string type in types) {
@@ -16,9 +16,17 @@ ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper
             for(int i = 0; i < num; i++){
                 double value = 100;
                 string markerFile = config[type]["markerProto"];
-                valueBuf.clear();
-                valueBuf << "values[" << i << ']';
-                config.lookupValue(valueBuf.str(), value);
+                buffer.clear();
+                buffer << i;
+                if (markerFile.find_first_of('X') == -1) {
+                    cerr << "markerFile " << markerFile << " did not contain an X." << endl;
+                    exit(-1);
+                }
+                markerFile.replace(markerFile.find_first_of('X'), 1, buffer.str());
+                cout << markerFile << endl;
+                buffer.clear();
+                buffer << "values[" << i << ']';
+                config.lookupValue(buffer.str(), value);
                 switch (type.c_str()[0]) { //apologies to anyone who wishes to add a type with the same initial as a previous one
                 case 'r': c = gnucap.newResistor(value); break;
                 case 'c': c = gnucap.newCapacitor(value); break;
