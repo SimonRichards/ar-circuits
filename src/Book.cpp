@@ -176,7 +176,7 @@ void Book::render(IplImage* frame_input, std::vector<MarkerTransform> mt) {
 	IplImage* outImage = cvCreateImage(cvSize(camWidth,camHeight), IPL_DEPTH_8U, 3);
 	glReadPixels(0,0,camWidth,camHeight,GL_RGB, GL_UNSIGNED_BYTE, outImage->imageData);
 	cvCvtColor( outImage, outImage, CV_BGR2RGB );
-	cvFlip(outImage, 0, -1);
+	cvFlip(outImage, 0, 0);
 
 	cvShowImage("Rendered Image", outImage);
 	cvReleaseImage(&outImage);

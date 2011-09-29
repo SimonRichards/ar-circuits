@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 
 #include "ARScene.h"
-#define LEAD_OFFSET 10
+#define LEAD_OFFSET 12
 #define LEAD_RADIUS 2
 
 extern string markerDir;
