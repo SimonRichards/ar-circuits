@@ -111,6 +111,8 @@ void Book::initOGL(int argc, char **argv) {
 	// Foreground 3D content
 	// ----------------------------------------------------------------
 	fgCamera = new osg::Camera();
+	cout << fgCamera->getNearFarRatio() << " near far\n";
+	fgCamera->setNearFarRatio(fgCamera->getNearFarRatio() / 2000);
 	fgCamera->getOrCreateStateSet()->setRenderBinDetails(1, "RenderBin");
 	fgCamera->setReferenceFrame(osg::Transform::ABSOLUTE_RF_INHERIT_VIEWPOINT);
 	fgCamera->setClearMask(GL_DEPTH_BUFFER_BIT);
