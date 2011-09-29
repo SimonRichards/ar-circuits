@@ -6,7 +6,7 @@
 #include "gnucap-lib\u_prblst.h"
 #include "gnucap-lib\e_card.h"
 #include "gnucap-lib\s__.h"
-#define DEBUG
+//#define DEBUG
 // DO NOT USE ANY IO METHODS INCLUDING THE COMMANDS < and <<
 
 // Hooking into lower level functions in gnucap
@@ -226,7 +226,7 @@ namespace gnucap_lib {
         unsigned int i, j;
         auto n1 = nodes[0];
         auto n2 = nodes[1];
-        cout << "started setNodes()" << endl;
+        //cout << "started setNodes()" << endl;
 
         if (nodes[lead] != -1)
             return nodeCount;
@@ -243,7 +243,7 @@ namespace gnucap_lib {
                 }
             }
         }
-        cout << "completed setNodes()" << endl;
+        //cout << "completed setNodes()" << endl;
         return nodeCount - 1;
     }
 
@@ -308,9 +308,7 @@ namespace gnucap_lib {
 
         if (c == connections[lead].end()) { // if connections[lead] does not contain other
             connections[lead].push_back(Connection(other, otherLead));
-            cout << connections[lead].size() << ", ";
             other->connections[otherLead].push_back(Connection(this, lead));
-            cout << other->connections[otherLead].size() << endl;
             return true;
         } else { // if it does
             connections[lead].erase(c);
@@ -322,8 +320,6 @@ namespace gnucap_lib {
                     break;
                 }
             }
-            cout << connections[lead].size() << ", ";
-            cout << other->connections[otherLead].size() << endl;
 
             if (i == size) cerr << "connection toggle error" << endl;
 
