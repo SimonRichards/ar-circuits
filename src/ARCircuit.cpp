@@ -25,9 +25,14 @@ ARCircuit::ARCircuit(const libconfig::Setting& config, gnucap_lib::GnucapWrapper
                 markerFile.replace(markerFile.find_first_of('X'), 1, buffer.str());
                 buffer.clear();
                 buffer.str("");
-                buffer << type << ".values.[" << i + 1 << ']';
+				buffer << type << ".values.[" << i << "]";
 				string st = buffer.str();
-                bool up = config.lookupValue(buffer.str(), value);
+				bool up;
+				try{
+					value = (int) config[type]["values"][i];
+				} catch (libconfig::SettingNotFoundException e){
+					cout << type << " has no value at " << i << endl;
+				}
 				gnucap_lib::Component *c;
                 switch (type.c_str()[0]) { 
                 case 'r': c = gnucap.newResistor(value); break;

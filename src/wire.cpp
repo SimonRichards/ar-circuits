@@ -24,6 +24,7 @@ void Wire::update() {
     osg::Quat q;
     q.makeRotate(osg::Vec3d(0, 0, 1), end - start);
     //cout << q << endl;
+	wireShape->setRotation(q);
     wireDrawable->dirtyDisplayList();
 }
 
