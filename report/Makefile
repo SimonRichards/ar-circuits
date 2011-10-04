@@ -1,16 +1,16 @@
 all: build 
 
 build: 
-	latexmk ar-circuits
+	latexmk AR_Circuits
 
 clean:
-	latexmk -c ar-circuits
+	latexmk -c AR_Circuits
 
 cleanall:
-	latexmk -C ar-circuits
+	latexmk -C AR_Circuits
 
 view:
-	latexmk -pvc ar-circuits
+	latexmk -pvc AR_Circuits
 
 .PHONY: clean all view cleanall
 
