@@ -67,23 +67,30 @@
 
 \IEEEPARstart{D}{ynamic Analysis} bitches \cite{orc13}
 
+\section{Related Work}
+
+In the paper "Augmented Reality for teaching spatial relations"\cite{Maier09} the authors describe their tool Augmented Chemical Reactions, which is aimed at using AR to teach students about how the geometry of molecules effect reactions between them. Molecules are spatially registered to fiducial markers. Marker-cubes can be used to allow the user to view the molecule from any angle. When the markers of two molecules with the ability to bond to each other come into proximity to each other, possible bonds are shown as transparent tubes. The user can then bond the molecules if they wish.
+
+This paper did not show complex examples or discuss in great depth the usage of their tool. This was partly due to the length of the submission, but also partly to a lack of conciseness in describing supporting topics such as the motivation and Augmented Reality, and partly to superficial explanations. The lack of detail was especially important as the tool's use for scientists designing molecules was emphasised. No mention was given to the underlying physics simulator, or the limitations of molecule numbers or complexity, which would be important information for an interested scientist. In addition, the usage in a classroom was not discussed.
+
+An area for further work not mentioned in the paper could be integrating extra visualisations of the chemical reaction at the visible scale. A common problem with advanced concepts is the difficulty with bridging the gap between abstract concepts and real-world observations. This tool could allow a macroscopic view demonstrating the tangible outputs of a reaction alongside the individual molecule view. Extra data such as temperature and state-changes could be shown to give a more complete understanding of the reaction.
+
+Construct3D is an AR educational tool described in the paper "Mathematics And Geometry Education With Collaborative Augmented Reality"\cite{Kaufmann03}. Using one of a number of suggested hardware set-ups, users create geometric entities such as curves and spheres using a 6 degrees-of-freedom 'stylus' and the Personal Interaction Panel, an AR interaction system\cite{szal97}. With their geometric entities they can then investigate concepts such as geometric sections and vectors. In the more ambitious hardware set-ups, users can walk around and through the geometry they create. The geometry exists on 3D layers, allowing different visibility modes for different users or teaching scenarios. 
+
+Collaboration is emphasised, with the tool featuring shared scene-graphs and AR applications between hardware systems. This advanced form of collaboration with multiple communicating systems is not within the scope of our project, however the simpler collaboration which a single system can support is. While the educational content is not as closely related to our project, the design considerations regarding educational use are highly relevant.
+
+The contexts in which Construct3D would be likely used for were well considered, including the possible participants and the available resources. This means that collaboration at different scales and usage through different mediums such as HMDs and monitors were designed for. An initial trial study showed that students found the tool very useful, and the tool was improved based on feedback. Large-scale studies on the educational benefits were carried out, and are summarised in a paper from 2007\cite{Kaufmann07}. Many improvements were made based on the results of these studies.
+
+
 \section{Project Goals}
 
 \section{System Description}
 
-\subsection{Data Collector}
-
-\subsection{Scene Builder}
-
-\subsection{Visualisation}
-
 \section{Discussion}
 
-\subsection{Limitations of the Implementation}
+\subsection{Limitations}
 
-\subsection{Further Work}
-
-\section{Related Work}
+\section{Further Work}
 
 \section{Conclusion}
 
