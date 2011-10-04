@@ -34,10 +34,14 @@
 %\usepackage[tight,footnotesize]{subfigure}
 %\fi\
 %\ifCLASSOPTIONcompsoc
-  \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+%  \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
 %\else
 %  \usepackage[caption=false,font=footnotesize]{subfig}
 %\fi
+
+
+\usepackage{hyperref}
+\setcounter{secnumdepth}{2}
 
 
 \usepackage{stfloats}
@@ -45,11 +49,21 @@
 \hyphenation{op-tical net-works semi-conduc-tor}
 
 
-\begin{document}
 \title{AR Circuits}
 
-\author{Daniel Bentall}% <-this % stops a space
+\author{
+    \IEEEauthorblockN{
+        Simon Richards\\
+            \href{mailto:scr52@uclive.ac.nz}{\texttt{scr52@uclive.ac.nz}}\\
+    }
+    \vspace{0.5\baselineskip}
+    \IEEEauthorblockN{
+        Daniel Bentall\\
+            \href{mailto:djb216@uclive.ac.nz}{\texttt{djb216@uclive.ac.nz}}
+    }
+}
 
+\begin{document}
 
 \input{AR_Circuits}
 
@@ -70,10 +84,10 @@
 % http://www.michaelshell.org/tex/ieeetran/bibtex/
 \bibliographystyle{IEEEtran}
 % argument is your BibTeX string definitions and bibliography database(s)
-\bibliography{IEEEabrv,mybib}
-%
-% <OR> manually copy in the resultant .bbl file
-% set second argument of \begin to the number of references
+    \bibliography{IEEEabrv,mybib}
+    %
+    % <OR> manually copy in the resultant .bbl file
+    % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
 
-\end{document}
+    \end{document}

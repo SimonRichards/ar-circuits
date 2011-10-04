@@ -12,5 +12,7 @@ cleanall:
 view:
 	latexmk -pvc report
 
-.PHONY: clean all view cleanall
+rebuild: cleanall build
+
+.PHONY: clean all view cleanall rebuild
 
