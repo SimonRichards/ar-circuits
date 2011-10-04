@@ -39,7 +39,6 @@ Collaboration is emphasised, with the tool featuring shared scene-graphs and AR 
 The contexts in which Construct3D would be likely used for were well considered, including the possible participants and the available resources. This means that collaboration at different scales and usage through different mediums such as HMDs and monitors were designed for. An initial trial study showed that students found the tool very useful, and the tool was improved based on feedback. Large-scale studies on the educational benefits were carried out, and are summarised in a paper from 2007\cite{Kaufmann07}. Many improvements were made based on the results of these studies.
 
 \subsection{Understanding Ohm's law - Enlightenment Through Augmented Reality}
-\subsubsection{Summary}
 In this paper\cite{peng2010understanding}, authors Peng and M\"{u}ller-Wittig discuss a system that allows a user to interactively build circuits via the placement of fiducial markers. The markers represent resistors, which are displayed with their colour coded stripes showing. 
 
 The surface onto which the markers are placed has a fixed set of component slots. The user needs to place enough markers into these slots to make a complete circuit. At this point the user sees a wire rendered around the circuit, the software calculates the total resistance of the circuit and consequently the current which must be flowing through a bulb which is connected in series with a virtual DC power supply.
@@ -50,8 +49,6 @@ Peng and M\"{u}ller-Wittig's paper also provides some insight into the relevance
 
 \subsubsection{Relevance}
 This project's goals are very similar to our own, if somewhat limited in their scope. As such this project makes an excellent starting point for us and its method and results are worthy of note.
-
-
 
 Similarities:
 \begin{itemize}
@@ -72,8 +69,6 @@ The system appeared to be very simple to use and may be an effective teaching to
 
 \subsection{Motion in Augmented Reality Games: An Engine for Creating Plausible Physical Interactions in Augmented Reality Games}
 
-\subsubsection{Summary}
-
 Namee et al\cite{namee2010motion} have developed a game engine for interactive augmented reality gaming. The engine is modular in design, it contains a World Model, an AR Registration Engine, a Physics Engine and a Renderer. 
 
 They implemented the Registration module with the ARToolkit API, the Physics module with the Open Dynamics Engine and Havok, and the renderer with OpenGL. As they point out though, MARG is technology agnostic and the implementations is not that important; the paper's focus is on software abstraction, design and the two proof of concept applications.
@@ -86,23 +81,29 @@ showing that MARG can integrate virtual objects with physical ones believably.
 \subsection{Relevance}
 The top level design of MARG is very similar to the design of our software, if the mechanical physics engine is replaced with an electrical physics engine/simulator then the software meets our needs completely. That is to say in both our project and theirs the user controls physical and virtual objects in 3D space and those objects are modelled by a physics engine.
 
-\subsection{Criticism}
+\subsection{Critique}
 MARG's well thought out design allows quite a bit of flexibility in terms of what may be implemented. Their two example games demonstrate the full power of MARG.
 
 The results of their user tests appear to show MARG being slightly more difficult to use than an equivalent physical system and they do not explore the cause of this.
 
-\section{Conclusion}
-The two papers reviewed give us insight into both the system design and user interaction sides of our project. The first paper provides an example of what our project may look like in a basic form, while the second paper expands on the abstraction and design required to implement an augmented reality application.
 
 \section{Project Goals}
 
 \section{System Description}
+Software structure.
+
+Single camera.
+
+User interaction modes.
 
 \section{Discussion}
 
 \subsection{Limitations}
 
 \section{Further Work}
+Tangible probes with on screen plotting.
+
+Improved voltage/current visualisation.
 
 \section{Conclusion}
 
