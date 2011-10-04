@@ -66,3 +66,10 @@ ipch
 *.lastbuildstate
 *.rc
 /resources/markers/build
+
+*.bbl
+*.dvi
+*.blg
+*latexmk
+*.log
+*.aux

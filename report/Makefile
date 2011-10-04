@@ -1,16 +1,18 @@
 all: build 
 
 build: 
-	latexmk ar-circuits
+	latexmk report
 
 clean:
-	latexmk -c ar-circuits
+	latexmk -c report
 
 cleanall:
-	latexmk -C ar-circuits
+	latexmk -C report
 
 view:
-	latexmk -pvc ar-circuits
+	latexmk -pvc report
 
-.PHONY: clean all view cleanall
+rebuild: cleanall build
+
+.PHONY: clean all view cleanall rebuild
 
