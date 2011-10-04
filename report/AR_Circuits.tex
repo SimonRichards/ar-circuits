@@ -30,6 +30,61 @@ Collaboration is emphasised, with the tool featuring shared scene-graphs and AR 
 
 The contexts in which Construct3D would be likely used for were well considered, including the possible participants and the available resources. This means that collaboration at different scales and usage through different mediums such as HMDs and monitors were designed for. An initial trial study showed that students found the tool very useful, and the tool was improved based on feedback. Large-scale studies on the educational benefits were carried out, and are summarised in a paper from 2007\cite{Kaufmann07}. Many improvements were made based on the results of these studies.
 
+\section{Understanding Ohm's law - Enlightenment Through Augmented Reality}
+\subsection{Summary}
+In this paper\cite{peng2010understanding}, authors Peng and M\"{u}ller-Wittig discuss a system that allows a user to interactively build circuits via the placement of fiducial markers. The markers represent resistors, which are displayed with their colour coded stripes showing. 
+
+The surface onto which the markers are placed has a fixed set of component slots. The user needs to place enough markers into these slots to make a complete circuit. At this point the user sees a wire rendered around the circuit, the software calculates the total resistance of the circuit and consequently the current which must be flowing through a bulb which is connected in series with a virtual DC power supply.
+
+The bulb is a real light source, driven by a DC supply and interfaced to the computer via an Arduino development board. It is the only source of feedback provided to the user barring the textual information presented to the user in a dialogue box.
+
+Peng and M\"{u}ller-Wittig's paper also provides some insight into the relevance and efficacy of augmented reality applications as teaching tools and the cost benefits of doing so.
+
+\subsection{Relevance}
+This project's goals are very similar to our own, if somewhat limited in their scope. As such this project makes an excellent starting point for us and its method and results are worthy of note.
+
+
+
+Similarities:
+\begin{itemize}
+\item A single web camera is all that is required for input into the system, although there is no reason either system may not be improved with a more complicated set up, such as a head mounted display.
+\item Fiducial markers are used to represent the location of the components they represent. Those components are displayed above the marker.
+\item OpenSceneGraph is used to build the virtual part of the scene.
+\end{itemize}
+
+We do, however, plan to expand on the number of different components available, their use of static models for components and their lack of feedback through augmented reality.
+
+\subsection{Criticism}
+The system appeared to be very simple to use and may be an effective teaching tool. It was limited, however, in the following areas.
+\begin{itemize}
+\item The user receives feedback from the circuit only through the bulb. The system could be expanded to show the effects of voltage division.
+\item Their use of fixed slots limits the user to a few simple circuits. This feature does make it easier to calculate voltages and allows the user to more easily distinguish between components which are in the circuit and which are out. 
+\item The results of the simulation's calculations are displayed in a dialogue box on screen, they could have attempted to display information over the component it pertains to.
+\end{itemize}
+
+\section{Motion in Augmented Reality Games: An Engine for Creating Plausible Physical Interactions in Augmented Reality Games}
+
+\subsection{Summary}
+
+Namee et al\cite{namee2010motion} have developed a game engine for interactive augmented reality gaming. The engine is modular in design, it contains a World Model, an AR Registration Engine, a Physics Engine and a Renderer. 
+
+They implemented the Registration module with the ARToolkit API, the Physics module with the Open Dynamics Engine and Havok, and the renderer with OpenGL. As they point out though, MARG is technology agnostic and the implementations is not that important; the paper's focus is on software abstraction, design and the two proof of concept applications.
+
+Objects in the Motion in Augmented Reality Games (MARG) engine can be virtual, physical or a combination and they always have an associated physics model.
+
+Two concept games were developed by the team to demonstrate the engine's ability to handle interactions between physical and virtual objects. To show how well the user's expectations of the outcomes of these interactions are met, the team timed participants completing simple challenges using both the AR games and matching games made of entirely physical components. Although the completion times were greater and had more spread for the AR versions the times were still comparable
+showing that MARG can integrate virtual objects with physical ones believably.
+
+\subsection{Relevance}
+The top level design of MARG is very similar to the design of our software, if the mechanical physics engine is replaced with an electrical physics engine/simulator then the software meets our needs completely. That is to say in both our project and theirs the user controls physical and virtual objects in 3D space and those objects are modelled by a physics engine.
+
+\subsection{Criticism}
+MARG's well thought out design allows quite a bit of flexibility in terms of what may be implemented. Their two example games demonstrate the full power of MARG.
+
+The results of their user tests appear to show MARG being slightly more difficult to use than an equivalent physical system and they do not explore the cause of this.
+
+\section{Conclusion}
+The two papers reviewed give us insight into both the system design and user interaction sides of our project. The first paper provides an example of what our project may look like in a basic form, while the second paper expands on the abstraction and design required to implement an augmented reality application.
 
 \section{Project Goals}
 
