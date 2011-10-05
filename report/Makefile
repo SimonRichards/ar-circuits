@@ -1,16 +1,17 @@
+MAIN_TEX = $(MAIN_TEX)
 all: build 
 
 build: 
-	latexmk report
+	latexmk $(MAIN_TEX)
 
 clean:
-	latexmk -c report
+	latexmk -c $(MAIN_TEX)
 
 cleanall:
-	latexmk -C report
+	latexmk -C $(MAIN_TEX)
 
 view:
-	latexmk -pvc report
+	latexmk -pvc $(MAIN_TEX)
 
 rebuild: cleanall build
 
