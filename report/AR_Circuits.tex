@@ -2,8 +2,8 @@
 \begin{abstract}
 An electronic circuit simulator was developed to aid in the 
 teaching of elementary electrical principles. 
-It allows users to design and evaluate an arbitrarily complex
-circuit constrained only by the available space. The circuit is
+It allows users to design and evaluate arbitrarily complex
+circuits constrained only by the space available. The circuit is
 analysed in real-time and the voltage and current levels are 
 displayed dynamically and intuitively by the models 
 representing the circuit components and their wiring.
@@ -53,7 +53,7 @@ This project's goals are very similar to our own, if somewhat limited in their s
 Similarities:
 \begin{itemize}
 \item A single web camera is all that is required for input into the system, although there is no reason either system may not be improved with a more complicated set up, such as a head mounted display.
-\item Fiducial markers are used to represent the location of the components they represent. Those components are displayed above the marker.
+\item Fiducial markers are used to represent the location of the components they represe                                                                                                                                                                                                                      nt. Those components are displayed above the marker.
 \item OpenSceneGraph is used to build the virtual part of the scene.
 \end{itemize}
 
@@ -84,7 +84,7 @@ The top level design of MARG is very similar to the design of our software, if t
 \subsection{Critique}
 MARG's well thought out design allows quite a bit of flexibility in terms of what may be implemented. Their two example games demonstrate the full power of MARG.
 
-The results of their user tests appear to show MARG being slightly more difficult to use than an equivalent physical system and they do not explore the cause of this.
+The results of their user tests appear to show MARG being slightly more difficult to use than an equivalent physical system yet they do not explore the cause of this.
 
 
 \section{Project Goals}
@@ -108,7 +108,10 @@ Once the approach for solving these goals had been planned, a set of more specif
 \end{itemize}
 
 \section{System Description}
-Software structure.
+The entire system was comprised of software running on a pc, a single camera which was fixed or free at the user's discretion, and a set of markers representing the circuit components.
+
+\subsection{Software}
+The application developed used the OpenSceneGraph (which uses OpenGL), AR Toolkit, OPIRA and libconfig libraries. Gnucap, a commandline circuit simulator was 
 
 Single camera.
 
@@ -125,7 +128,6 @@ Each marker corresponds to a single component, and the expected use is for the m
 
 \subsection{Limitations}
 
-The second, specific set of goals were not fully met. Logical circuitry in particular was not implemented. The electrical simulation library did not support such circuits. Instead, specialised code for simulating logical circuitry was written, but never tested. [Simon to explain]
 
 The number of markers which can be viewed at once is limited by the resolution of the camera, as the markers will not track if they appear as too few pixels in area to the camera
 
