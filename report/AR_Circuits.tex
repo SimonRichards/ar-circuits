@@ -129,18 +129,23 @@ Each marker corresponds to a single component, and the expected use is for the m
 \subsection{Limitations}
 
 
-The number 
+The number of markers which can be viewed at once is limited by the resolution of the camera, as the markers will not track if they appear as too few pixels in area to the camera
+
+One challenge with all visualisations is dealing with different data ranges. Currently, no automatic scaling of voltage and current values is implemented. This means that the user must choose component values which result in values in a certain range, or the visualisation will not be easily visible. 
 
 \section{Further Work}
-Tangible probes with on screen plotting. Could extend to having waves display above wires
+
+Tangible probes with on screen plotting and actual value display. Could extend to having waves display above wires.
 
 Improved voltage/current visualisation.
 
-Try integrating voltage-current visualisation with the connecting wires. This might be more intuitive, but it also might be confusing.
 
-To improve the scalability of the system, a circuit block element could be added. The user could build up a section of circuit and then assign it to a marker 
+The voltage-current visualisation could be improved. One possibility is integrating it with the wires connecting components. This might be more intuitive, as the relationship between current, voltage and the wire is more explicit, but it also might be confusing to view, especially with AC flows, as the heights of the components would all be changing constantly.
 
-Allow control of component pararmeters such as impedance.
+Gestures could be added to improve interaction. Shaking a marker could toggle the component into and out of an edit mode. In edit mode moving a marker vertically could cause its component to grow and shrink, and moving it horizontally could cause its primary parameter to change. An alternative could be using a special marker to alter the parameters or marker size.
+
+To improve the scalability of the system, a circuit block element could be added. The user could build up a circuit and then assign it to a special marker as a single item. When the special marker is brought close to a component, instead of connecting to the component it would `absorb' all connected components. Since the resulting composite component might contain many connectable nodes and these nodes will be closely packed, the connecting process should use a ``connect to closest'' rule to avoid making multiple connections at once. To edit the composite component, the user would shake the marker, at which point all other components disappear and the original markers used to make the composite component would be used to make changes.
+
 
 \section{Conclusion}
 
