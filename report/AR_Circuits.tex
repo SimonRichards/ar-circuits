@@ -116,12 +116,29 @@ User interaction modes.
 
 \section{Discussion}
 
+Dealing with losing part of the circuit, all of the circuit.
+
+Occlusion.
+
+Each marker corresponds to a single component, and the expected use is for the marker image to be representative of the component. This limits the number of markers, and hence components, which can be viewed at once. An alternative to this paradigm is demonstrated by the Augmented Chemistry project \cite{fjeld07}, which uses AR to teach organic chemistry. One marker represents the molecule under construction and another is used to bring in new atoms to be added to the molecule. A book of markers, each representing an atom, is used to select which atom is being added. Using this interaction paradigm the number of components would not be constrained by the number of markers. However, in electronics only the connections are important, not the layout, whereas in chemisrty the layout is fixed. A useful ability for understanding electronic circuits is being able to rearrange the layout of components, which the Augmented Chemistry paradigm does not easily allow.
+
+
 \subsection{Limitations}
 
+The second, specific set of goals were not fully met. Logical circuitry in particular was not implemented. The electrical simulation library did not support such circuits. Instead, specialised code for simulating logical circuitry was written, but never tested. [Simon to explain]
+
+The number 
+
 \section{Further Work}
-Tangible probes with on screen plotting.
+Tangible probes with on screen plotting. Could extend to having waves display above wires
 
 Improved voltage/current visualisation.
+
+Try integrating voltage-current visualisation with the connecting wires. This might be more intuitive, but it also might be confusing.
+
+To improve the scalability of the system, a circuit block element could be added. The user could build up a section of circuit and then assign it to a marker 
+
+Allow control of component pararmeters such as impedance.
 
 \section{Conclusion}
 
