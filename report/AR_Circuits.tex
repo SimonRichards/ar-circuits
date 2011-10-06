@@ -108,7 +108,10 @@ Once the approach for solving these goals had been planned, a set of more specif
 \end{itemize}
 
 \section{System Description}
-The entire system was comprised of software running on a pc, a camera which was fixed or free at the user's discretion, and 
+The entire system was comprised of software running on a pc, a single camera which was fixed or free at the user's discretion, and a set of markers representing the circuit components.
+
+\subsection{Software}
+The application developed used the OpenSceneGraph (which uses OpenGL), AR Toolkit, OPIRA and libconfig libraries. Gnucap, a commandline circuit simulator was 
 
 Single camera.
 
@@ -125,7 +128,6 @@ Each marker corresponds to a single component, and the expected use is for the m
 
 \subsection{Limitations}
 
-The second, specific set of goals were not fully met. Logical circuitry in particular was not implemented. The electrical simulation library did not support such circuits. Instead, specialised code for simulating logical circuitry was written, but never tested. [Simon to explain] Dan doesn't know what he is talking about however as the logic simulation was completely ready to go (barring a few minutes typing and printing out some markers).
 
 The number 
 
