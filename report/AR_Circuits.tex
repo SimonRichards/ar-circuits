@@ -89,6 +89,24 @@ The results of their user tests appear to show MARG being slightly more difficul
 
 \section{Project Goals}
 
+This goals of this project were to use AR to provide a novel electricity education tool. Users build virtual electronic circuits and the states of the electrical components are visually represented. To achieve this, the following general goals were set:
+
+\begin{itemize}
+\item Represent various electrical components with some real-world object, each corresponding to a single marker.
+\item Allow users to create and destroy connections between components using some intuitive interaction.
+\item Visualise this connection.
+\item Simulate the current through and voltage drop of each component.
+\item Visualise this data.
+\end{itemize}
+
+Once the approach for solving these goals had been planned, a set of more specific goals for producing incrementally more challenging interactions and physical modelling were created:
+
+\begin{itemize}
+\item To test connection interactions, demonstrate a battery and lamp circuit.
+\item To test logical circuitry modelling and extended interactions, demonstrate a logic circuit where the user can change input states.
+\item To test the completed physics simulator and the current and voltage visualisations, demonstrate an AC circuit with the current and voltage represented as a pipe above the circuit.
+\end{itemize}
+
 \section{System Description}
 Software structure.
 
@@ -98,12 +116,29 @@ User interaction modes.
 
 \section{Discussion}
 
+Dealing with losing part of the circuit, all of the circuit.
+
+Occlusion.
+
+Each marker corresponds to a single component, and the expected use is for the marker image to be representative of the component. This limits the number of markers, and hence components, which can be viewed at once. An alternative to this paradigm is demonstrated by the Augmented Chemistry project \cite{fjeld07}, which uses AR to teach organic chemistry. One marker represents the molecule under construction and another is used to bring in new atoms to be added to the molecule. A book of markers, each representing an atom, is used to select which atom is being added. Using this interaction paradigm the number of components would not be constrained by the number of markers. However, in electronics only the connections are important, not the layout, whereas in chemisrty the layout is fixed. A useful ability for understanding electronic circuits is being able to rearrange the layout of components, which the Augmented Chemistry paradigm does not easily allow.
+
+
 \subsection{Limitations}
 
+The second, specific set of goals were not fully met. Logical circuitry in particular was not implemented. The electrical simulation library did not support such circuits. Instead, specialised code for simulating logical circuitry was written, but never tested. [Simon to explain]
+
+The number 
+
 \section{Further Work}
-Tangible probes with on screen plotting.
+Tangible probes with on screen plotting. Could extend to having waves display above wires
 
 Improved voltage/current visualisation.
+
+Try integrating voltage-current visualisation with the connecting wires. This might be more intuitive, but it also might be confusing.
+
+To improve the scalability of the system, a circuit block element could be added. The user could build up a section of circuit and then assign it to a marker 
+
+Allow control of component pararmeters such as impedance.
 
 \section{Conclusion}
 
