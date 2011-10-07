@@ -242,20 +242,17 @@ or too distant.
 
 \section{Discussion}
 
-When the user is building the circuit and a marker is lost, the wires for that component are
-[[Dealing with losing part of the circuit, all of the circuit.]]
+When the user is building the circuit and a marker is lost, if that marker is attached to another then the component of the lost marker does not disappear. Instead it maintains its position relative to the camera until the lost marker is reacquired. This helps the user to keep track of the circuit, but with many components could lead to clutter. It could also be confusing as it might appear that a marker is being tracked when actually it is not. Thus the user should be able to change this setting for personal preference, and possibly toggle the setting from within the program.
 
 As with most interactive AR systems, incorrect occlusion of the real world by the digital content is an issue. When a user moves their hand to a position which should be in front of the 3D content (without blocking the marker) the content is drawn in front, as the graphics system does not have any depth information aside from the relative position of the marker. This reduces the believability of the system and can be confusing to view. Various methods of depth detection, are available which can be used to provide roughly correct occlusion. However they require extra hardware and the results are often noisy, so that the digital content appears to have frayed edges where it meets with the real-world object. For these reasons, it was decided not to use occlusion.
 
 Each marker corresponds to a single component, and the expected use is for the marker image to be representative of the component. This limits the number of markers, and hence components, which can be viewed at once. An alternative to this paradigm is demonstrated by the Augmented Chemistry project \cite{fjeld07}, which uses AR to teach organic chemistry. One marker represents the molecule under construction and another is used to bring in new atoms to be added to the molecule. A book of markers, each representing an atom, is used to select which atom is being added. Using this interaction paradigm the number of components would not be constrained by the number of markers. However, in electronics only the connections are important, not the layout, whereas in chemistry the layout is fixed. A useful ability for understanding electronic circuits is being able to rearrange the layout of components, which the Augmented Chemistry paradigm does not easily allow.
 
-
 \subsection{Limitations}
 
+Challenges common to many visualisation systems are dealing with different data ranges, outliers and large data volume. Currently, no automatic scaling of voltage and current values is implemented. This means that the user must choose component values which result in values in a certain range, or the voltage-current visualisation might be so far from the markers (due to high voltage) as to be out of view, or so thin (due to low current) as to be invisible. However, if scaling was implemented, then outliers could force a scaling which results in other values appearing uniform. The problem of data volume is minimal here, as the circuit is aimed at electrical teaching, which typically does not involve circuits with a large number of components.
 
-The number of markers which can be viewed at once is limited by the resolution of the camera, as the markers will not track if they appear as too few pixels in area to the camera
-
-One challenge with all visualisations is dealing with different data ranges. Currently, no automatic scaling of voltage and current values is implemented. This means that the user must choose component values which result in values in a certain range, or the visualisation will not be easily visible.
+In addition to these implementation limitations, the system is limited by a number of technological factors. The number of markers which can be viewed at once is limited by the resolution of the camera. This could be improved by improving the camera resolution, but this would also impact performance, as the tracker would then have to process more pixels per frame. This processing is CPU intensive, so the frame-rate is limited by the computer's abilities. The graphics processing is GPU intensive, so if the computer has no graphics card or a poor one, the frame-rate will again be limited.
 
 \section{Further Work}
 
@@ -267,6 +264,17 @@ Gestures could be added to improve interaction. Shaking a marker could toggle th
 
 To improve the scalability of the system, a circuit block element could be added. The user could build up a circuit and then assign it to a special marker as a single item. When the special marker is brought close to a component, instead of connecting to the component it would `absorb' all connected components. Since the resulting composite component might contain many connectable nodes and these nodes will be closely packed, the connecting process should use a ``connect to closest'' rule to avoid making multiple connections at once. To edit the composite component, the user would shake the marker, at which point all other components disappear and the original markers used to make the composite component would be used to make changes.
 
+To validate the concept and implementation, user studies should be carried out. A metric of performance as an educational tool might be the learning rate compared to using traditional techniques. Metrics as an AR application might include time for the user to become familiar with a certain task,
 
 \section{Conclusion}
+
+AR Circuits is a prototype educational AR system. To become useful for teaching it requires refinement and expansion, but it demonstrates the concept of a circuit building tool. In particular, the metaphor
+
+The use of technologies such as Augmented Reality in education is developing and becoming more accepted. AR Circuits was developed to demonstrate how some elements of AR can be harnessed to provide a novel learning experience. The prototype allows the user to interactively build an arbitrary electronic circuit from a set of electronic components and visualise the current and voltage which result. Being able to explore building circuits and getting instant dynamic feedback on the effects of various circuit configurations could greatly improve student learning and motivation.
+
+
+
+
+
+
 
