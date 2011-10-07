@@ -126,24 +126,43 @@ the following hierarchichal model.
 
 \begin{verbatim}
 Circuit
-   -- Scene (resistor)
-          -- Fiducial marker identifier
-          -- OSG 3D model
-          -- Wire Models
-          -- Gnucap Component
-   -- Scene (supply)
-          -- Same as above...
-   -- etc.
+    -- Scene (resistor)
+        -- Fiducial marker identifier
+        -- OSG 3D model
+        -- Gnucap component
+        -- Wire models
+            -- 3D model
+            -- 2 scene references
+    -- Scene (supply)
+        -- Same as above...
+    -- etc.
 \end{verbatim}
 
-Hence each scene was responsible for mainting the electrical, graphical
+Hence each scene is responsible for mainting the electrical, graphical
 and spatial states of a single component. Each scene also owns a set of
 wires of a variable size. During each iteration components check for
-proximity between their nodes and the nodes of other component, adding
-and removing wires as necessary. The circuit object requesting these
-proximity checks
+proximity between their leads and the leads of other component, adding
+and removing wires as necessary. The circuit object which requests these
+proximity checks enforces that each combination of scenes is only checked
+once (e.g. ab == ba) to avoid duplicate wires being instantiated.
 
+\subsubsection{OpenSceneGraph}
+OpenSceneGraph provides am application programming interface to a powerful,
+OpenGL backed, 3D graphics engine. As the graphics requirements of the AR
+Circuits application were not very large, our interactions with this
+library were limited to importing models created in the Maya 3D modelling suite,
+generating simple geometric shapes programmatically (for wires and leads), and
+transforming all of these models according to marker location found using AR
+Toolkit.
 
+\subsubsection{AR Toolkit}
+
+\subsubsection{Libconfig}
+
+\subsubsection{Gnucap}
+
+\section{User Interaction}
+Marker set (link to config files).
 Single camera.
 
 User interaction modes.
