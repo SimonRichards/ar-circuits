@@ -177,6 +177,17 @@ use by allowing the user to specify the models, patterns, numbers and initial
 values of circuit components.
 
 \subsubsection{Gnucap}
+Gnucap is an open-source circuit analysis package. It has a command-line
+interface which accepts a SPICE styled netlist as input. This meant that some
+calculations were necessary before analysis as the netlist needed to be generated
+from a set of components. To simplify use the program was modified into a
+library so that voltage and current information could be accessed via function
+calls rather than interpreting the command-line version's formatted output. This
+necessitated a small rewrite of some portions of the POSIX styled IO code so
+that the library would compile with the Visual C++ compiler.
+
+All extensions and modifications to this code were encapsulated by two simple
+wrapper classes representing the circuit analyser and electrical components.
 
 \section{User Interaction}
 Marker set (link to config files).
@@ -195,7 +206,7 @@ User interaction modes.
 
 \section{Discussion}
 
-When the user is building the circuit and a marker is lost, the wires for that component are 
+When the user is building the circuit and a marker is lost, the wires for that component are
 [[Dealing with losing part of the circuit, all of the circuit.]]
 
 As with most interactive AR systems, incorrect occlusion of the real world by the digital content is an issue. When a user moves their hand to a position which should be in front of the 3D content (without blocking the marker) the content is drawn in front, as the graphics system does not have any depth information aside from the relative position of the marker. This reduces the believability of the system and can be confusing to view. Various methods of depth detection, are available which can be used to provide roughly correct occlusion. However they require extra hardware and the results are often noisy, so that the digital content appears to have frayed edges where it meets with the real-world object. For these reasons, it was decided not to use occlusion.
