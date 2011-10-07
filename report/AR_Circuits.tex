@@ -155,9 +155,26 @@ generating simple geometric shapes programmatically (for wires and leads), and
 transforming all of these models according to marker location found using AR
 Toolkit.
 
+An example of the programmatic generation and manipulation of an OSG model is
+the cylinders displayed above wires representing the potential difference
+between that node and ground as shown in figure\ref{voltage}.
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.50\textwidth]{voltages}
+\end{center}
+\caption{The voltage level display}
+\label{voltage}
+\end{figure}
+
+
 \subsubsection{AR Toolkit}
 
+
 \subsubsection{Libconfig}
+Libconfig is a simple and efficient C/C++ library for reading structured
+configuration files. It aided the development of AR Circuits and simplifies its
+use by allowing the user to specify the models, patterns, numbers and initial
+values of circuit components.
 
 \subsubsection{Gnucap}
 
@@ -166,12 +183,14 @@ Marker set (link to config files).
 Single camera.
 
 User interaction modes.
+\ref{connection}
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.50\textwidth]{connection}
 \end{center}
 \caption{The connection toggling process}
+\label{connection}
 \end{figure}
 
 \section{Discussion}
