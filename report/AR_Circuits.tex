@@ -186,10 +186,9 @@ Each marker corresponds to a single component, and the expected use is for the m
 
 \subsection{Limitations}
 
+One challenge with all visualisations is dealing with different data ranges. Currently, no automatic scaling of voltage and current values is implemented. This means that the user must choose component values which result in values in a certain range, or the voltage-current visualisation might be so far from the markers as to be out of view, or the variance so small as to appear uniform. A related problem is when 
 
-The number of markers which can be viewed at once is limited by the resolution of the camera, as the markers will not track if they appear as too few pixels in area to the camera
-
-One challenge with all visualisations is dealing with different data ranges. Currently, no automatic scaling of voltage and current values is implemented. This means that the user must choose component values which result in values in a certain range, or the visualisation will not be easily visible.
+In addition to these implementation limitations, the system is limited by a number of technological factors. The number of markers which can be viewed at once is limited by the resolution of the camera. This could be improved by improving the camera resolution, but this would also impact performance, as the tracker would then have to process more pixels per frame. This processing is CPU intensive, so the frame-rate is limited by the computer's abilities. The graphics processing is GPU intensive, so if the computer has no graphics card or a poor one, the frame-rate will again be limited.
 
 \section{Further Work}
 
