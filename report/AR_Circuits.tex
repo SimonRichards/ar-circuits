@@ -17,7 +17,11 @@ representing the circuit components and their wiring.
 %motivation
 %learning and augmented reality
 
-\IEEEPARstart{D}{ynamic Analysis} bitches
+\IEEEPARstart{S}{ome} topics in education contain inherently 3-dimensional and dynamic structures and processes, which are poorly dealt with by traditional teaching techniques, for example, chemistry \cite{Wu2004}. Text and static 2D pictures and schematics do not intuitively demonstrate these difficult concepts, as the student must mentally translate, interpolate and extrapolate from these highly abstracted representations to a more realistic mental model. Concepts with time-varying aspects are especially difficult to represent with static images. Recently, technology has started to become more prevalent in education \cite{Papa2009}\cite{Boster2006}, with computers able to display interactive projections of animated 3D scenes.
+
+Augmented Reality (AR) is an emerging technology which allows users to view the real world augmented with digital content that in some way relates to the world. The most common form of AR involves viewing printed images with a webcam, which are known to the computer and are tracked using computer vision techniques. Digital content is then added to the video stream, typically in a manner which makes it appear that the content is physically attached to the printed image. In an education setting, the augmented content would relate to the concepts being taught, with the aim of improving the learning of the student.
+
+AR offers some advantages for education that other technologies do not, especially for spatially complex topics \cite{Dunser2006}. The virtual environment is safe, and can be much more tightly controlled and monitored by educators, as well as providing content digitally, which can be inexpensive compared to physical teaching aids. Students who struggle with standard teaching techniques have also been shown to perform at a similar level to other students when using AR \cite{Dunser2008}. The importance of interaction has also been shown: Engineering students who took a special hands-on course over the course of their degree performed significantly better at the standardised spatial visualisation Mental Cutting Test than they had at the beginning of their degree, while other engineering students showed no improvement over the course of their degree \cite{Field99}. Others \cite{Passig2001} also showed benefits of using virtual reality, a closely related technology which also uses virtual environments, but does not contain the real-world aspects.
 
 \section{Related Work}
 Summarise related works
@@ -215,7 +219,12 @@ be moved back out of proximity (to avoid continuous toggling).
 Voltage and current are displayed by cylinders running parallel to and above
 the wires. The height of the tube represents the electric potential between the
 node the wire is on and ground and the radius of the tube represents the current
-flowing through the wire. This is illustrated in figure \ref{voltages}.
+flowing through the wire. This is illustrated in figure \ref{voltages}. This 
+representation was chosen as a realisation of the common electronic-hydraulic
+analogy, where the electron flow is compared to water flow in pipes. The height
+of water corresponds to electrical potential (voltage) as the water has gravitational
+potential energy, and the diameter of the pipes corresponds to the electrical
+current.
 
 
 \subsection{Unconstrained View}
@@ -256,11 +265,11 @@ Gestures could be added to improve interaction. Shaking a marker could toggle th
 
 To improve the scalability of the system, a circuit block element could be added. The user could build up a circuit and then assign it to a special marker as a single item. When the special marker is brought close to a component, instead of connecting to the component it would `absorb' all connected components. Since the resulting composite component might contain many connectable nodes and these nodes will be closely packed, the connecting process should use a ``connect to closest'' rule to avoid making multiple connections at once. To edit the composite component, the user would shake the marker, at which point all other components disappear and the original markers used to make the composite component would be used to make changes.
 
-To validate the concept and implementation, user studies should be carried out. A metric of performance as an educational tool might be the learning rate compared to using traditional techniques. Metrics as an AR application might include time for the user to become familiar with a certain task,
+To validate the concept and implementation, user studies should be carried out. A metric of performance as an educational tool might be the learning rate compared to using traditional techniques. Metrics as an AR application might include time for the user to become familiar with a certain task, asdasdsegwef
 
 \section{Conclusion}
 
-AR Circuits is a prototype educational AR system. To become useful for teaching it requires refinement and expansion, but it demonstrates the concept of a circuit building tool. In particular, the metaphor
+AR Circuits is a prototype educational AR system. To become useful for teaching it requires refinement and expansion, but it demonstrates the concept of a circuit building tool. In particular, the visualisation metaphor of displaying voltage and current awdqwefhbwqefdw
 
 The use of technologies such as Augmented Reality in education is developing and becoming more accepted. AR Circuits was developed to demonstrate how some elements of AR can be harnessed to provide a novel learning experience. The prototype allows the user to interactively build an arbitrary electronic circuit from a set of electronic components and visualise the current and voltage which result. Being able to explore building circuits and getting instant dynamic feedback on the effects of various circuit configurations could greatly improve student learning and motivation.
 
