@@ -73,3 +73,7 @@ ipch
 *latexmk
 *.log
 *.aux
+
+/report/.gitignore
+/report/report.out
+/report/report.synctex.gz
