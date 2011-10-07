@@ -190,11 +190,39 @@ All extensions and modifications to this code were encapsulated by two simple
 wrapper classes representing the circuit analyser and electrical components.
 
 \section{User Interaction}
-Marker set (link to config files).
-Single camera.
+The main focus during the development of this project was into two modes of user
+interaction. The first was user control over the circuit via placement of the
+markers. The second is the visual feedback the user receives in real-time
+showing the voltages and currents returned by the circuit analysis.
 
-User interaction modes.
-\ref{connection}
+\subsection{Control}
+User control over the circuit layout is effected by the user's placement of component
+markers. Toggling connections between components is achieved as shown
+pictorially in figure \ref{connection}. The steps are as follows.
+\begin{enumerate}
+\item Two resistors are to be connected serially.
+\item The leads to be connected are brought within a proximity threshold and the
+leads change colour to indicate this.
+\item After a one second delay, a wire is created between the nodes.
+\item This wire will maintain a direct line segment between the two nodes
+(connections are always one-to-one).
+\item To disconnect, the same procedure is followed.
+\item The resistors are now disconnected, to reconnect they will first have to
+be moved back out of proximity (to avoid continuous toggling).
+\end{enumerate}
+
+\subsection{Feedback}
+Voltage and current are displayed by cylinders running parallel to and above
+the wires. The height of the tube represents the electric potential between the
+node the wire is on and ground and the radius of the tube represents the current
+flowing through the wire. This is illustrated in figure \ref{voltages}.
+
+
+\subsection{Unconstrained View}
+Another important, but implicit, aspect to the
+user's experience with AR Circuits is the ability to view the scene from any
+angle or location they choose, so long as the relevant markers are not occluded
+or too distant.
 
 \begin{figure}
 \begin{center}
