@@ -78,8 +78,9 @@ void ARCircuit::updateARCircuit(){
         for each (Wire* w in subject->wires){
 			osg::Vec3d normal = osg::Matrix::transform3x3(osg::Vec3d(0,0,-1), subject->getMarkerMatrix());
 			normal.normalize();
-			w->update(normal, abs(subject->component->voltage));
+			w->update(normal, subject->component->voltage);
 		}
+		cout << subject->component->generateString() << endl;
     }
 }
 

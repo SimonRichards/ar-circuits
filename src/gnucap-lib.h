@@ -42,7 +42,6 @@ namespace gnucap_lib {
 		bool changed;
 		int nodes[2];
 		string _value;
-		string generateString();
 		Component(string name);
 		Component(string name, double value);
 		void init();
@@ -53,6 +52,7 @@ namespace gnucap_lib {
 		friend class GnucapWrapper;
 
 	public:
+		string generateString();
 		string _name;
 		unsigned int leads;
 		double voltage, current;
