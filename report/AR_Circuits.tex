@@ -138,7 +138,7 @@ Circuit
    -- etc.
 \end{verbatim}
 
-Hence each scene is responsible for mainting the electrical, graphical
+Hence each scene is responsible for maintaining the electrical, graphical
 and spatial states of a single component. Each scene also owns a set of
 wires of a variable size. During each iteration components check for
 proximity between their leads and the leads of other component, adding
@@ -176,8 +176,8 @@ User interaction modes.
 
 \section{Discussion}
 
-When the user is building the circuit and a marker is lost
-Dealing with losing part of the circuit, all of the circuit.
+When the user is building the circuit and a marker is lost, the wires for that component are 
+[[Dealing with losing part of the circuit, all of the circuit.]]
 
 As with most interactive AR systems, incorrect occlusion of the real world by the digital content is an issue. When a user moves their hand to a position which should be in front of the 3D content (without blocking the marker) the content is drawn in front, as the graphics system does not have any depth information aside from the relative position of the marker. This reduces the believability of the system and can be confusing to view. Various methods of depth detection, are available which can be used to provide roughly correct occlusion. However they require extra hardware and the results are often noisy, so that the digital content appears to have frayed edges where it meets with the real-world object. For these reasons, it was decided not to use occlusion.
 
